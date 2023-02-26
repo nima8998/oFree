@@ -1,10 +1,28 @@
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+// Components
+import { CustomButton } from './src/components';
+
+// Views
+import { Home, Tutorial } from './src/Views';
 
 export default function App() {
+  const [step, setStep] = React.useState(1);
+  const [isTutorialActive, setIsTutorialActive] = React.useState(false);
+
   return (
     <View style={styles.container}>
-      <Text>Hola coders.</Text>
+        {
+          !isTutorialActive ?
+            <Tutorial step={step} setStep={setStep}/> :
+            <Home/>
+        }
+      <CustomButton 
+        text={!isTutorialActive ? "Saltar" : "Ver tutorial"}
+        onPress={() => setIsTutorialActive(!isTutorialActive)}
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -15,6 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+  }
 });
