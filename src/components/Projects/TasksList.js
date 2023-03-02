@@ -1,12 +1,11 @@
 import { StyleSheet, FlatList, View} from 'react-native'
 import React from 'react'
 import TaskItem from './TaskItem'
+import { useCommonContext } from '../../Context/CommonContextProvider'
 
-const TasksList = ({
-    projects,
-    selectCurrentProject
-}) => {
+const TasksList = () => {
 
+  const {projects} = useCommonContext();
 
   return (
     <View>
@@ -16,7 +15,6 @@ const TasksList = ({
           renderItem={({item}) => 
             <TaskItem 
               projectInfo={item} 
-              selectCurrentProject={selectCurrentProject}
             />
           }
         style={styles.container}

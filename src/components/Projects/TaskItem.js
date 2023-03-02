@@ -1,12 +1,14 @@
 import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
+import { useCommonContext } from '../../Context/CommonContextProvider'
 
 const TaskItem = ({
-    projectInfo,
-    selectCurrentProject
+    projectInfo
 }) => {
+  const {editCurrentProject} = useCommonContext();
+  
   return (
-    <Pressable style={styles.item} onPress={()=>selectCurrentProject(projectInfo)}>
+    <Pressable style={styles.item} onPress={()=>editCurrentProject(projectInfo.id)}>
       <Text style={styles.itemText}>
         {projectInfo.name}
       </Text>

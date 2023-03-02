@@ -1,17 +1,22 @@
-import { StyleSheet, Text, View, Modal, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Modal, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
 import {CustomInput, CustomButton} from '../'
 
-const AddNewProjectModal = ({
-    isModalVisible,
-    setIsModalVisible,
-    setProjectDescription,
-    setProjectName,
-    addProject
-}) => {
+import { useCommonContext } from '../../Context/CommonContextProvider';
+
+const AddNewProjectModal = () => {
+    const {	
+        newProjectModal, 
+        setNewProjectModal, 
+        setProjectName,
+        setProjectDescription,
+        addProject,
+      } = useCommonContext()
   return (
-    <View style={styles.centeredView} >
-        <Modal animationType="fade" transparent={true} visible={isModalVisible} onRequestClose={setIsModalVisible}>
+    <TouchableWithoutFeedback onPress={() => { 
+        Keyboard.dismiss()
+      }}>
+        <Modal animationType="fade" transparent={true} visible={newProjectModal} onRequestClose={setNewProjectModal}>
             <View style={styles.modalContainer}>
                 <View style={styles.modal}>
                     <View>
@@ -32,7 +37,7 @@ const AddNewProjectModal = ({
                     </View>
                     <View style={styles.modalFooter}>
                         <CustomButton
-                            onPress={setIsModalVisible}
+                            onPress={setNewProjectModal}
                             text="CANCELAR"
                         />
                         <CustomButton
@@ -43,7 +48,7 @@ const AddNewProjectModal = ({
                 </View>
             </View>
         </Modal>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 

@@ -1,18 +1,22 @@
 import { StyleSheet, Text, Pressable, View } from 'react-native'
 import React from 'react'
+import { useCommonContext } from '../../Context/CommonContextProvider'
+import Colors from '../Constants/Colors'
 
-const ButtonActions = ({
-  handleModal,
-  isListVisible,
-  setIsListVisible
-}) => {
+
+const ButtonActions = () => {
+  const {
+    setNewProjectModal,
+    setIsListVisible,
+    isListVisible,
+  } = useCommonContext()
 
   return (
     <View style={styles.container} >
         {
           isListVisible &&
           <View style={styles.actionsList}>
-            <Pressable style={styles.secondaryButton} onPress={handleModal}>
+            <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
               <Text style={{transform: [{rotate: '-45deg'}]}}>Add</Text>
             </Pressable>
           </View>
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
     },
     button: {
-      backgroundColor: "#C850ED",
+      backgroundColor: Colors.primaryViolet,
       transform: [{rotate: "45deg"}],
       width: 40,
       height: 40,
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
       color: '#fff',
     },
     secondaryButton: {
-      backgroundColor: '#DEA0F0',
+      backgroundColor: Colors.secondaryViolet,
       transform: [{rotate: "45deg"}],
       width: 40,
       height: 40,

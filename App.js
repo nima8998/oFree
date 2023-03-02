@@ -1,30 +1,19 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-
-// Components
-import { CustomButton } from './src/components';
+import { CommonContextProvider } from './src/Context/CommonContextProvider';
 
 // Views
-import { Home, Tutorial } from './src/Views';
+import { Home } from './src/Views';
 
 export default function App() {
-  const [step, setStep] = React.useState(1);
-  const [isTutorialActive, setIsTutorialActive] = React.useState(false);
-
   return (
-    <View style={styles.container}>
-        {
-          !isTutorialActive ?
-            <Tutorial step={step} setStep={setStep}/> :
-            <Home/>
-        }
-      <CustomButton 
-        text={!isTutorialActive ? "Saltar" : "Ver tutorial"}
-        onPress={() => setIsTutorialActive(!isTutorialActive)}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <CommonContextProvider>
+      <View style={styles.container}>
+        <Home/>
+        <StatusBar style="auto" />
+      </View>
+    </CommonContextProvider>
   );
 }
 

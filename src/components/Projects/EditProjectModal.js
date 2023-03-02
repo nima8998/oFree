@@ -1,39 +1,41 @@
 import { StyleSheet, Text, Modal, View } from 'react-native'
 import CustomButton from '../Elements/CustomButton'
 import React from 'react'
+import { useCommonContext } from '../../Context/CommonContextProvider'
+import Colors from '../Constants/Colors'
 
-const EditProjectModal = ({
-    isEditModalVisible,
-    setIsEditModalVisible,
-    currentProject,
-    deleteProject
-}) => {
+const EditProjectModal = () => {
+    
+    const {
+        currentProject, 
+        editProjectModal,
+        setEditProjectModal,
+        deleteProject
+    } = useCommonContext();
+
   return (
-    <View style={styles.centeredView}>
-        <Modal animationType="fade" transparent={true} visible={isEditModalVisible} onRequestClose={setIsEditModalVisible}>
-            <View style={styles.modalContainer}>
-                <View style={styles.modal}>
-                    <Text style={styles.modalTitle}>Proyecto: {currentProject.name}</Text>
-                    <View style={styles.modalBody}>
-                        <View>
-                            <Text>{currentProject.description}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.modalFooter}>
-                        <CustomButton
-                            onPress={()=>deleteProject(currentProject.id)}
-                            text="ELIMINAR"
-                            propStyle={{color: "red"}}
-                        />
-                        <CustomButton
-                            onPress={setIsEditModalVisible}
-                            text="LISTO"
-                        />
+    <Modal animationType="fade" transparent={true} visible={editProjectModal} onRequestClose={setEditProjectModal}>
+        <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+                <Text style={styles.modalTitle}>Proyecto: {currentProject.name}</Text>
+                <View style={styles.modalBody}>
+                    <View>
+                        <Text>{currentProject.description}</Text>
                     </View>
                 </View>
+                <View style={styles.modalFooter}>
+                    <CustomButton
+                        onPress={()=>deleteProject(currentProject.id)}
+                        text="ELIMINAR"                            
+                    />
+                    <CustomButton
+                        onPress={setEditProjectModal}
+                        text="LISTO"
+                    />
+                </View>
             </View>
-        </Modal>
-    </View>
+        </View>
+    </Modal>
   )
 }
 
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     },
     projectTypeText: {
         marginHorizontal: 5, 
-        borderColor: "#304FFE", 
+        borderColor: Colors.primaryBlue, 
         paddingHorizontal: 15,
     }
 })

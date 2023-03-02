@@ -1,18 +1,21 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import Colors from '../Constants/Colors'
 
 const CustomButton = ({
     text,
     onPress,
-    propStyle
+    buttonPropsStyle,
+    textPropsStyle,
+    type = "primary"
 }) => {
   return (
     <TouchableOpacity 
         activeOpacity={0.8}
-        style={styles.buttonStyle}
+        style={[styles.baseStyle, buttonPropsStyle, type !== "primary" && styles.secondaryButton]}
         onPress={onPress}
     >
-        <Text style={[styles.textStyle, propStyle]}>{text}</Text>
+        <Text style={[styles.textStyle, textPropsStyle, type !== "primary" && styles.secondaryText]}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -20,16 +23,23 @@ const CustomButton = ({
 export default CustomButton
 
 const styles = StyleSheet.create({
-    buttonStyle: {
-        backgroundColor: "#fff",
-        paddingHorizontal: 25,
+    baseStyle: {
+        backgroundColor: Colors.primaryBlue,
+        paddingHorizontal: 20,
         paddingVertical: 8,
         borderRadius: 3,
-        backgroundColor: '#dadada',
-        margin: 2,
+        margin: 2
+    },
+    secondaryButton: {
+        backgroundColor: "#fff",
     },
     textStyle: {
         fontSize: 10,
         fontWeight:  'bold',
+        color: "#fff",
+        letterSpacing: 1
+    },
+    secondaryText:{
+        color: Colors.primaryBlue,
     }
 })
