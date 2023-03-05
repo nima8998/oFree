@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../Constants/Colors'
+import CustomText from './CustomText'
 
 const CustomButton = ({
     text,
@@ -15,7 +16,7 @@ const CustomButton = ({
         style={[styles.baseStyle, buttonPropsStyle, type !== "primary" && styles.secondaryButton]}
         onPress={onPress}
     >
-        <Text style={[styles.textStyle, textPropsStyle, type !== "primary" && styles.secondaryText]}>{text}</Text>
+        <CustomText otherStyles={[styles.textStyle, textPropsStyle, type !== "primary" && styles.secondaryText]} textValue={text}/>
     </TouchableOpacity>
   )
 }

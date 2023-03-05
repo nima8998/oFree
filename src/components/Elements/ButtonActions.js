@@ -8,9 +8,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const ButtonActions = () => {
   const {
-    setNewProjectModal,
     setIsListVisible,
     isListVisible,
+    handleView
   } = useCommonContext()
 
   return (
@@ -18,13 +18,13 @@ const ButtonActions = () => {
         {
           isListVisible &&
           <View style={styles.actionsList}>
-            <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
+            <Pressable style={styles.secondaryButton} onPress={()=>handleView("projects")}>
               <FontAwesome5 name="user-alt" size={20} color="white" style={styles.iconList}/>
             </Pressable>
-            <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
+            <Pressable style={styles.secondaryButton} onPress={()=>handleView("projects/newProject")}>
               <MaterialCommunityIcons name="briefcase" size={20} color="white" style={styles.iconList}/>
             </Pressable>
-            <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
+            <Pressable style={styles.secondaryButton} onPress={()=>handleView("projects")}>
               <Ionicons name="md-checkbox" size={20} color="white" style={styles.iconList}/>
             </Pressable>
           </View>

@@ -9,26 +9,27 @@ const CustomText = ({
     otherStyles
 }) => {
   const [loading] = useFonts({
-    Montserrat: require("../../Font/Montserrat-Regular.ttf"),
-    MontserratSemiBold: require("../../Font/MontserratSemiBold.ttf"),
-    MontserratMedium: require("../../Font/Montserrat-Medium.ttf")
+    "Montserrat-Regular": require("../../Font/Montserrat-Regular.ttf"),
+    "Montserrat-SemiBold": require("../../Font/Montserrat-SemiBold.ttf"),
+    "Montserrat-Medium": require("../../Font/Montserrat-Medium.ttf")
   })
 
-  // if(!loading) return <AppLoading/>
   React.useEffect(()=>{
     if(loading) SplashScreen.hideAsync();
   },[loading])
+
+  if(!loading) {return null}
 
   return (
       <Text style={[{
         fontFamily: 
           fontType === "regular" ?
-          "Monteserrat" :
+          "Montserrat-Regular" :
           fontType === "semibold" ?
-          "MontserratSemiBold" :
+          "Montserrat-SemiBold" :
           fontType === "medium" ?
-          "MontserratMedium" :
-          "Montserrat"
+          "Montserrat-Medium" :
+          "Montserrat-Regular"
       }, otherStyles]}>
         {textValue}
       </Text>

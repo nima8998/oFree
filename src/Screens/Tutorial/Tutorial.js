@@ -6,6 +6,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import React from 'react'
 import { useCommonContext } from "../../Context/CommonContextProvider"
 import Colors from "../../components/Constants/Colors"
+import CustomText from "../../components/Elements/CustomText"
 
 
 const handleStep  = (step) =>{
@@ -13,7 +14,7 @@ const handleStep  = (step) =>{
     if(step === 1) value = 'Con Ofree podés organizar tu semana y repartir en ella todas las tareas de tus proyectos.'
     if(step === 2) value = 'También podés agendar clientes, reuniones con ellxs y deadlines de los proyectos.'
     if(step === 3) value = '¡Podés configurar los avisos del día para no saltearte comidas ni trabajar de más!'
-    return <Text style={styles.textStyle}>{value}</Text>
+    return <CustomText textValue={value} otherStyles={styles.textStyle}/>
 }
 
 export default function Tutorial() {

@@ -6,15 +6,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import CustomText from '../Elements/CustomText';
+import {useCommonContext} from '../../Context/CommonContextProvider';
 
 const Tabs = () => {
+  const {handleView} = useCommonContext();
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable style={styles.tab}>
+      <Pressable style={styles.tab} onPress={()=>handleView("home")}>
         <Octicons name="home" size={20} color="white" />
         <CustomText textValue={"Inicio"} otherStyles={styles.tabText}/>
       </Pressable>
-      <Pressable style={styles.tab}>
+      <Pressable style={styles.tab} onPress={()=>handleView("projects")}>
         <Ionicons name="newspaper-outline" size={20} color="white" />
         <CustomText textValue={"Proyectos"} otherStyles={styles.tabText}/>
       </Pressable>

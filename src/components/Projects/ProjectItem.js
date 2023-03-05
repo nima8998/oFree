@@ -2,13 +2,12 @@ import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider'
 
-const TaskItem = ({
+const ProjectItem = ({
     projectInfo
 }) => {
-  const {editCurrentProject} = useCommonContext();
   
   return (
-    <Pressable style={styles.item} onPress={()=>editCurrentProject(projectInfo.id)}>
+    <Pressable style={styles.item} >
       <Text style={styles.itemText}>
         {projectInfo.name}
       </Text>
@@ -16,7 +15,7 @@ const TaskItem = ({
   )
 }
 
-export default TaskItem
+export default ProjectItem
 
 const styles = StyleSheet.create({
     item:{
@@ -26,7 +25,17 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         justifyContent: 'center',
         alignItems:  "center",
-        padding: 10
+        padding: 10,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 5,
+        
+        elevation: 4,
     },
     itemText:{
         color: '#000',

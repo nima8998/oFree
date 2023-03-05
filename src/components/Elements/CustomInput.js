@@ -5,13 +5,14 @@ const CustomInput = ({
     placeholder,
     value,
     action,
+    otherStyles
 }) => {
   return (
     <TextInput
         placeholder={placeholder}
         value={value}
         onChangeText={(text) => action(text)}
-        style={styles.input}
+        style={[styles.input, otherStyles]}
     />
   )
 }

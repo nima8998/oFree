@@ -1,6 +1,6 @@
 import { StyleSheet, FlatList, View} from 'react-native'
 import React from 'react'
-import TaskItem from './TaskItem'
+import ProjectItem from './ProjectItem'
 import { useCommonContext } from '../../Context/CommonContextProvider'
 
 const TasksList = () => {
@@ -13,7 +13,7 @@ const TasksList = () => {
           data={projects}
           keyExtractor={(item) => item.id}
           renderItem={({item}) => 
-            <TaskItem 
+            <ProjectItem 
               projectInfo={item} 
             />
           }

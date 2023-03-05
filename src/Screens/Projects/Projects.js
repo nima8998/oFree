@@ -1,18 +1,19 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { ButtonActions } from '../../components';
+import { ButtonActions, ProjectsList } from '../../components';
 import CustomText from '../../components/Elements/CustomText';
+import { useCommonContext } from '../../Context/CommonContextProvider';
 
-const Home = () => {
+const Projects = () => {
   return (
     <View style={styles.container}>
-      <CustomText textValue={"Home View"}/>
+      <ProjectsList/>
       <ButtonActions />
     </View>
   )
 }
 
-export default Home
+export default Projects
 
 const styles = StyleSheet.create({
     container: {
