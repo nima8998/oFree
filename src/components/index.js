@@ -5,3 +5,6 @@ export {default as CustomInput} from "./Elements/CustomInput";
 // PROJECT ELEMENTS
 export {default as TasksList} from "./Projects/TasksList";
 export {default as EditProjectModal} from "./Projects/EditProjectModal";
+
+export {default as Navbar} from "./Navbar/Navbar";
+export {default as Tabs} from "./Tabs/Tabs";

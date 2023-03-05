@@ -4,24 +4,14 @@ import { TasksList, ButtonActions } from '../../components';
 
 import AddNewProjectModal from '../../components/Projects/AddNewProjectModal'
 import EditProjectModal from '../../components/Projects/EditProjectModal';
-import { useCommonContext } from '../../Context/CommonContextProvider';
-import Tutorial from '../Tutorial/Tutorial';
 
 const Home = () => {
-  const {isTutorialActive} = useCommonContext();
-
   return (
     <View style={styles.container}>
-      {
-        isTutorialActive ?
-          <Tutorial/> :
-          <>
-            <TasksList />
-            <AddNewProjectModal/>
-            <EditProjectModal/>
-            <ButtonActions />
-          </>
-      }
+      <TasksList />
+      <AddNewProjectModal/>
+      <EditProjectModal/>
+      <ButtonActions />
     </View>
   )
 }

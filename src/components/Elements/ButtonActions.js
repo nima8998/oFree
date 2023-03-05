@@ -2,7 +2,9 @@ import { StyleSheet, Text, Pressable, View } from 'react-native'
 import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider'
 import Colors from '../Constants/Colors'
-
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const ButtonActions = () => {
   const {
@@ -17,7 +19,13 @@ const ButtonActions = () => {
           isListVisible &&
           <View style={styles.actionsList}>
             <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
-              <Text style={{transform: [{rotate: '-45deg'}]}}>Add</Text>
+              <FontAwesome5 name="user-alt" size={20} color="white" style={styles.iconList}/>
+            </Pressable>
+            <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
+              <MaterialCommunityIcons name="briefcase" size={20} color="white" style={styles.iconList}/>
+            </Pressable>
+            <Pressable style={styles.secondaryButton} onPress={()=>setNewProjectModal()}>
+              <Ionicons name="md-checkbox" size={20} color="white" style={styles.iconList}/>
             </Pressable>
           </View>
         }
@@ -60,11 +68,14 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 3,
+      marginVertical: 10,
     },
     actionsList:{
       position: 'absolute',
-      bottom: 60,
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
+      bottom: 55,
+      flexDirection: 'column',
+    },
+    iconList: {
+      transform: [{rotate: '-45deg'}],
     }
 })

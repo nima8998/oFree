@@ -1,17 +1,15 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { View, StyleSheet, StatusBar } from 'react-native';
+import Colors from './src/components/Constants/Colors';
 import { CommonContextProvider } from './src/Context/CommonContextProvider';
-
-// Views
-import { Home } from './src/Views';
+import {Initial} from './src/Screens';
 
 export default function App() {
   return (
     <CommonContextProvider>
       <View style={styles.container}>
-        <Home/>
-        <StatusBar style="auto" />
+        <StatusBar translucent  backgroundColor={Colors.primaryBlue}/>
+        <Initial/>
       </View>
     </CommonContextProvider>
   );

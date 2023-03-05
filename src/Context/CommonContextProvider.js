@@ -16,7 +16,13 @@ export let CommonContextProvider = ({ children }) => {
 
 	const [step, setStep] = React.useState(1);
 	const [isTutorialActive, setIsTutorialActive] = React.useState(true);
-  
+
+	const [currentView, setCurrentView] = React.useState();
+
+	// hardcode para manejar el 'enrutado'
+	const handleView = view =>{
+		setCurrentView(view);
+	}
 
 	const addProject = () =>{
 		if(projectName === '') return;
@@ -57,7 +63,9 @@ export let CommonContextProvider = ({ children }) => {
 		step, setStep,
 		addProject,
 		deleteProject,
-		editCurrentProject
+		editCurrentProject,
+		currentView,
+		handleView
 	}), [
 			newProjectModal,
 			editProjectModal,
@@ -67,7 +75,8 @@ export let CommonContextProvider = ({ children }) => {
 			isListVisible,
 			currentProject,
 			isTutorialActive,
-			step
+			step,
+			currentView
 		])
 
 	return (
