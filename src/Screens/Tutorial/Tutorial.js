@@ -2,7 +2,7 @@ import {
     CustomButton,
   } from "../../components/index"
 
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { useCommonContext } from "../../Context/CommonContextProvider"
 import Colors from "../../components/Constants/Colors"

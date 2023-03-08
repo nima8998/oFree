@@ -1,8 +1,6 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ButtonActions, ProjectsList } from '../../components';
-import CustomText from '../../components/Elements/CustomText';
-import { useCommonContext } from '../../Context/CommonContextProvider';
 
 const Projects = () => {
   return (

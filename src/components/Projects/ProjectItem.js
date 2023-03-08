@@ -1,6 +1,5 @@
 import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
-import { useCommonContext } from '../../Context/CommonContextProvider'
 
 const ProjectItem = ({
     projectInfo
