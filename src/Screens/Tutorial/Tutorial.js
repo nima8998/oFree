@@ -17,7 +17,9 @@ const handleStep  = (step) =>{
     return <CustomText textValue={value} otherStyles={styles.textStyle}/>
 }
 
-export default function Tutorial() {
+export default function Tutorial({
+    navigation
+}) {
     const {step, setStep, setIsTutorialActive} = useCommonContext();
     
     const slideStep = e =>{
@@ -37,7 +39,10 @@ export default function Tutorial() {
         </View>
         <CustomButton 
             text="Saltar"
-            onPress={() => setIsTutorialActive(false)}
+            onPress={() => {
+                navigation.navigate("Home")
+                setIsTutorialActive(false)
+            }}
         />
     </View>
   )
@@ -50,6 +55,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         flex: 1,
+        zIndex: 5,
     },
     stepsContainer:{
         flexDirection: "row",

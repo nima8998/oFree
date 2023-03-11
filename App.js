@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import Colors from './src/components/Constants/Colors';
+import Navigator from './src/components/Navigator/Navigator';
 import { CommonContextProvider } from './src/Context/CommonContextProvider';
-import {Initial} from './src/Screens';
+import Layout from './src/Screens/Layout/Layout'
 
 export default function App() {
   return (
     <CommonContextProvider>
-      <View style={styles.container}>
-        <StatusBar translucent  backgroundColor={Colors.primaryBlue}/>
-        <Initial/>
-      </View>
+      <StatusBar translucent backgroundColor={Colors.primaryBlue}/>
+      <Layout>
+        <Navigator/>
+      </Layout>
     </CommonContextProvider>
   );
 }

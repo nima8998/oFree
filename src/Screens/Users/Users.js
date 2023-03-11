@@ -1,27 +1,27 @@
+import { StyleSheet, View } from 'react-native'
+import CustomText from '../../components/Elements/CustomText'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { ButtonActions } from '../../components';
-import CustomText from '../../components/Elements/CustomText';
+import { ButtonActions } from '../../components'
 
-const Home = ({
-  navigation
+const Users = ({
+    navigation
 }) => {
   return (
     <View style={styles.container}>
-      <CustomText textValue={"Home View"}/>
+      <CustomText textValue={"Users view"}/>
       <ButtonActions navigation={navigation}/>
     </View>
   )
 }
 
-export default Home
+export default Users
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
-        paddingTop: 20,
+        marginTop: 20,
         flex: 1,
     }
-})
+  })

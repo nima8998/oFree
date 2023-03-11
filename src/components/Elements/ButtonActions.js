@@ -6,25 +6,31 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-const ButtonActions = () => {
+const ButtonActions = ({
+  navigation
+}) => {
   const {
     setIsListVisible,
     isListVisible,
-    handleView
   } = useCommonContext()
+
+  const navigateAndCloseList = (screen) =>{
+    navigation.navigate(screen);
+    setIsListVisible(false);
+  }
 
   return (
     <View style={styles.container} >
         {
           isListVisible &&
           <View style={styles.actionsList}>
-            <Pressable style={styles.secondaryButton} onPress={()=>handleView("projects")}>
+            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Users")}>
               <FontAwesome5 name="user-alt" size={20} color="white" style={styles.iconList}/>
             </Pressable>
-            <Pressable style={styles.secondaryButton} onPress={()=>handleView("projects/newProject")}>
+            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Projects")}>
               <MaterialCommunityIcons name="briefcase" size={20} color="white" style={styles.iconList}/>
             </Pressable>
-            <Pressable style={styles.secondaryButton} onPress={()=>handleView("projects")}>
+            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Tasks")}>
               <Ionicons name="md-checkbox" size={20} color="white" style={styles.iconList}/>
             </Pressable>
           </View>

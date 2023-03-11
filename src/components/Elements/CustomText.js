@@ -21,7 +21,8 @@ const CustomText = ({
   if(!loading) {return null}
 
   return (
-      <Text style={[{
+      <Text 
+      style={[{
         fontFamily: 
           fontType === "regular" ?
           "Montserrat-Regular" :
@@ -30,7 +31,8 @@ const CustomText = ({
           fontType === "medium" ?
           "Montserrat-Medium" :
           "Montserrat-Regular"
-      }, otherStyles]}>
+      }, otherStyles]}
+      >
         {textValue}
       </Text>
   )

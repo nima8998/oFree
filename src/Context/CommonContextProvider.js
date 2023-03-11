@@ -14,14 +14,6 @@ export let CommonContextProvider = ({ children }) => {
 	const [step, setStep] = React.useState(1);
 	const [isTutorialActive, setIsTutorialActive] = React.useState(true);
 
-	const [currentView, setCurrentView] = React.useState("home");
-
-	// hardcode para manejar el 'enrutado'
-	const handleView = view =>{
-		setCurrentView(view);
-		setIsListVisible(false);
-	}
-
 	const deleteProject = (id) =>{
 		const filteredList = projects.filter(element => element.id !== id)
 		setProjects(filteredList);
@@ -34,15 +26,12 @@ export let CommonContextProvider = ({ children }) => {
 		isTutorialActive, setIsTutorialActive,
 		step, setStep,
 		deleteProject,
-		currentView,
-		handleView
 	}), [
 			newProjectModal,
 			projects,
 			isListVisible,
 			isTutorialActive,
 			step,
-			currentView
 		])
 
 	return (

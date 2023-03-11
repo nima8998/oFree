@@ -1,12 +1,16 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { ButtonActions, ProjectsList } from '../../components';
+import CustomText from '../../components/Elements/CustomText';
 
-const Projects = () => {
+const Projects = ({
+  navigation
+}) => {
   return (
     <View style={styles.container}>
+      <CustomText textValue={"Project view"}/>
       <ProjectsList/>
-      <ButtonActions />
+      <ButtonActions navigation={navigation}/>
     </View>
   )
 }
