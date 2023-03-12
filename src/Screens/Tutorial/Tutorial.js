@@ -27,6 +27,13 @@ export default function Tutorial({
         e.touchX - e.nativeEvent.pageX < 0 && step > 1 && setStep(step - 1)
     }
 
+    React.useEffect(()=>{
+        setIsTutorialActive(true);
+        return()=>{
+            setIsTutorialActive(false);
+        }
+    },[])
+
   return (
     <View style={styles.container} 
         onTouchStart={e=> e.touchX = e.nativeEvent.pageX}

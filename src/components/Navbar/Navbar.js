@@ -5,20 +5,23 @@ import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import CustomText from '../Elements/CustomText'
 import {useCommonContext} from '../../Context/CommonContextProvider'
+
+
 const Navbar = () => {
-  const {currentView} = useCommonContext();
+  const {isTutorialActive} = useCommonContext();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {display: isTutorialActive ? "none" : 'flex'}]}>
       <View style={styles.nav}>
         <Entypo name="menu" size={25} color="white" />
         <CustomText textValue={"ofree"} fontType={"semibold"} otherStyles={{color: "#fff", fontSize: 25}} />
         <Ionicons name="notifications" size={20} color="white" />
       </View>
-      <View style={[styles.projectContainer, {display: currentView !== "projects" ? 'none' : "flex"}]}>
+      {/* <View style={styles.projectContainer}>
         <CustomText textValue="proyectos" otherStyles={styles.projectOptions} />
         <CustomText textValue="clientes" otherStyles={styles.projectOptions} />
         <CustomText textValue="entregas" otherStyles={styles.projectOptions} />
-      </View>
+      </View> */}
     </SafeAreaView>
   )
 }
