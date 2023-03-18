@@ -3,15 +3,15 @@ import { StyleSheet, StatusBar } from 'react-native';
 import Colors from './src/components/Constants/Colors';
 import Navigator from './src/components/Navigator/Navigator';
 import { CommonContextProvider } from './src/Context/CommonContextProvider';
-import Layout from './src/Screens/Layout/Layout'
+import { NativeBaseProvider } from 'native-base';
 
 export default function App() {
   return (
     <CommonContextProvider>
-      <StatusBar translucent backgroundColor={Colors.primaryBlue}/>
-      <Layout>
+      <NativeBaseProvider>
+        <StatusBar translucent backgroundColor={Colors.primaryBlue}/>
         <Navigator/>
-      </Layout>
+      </NativeBaseProvider>
     </CommonContextProvider>
   );
 }

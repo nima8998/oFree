@@ -4,13 +4,14 @@ import { ButtonActions, ProjectsList } from '../../components';
 import CustomText from '../../components/Elements/CustomText';
 
 const Projects = ({
-  navigation
+  navigation,
+  route
 }) => {
   return (
     <View style={styles.container}>
       <CustomText textValue={"Project view"}/>
       <ProjectsList/>
-      <ButtonActions navigation={navigation}/>
+      <ButtonActions navigation={navigation} route={route}/>
     </View>
   )
 }

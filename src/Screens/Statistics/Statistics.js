@@ -1,23 +1,26 @@
 import { StyleSheet, View } from 'react-native'
-import CustomText from '../../components/Elements/CustomText'
 import React from 'react'
+import CustomText from '../../components/Elements/CustomText'
+import { ButtonActions } from '../../components'
 
-const Users = () => {
+const Statistics = ({
+  navigation
+}) => {
   return (
     <View style={styles.container}>
-      <CustomText textValue={"Users view"}/>
+      <CustomText textValue={"Statistics View"}/>
     </View>
   )
 }
 
-export default Users
+export default Statistics
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
-        marginTop: 20,
+        paddingTop: 20,
         flex: 1,
     }
-  })
+})

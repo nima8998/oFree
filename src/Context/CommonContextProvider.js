@@ -4,15 +4,28 @@ export let CommonContext = React.createContext();
 export const useCommonContext = () => React.useContext(CommonContext);
 
 export let CommonContextProvider = ({ children }) => {
-	const [newProjectModal, setNewProjectModal] = React.useState(false);
-
 	const [projects, setProjects] = React.useState([]);
-
+	const [tasksList, setTasksList] = React.useState([]);
 
 	const [isListVisible, setIsListVisible] = React.useState(false);
+	const [isModalVisible, setIsModalVisible] = React.useState(false);
 
 	const [step, setStep] = React.useState(1);
 	const [isTutorialActive, setIsTutorialActive] = React.useState(true);
+
+	const addNewTask = async (taskData) =>{
+		return await new Promise((resolve, reject) =>{
+			try {
+				setTasksList(prev=>[...prev, taskData])
+				setTimeout(() => {
+					resolve({status: 200, message: "Tarea creada con exito!"})
+				}, 500);
+			} catch (error) {
+				reject(error);
+				throw error;
+			}
+		})
+	}
 
 	const deleteProject = (id) =>{
 		const filteredList = projects.filter(element => element.id !== id)
@@ -20,18 +33,21 @@ export let CommonContextProvider = ({ children }) => {
 	}
 
 	const MemorizedContext = React.useMemo(()=>({
-		newProjectModal, setNewProjectModal,
 		projects, setProjects,
+		tasksList, 
 		isListVisible, setIsListVisible,
 		isTutorialActive, setIsTutorialActive,
+		isModalVisible, setIsModalVisible,
 		step, setStep,
 		deleteProject,
+		addNewTask
 	}), [
-			newProjectModal,
 			projects,
+			tasksList,
 			isListVisible,
 			isTutorialActive,
-			step,
+			isModalVisible,
+			step,			
 		])
 
 	return (

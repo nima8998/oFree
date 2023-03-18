@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen'
 const CustomText = ({
     textValue,
     fontType,
-    otherStyles
+    otherStyles,
 }) => {
   const [loading] = useFonts({
     "Montserrat-Regular": require("../../Font/Montserrat-Regular.ttf"),
@@ -22,16 +22,16 @@ const CustomText = ({
 
   return (
       <Text 
-      style={[{
-        fontFamily: 
-          fontType === "regular" ?
-          "Montserrat-Regular" :
-          fontType === "semibold" ?
-          "Montserrat-SemiBold" :
-          fontType === "medium" ?
-          "Montserrat-Medium" :
-          "Montserrat-Regular"
-      }, otherStyles]}
+        style={[{
+          fontFamily: 
+            fontType === "regular" ?
+            "Montserrat-Regular" :
+            fontType === "semibold" ?
+            "Montserrat-SemiBold" :
+            fontType === "medium" ?
+            "Montserrat-Medium" :
+            "Montserrat-Regular"
+        }, otherStyles]}
       >
         {textValue}
       </Text>

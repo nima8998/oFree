@@ -17,7 +17,7 @@ const TasksList = () => {
               projectInfo={item} 
             />
           }
-        style={styles.container}
+          contentContainerStyle={styles.container}
       />
 
     </View>

@@ -5,6 +5,7 @@ import Colors from '../Constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 
 const ButtonActions = ({
   navigation
@@ -13,7 +14,18 @@ const ButtonActions = ({
     setIsListVisible,
     isListVisible,
   } = useCommonContext()
+  const {name} = useRoute();
+  // seteo este estado para saber en que route.name se encuentra. 
+  // El icono del Users solamente es accesible desde este boton cuando estas en el home
+  const [currentScreen, setCurrentScreen] = React.useState('Home');
+  
+  
+  React.useEffect(()=>{
+    setCurrentScreen(name)
+    return () =>{}
+  },[name])
 
+ 
   const navigateAndCloseList = (screen) =>{
     navigation.navigate(screen);
     setIsListVisible(false);
@@ -24,9 +36,12 @@ const ButtonActions = ({
         {
           isListVisible &&
           <View style={styles.actionsList}>
-            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Users")}>
-              <FontAwesome5 name="user-alt" size={20} color="white" style={styles.iconList}/>
-            </Pressable>
+            {
+              currentScreen === "Home" &&
+              <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Users")}>
+                <FontAwesome5 name="user-alt" size={20} color="white" style={styles.iconList}/>
+              </Pressable>
+            }
             <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Projects")}>
               <MaterialCommunityIcons name="briefcase" size={20} color="white" style={styles.iconList}/>
             </Pressable>
