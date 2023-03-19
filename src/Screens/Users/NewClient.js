@@ -2,15 +2,15 @@ import { StyleSheet, View } from 'react-native'
 import CustomText from '../../components/Elements/CustomText'
 import React from 'react'
 
-const Users = () => {
+const NewClient = () => {
   return (
     <View style={styles.container}>
-      <CustomText textValue={"Users view"}/>
+      <CustomText textValue={"Clients view"}/>
     </View>
   )
 }
 
-export default Users
+export default NewClient
 
 const styles = StyleSheet.create({
     container: {

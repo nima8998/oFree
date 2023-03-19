@@ -3,6 +3,7 @@ export {default as CustomButton} from "./Elements/CustomButton";
 export {default as ButtonActions} from "./Elements/ButtonActions";
 export {default as CustomInput} from "./Elements/CustomInput";
 export {default as CustomTextarea} from "./Elements/CustomTextarea";
+export {default as CustomDropdown} from "./Elements/CustomDropdown";
 // PROJECT ELEMENTS
 export {default as ProjectsList} from "./Projects/ProjectsList";
 

@@ -1,22 +1,15 @@
 import { Keyboard, Pressable, StyleSheet, TouchableWithoutFeedback, View, ActivityIndicator } from 'react-native'
 import CustomText from '../../components/Elements/CustomText'
 import React from 'react'
-import { CustomButton, CustomInput, CustomTextarea, ModalMessage } from '../../components'
+import { CustomButton, CustomInput, CustomTextarea, ModalMessage, CustomDropdown } from '../../components'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useCommonContext } from '../../Context/CommonContextProvider';
-import { Select } from "native-base";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from '../../components/Constants/Colors';
 
-const clients = [
-  {id: "1", name: "Client 1"},
-  {id: "2", name: "Client 2"},
-  {id: "3", name: "Client 3"},
-  {id: "4", name: "Client 4"},
-  {id: "5", name: "Client 5"},
-]
+const clients = require("../../Data/Clients.json")
 
-const Tasks = () => {
+const NewTask = () => {
   const {addNewTask, tasksList, setIsModalVisible, isModalVisible} = useCommonContext();
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [taskName, setTaskName] = React.useState('');
@@ -52,6 +45,7 @@ const Tasks = () => {
       .catch((error)=>{throw error})
       .finally(setIsLoading(false))
   }
+  
 
   return (
     <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
@@ -72,19 +66,7 @@ const Tasks = () => {
           showDatePicker && <DateTimePicker mode="date" value={!date ? new Date() : date} id="date" onChange={handleDate}/>
         }
         
-        <View style={styles.dropdown}>
-          <Select selectedValue={client} 
-            minWidth="200" 
-            accessibilityLabel="Seleccionar cliente" 
-            placeholder="Seleccionar cliente" 
-            mt={1} 
-            onValueChange={itemValue => setClient(itemValue)}
-          >
-            {
-              clients.map(({id, name})=>(<Select.Item key={id} label={name} value={id}/>))
-            }
-          </Select>
-        </View>
+        <CustomDropdown data={clients} action={setClient} clientSelected={client} placeholder="Seleccionar cliente"/>
 
         <CustomTextarea 
           placeholder={"Descripción"}
@@ -100,7 +82,7 @@ const Tasks = () => {
   )
 }
 
-export default Tasks
+export default NewTask
 
 const styles = StyleSheet.create({
   container: {
@@ -109,6 +91,16 @@ const styles = StyleSheet.create({
       alignItems: "center",
       marginTop: 20,
       flex: 1,
+  },
+  datepicker:{
+    flexDirection: 'row',
+    justifyContent:  'space-around',
+    alignItems: 'center',
+    padding: 5,
+    width: "65%",
+    marginTop: 20,
+    borderBottomWidth: 1,
+    borderColor: '#dadada' 
   },
   dropdown:{
     marginTop: 20,
@@ -128,15 +120,5 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     padding: 4,
     borderRadius: 3,
-  },
-  datepicker:{
-    flexDirection: 'row',
-    justifyContent:  'space-around',
-    alignItems: 'center',
-    padding: 5,
-    width: "65%",
-    marginTop: 20,
-    borderBottomWidth: 1,
-    borderColor: '#dadada' 
   }
 })

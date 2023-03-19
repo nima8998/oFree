@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { ButtonActions } from '../../components';
+// import { ButtonActions } from '../../components';
 import CustomText from '../../components/Elements/CustomText';
 
 const Home = ({
@@ -9,7 +9,7 @@ const Home = ({
   return (
     <View style={styles.container}>
       <CustomText textValue={"Home View"}/>
-      <ButtonActions navigation={navigation}/>
+      {/* <ButtonActions navigation={navigation}/> */}
     </View>
   )
 }

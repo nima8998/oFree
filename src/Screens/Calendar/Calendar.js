@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import CustomText from '../../components/Elements/CustomText'
-import { ButtonActions } from '../../components'
+// import { ButtonActions } from '../../components'
 
 const Calendar = ({
   navigation
@@ -9,7 +9,7 @@ const Calendar = ({
   return (
     <View style={styles.container}>
       <CustomText textValue={"Calendar View"}/>
-      <ButtonActions navigation={navigation} />
+      {/* <ButtonActions navigation={navigation} /> */}
     </View>
   )
 }

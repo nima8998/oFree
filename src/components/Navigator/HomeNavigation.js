@@ -1,5 +1,5 @@
 import React from 'react'
-import {Home,  Projects,  Tasks,  Users} from '../../Screens'
+import {Home,  Projects,  NewTask,  Users} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Stack = createNativeStackNavigator();
@@ -18,9 +18,9 @@ const HomeNavigation = () => {
           component={Home} 
           options={animationConfig}
         />
-        <Stack.Screen 
-          name="Tasks"
-          component={Tasks} 
+        {/* <Stack.Screen 
+          name="NewTask"
+          component={NewTask} 
           options={animationConfig}
         />
         <Stack.Screen 
@@ -32,7 +32,7 @@ const HomeNavigation = () => {
           name="Users"
           component={Users} 
           options={animationConfig}
-        />
+        /> */}
     </Stack.Navigator>
   )
 }

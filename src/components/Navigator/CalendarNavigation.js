@@ -1,5 +1,5 @@
 import React from 'react'
-import {Projects, Tasks, Calendar} from '../../Screens'
+import {Projects, NewTask, Calendar} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Stack = createNativeStackNavigator();
@@ -19,8 +19,8 @@ const CalendarNavigation = () => {
           options={animationConfig}
         />
         <Stack.Screen 
-          name="Tasks"
-          component={Tasks} 
+          name="NewTask"
+          component={NewTask} 
           options={animationConfig}
         />
         <Stack.Screen 

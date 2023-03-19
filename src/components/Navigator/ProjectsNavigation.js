@@ -1,28 +1,58 @@
 import React from 'react'
-import {Projects, Tasks} from '../../Screens'
+import {Projects, NewTask, NewClient, NewProject} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import Colors from '../Constants/Colors';
 
 const Stack = createNativeStackNavigator();
 
-const animationConfig = {
-  animation: "none"
-}
 
 const HomeNavigation = () => {
   return (
     <Stack.Navigator initialRouteName="Projects" screenOptions={{
-        headerShown: false
+      title: "oFree",
+      headerTitleStyle: {
+        color: "#fff",
+        fontSize: 22,
+      },
+      headerStyle:{
+        backgroundColor: Colors.primaryBlue
+      }
     }}>
-        <Stack.Screen 
-          name="Tasks"
-          component={Tasks} 
-          options={animationConfig}
-        />
-        <Stack.Screen 
-          name="Projects"
-          component={Projects} 
-          options={animationConfig}
-        />
+      <Stack.Screen 
+        name="Projects"
+        component={Projects}
+        options={{
+          headerLeft: () =>(
+            <Entypo name="menu" size={24} color="white" />
+          ),
+          headerRight: () =>(
+            <Ionicons name="notifications-sharp" size={24} color="white" />
+          )
+        }}
+      />
+      <Stack.Screen 
+        name="NewTask"
+        component={NewTask}
+        options={{
+          title: "Nueva tarea"
+        }}
+      />
+      <Stack.Screen 
+        name="NewClient"
+        component={NewClient}
+        options={{
+          title: "Nuevo cliente"
+        }}
+      />
+      <Stack.Screen 
+        name="NewProject"
+        component={NewProject}
+        options={{
+          title: "Nuevo proyecto"
+        }}
+      />
     </Stack.Navigator>
   )
 }

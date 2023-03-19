@@ -5,7 +5,6 @@ import Colors from '../Constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useRoute } from '@react-navigation/native';
 
 const ButtonActions = ({
   navigation
@@ -14,16 +13,6 @@ const ButtonActions = ({
     setIsListVisible,
     isListVisible,
   } = useCommonContext()
-  const {name} = useRoute();
-  // seteo este estado para saber en que route.name se encuentra. 
-  // El icono del Users solamente es accesible desde este boton cuando estas en el home
-  const [currentScreen, setCurrentScreen] = React.useState('Home');
-  
-  
-  React.useEffect(()=>{
-    setCurrentScreen(name)
-    return () =>{}
-  },[name])
 
  
   const navigateAndCloseList = (screen) =>{
@@ -37,15 +26,14 @@ const ButtonActions = ({
           isListVisible &&
           <View style={styles.actionsList}>
             {
-              currentScreen === "Home" &&
-              <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Users")}>
+              <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("NewClient")}>
                 <FontAwesome5 name="user-alt" size={20} color="white" style={styles.iconList}/>
               </Pressable>
             }
-            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Projects")}>
+            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("NewProject")}>
               <MaterialCommunityIcons name="briefcase" size={20} color="white" style={styles.iconList}/>
             </Pressable>
-            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("Tasks")}>
+            <Pressable style={styles.secondaryButton} onPress={()=>navigateAndCloseList("NewTask")}>
               <Ionicons name="md-checkbox" size={20} color="white" style={styles.iconList}/>
             </Pressable>
           </View>

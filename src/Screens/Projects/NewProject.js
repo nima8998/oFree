@@ -1,16 +1,19 @@
-import { StyleSheet, View, Pressable } from 'react-native'
+import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React from 'react'
-import { CustomInput, CustomButton } from '../../components'
+import { CustomInput, CustomButton, CustomDropdown } from '../../components'
 import CustomText from '../../components/Elements/CustomText';
 import Colors from '../../components/Constants/Colors';
+import ColorNames from '../../components/Constants/ColorNames';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 
+const clients = require("../../Data/Clients");
 
 const NewProject = () => {
     const [projectName, setProjectName] = React.useState('');
     const [projectClient, setProjectClient] = React.useState('');
     const [projectType, setProjectType] = React.useState('fijo');
     const {projects, setProjects} = useCommonContext();
+    const [colorName, setColorName] = React.useState('');
 
     const addProject = () => {
         if (projectName === '') return;
@@ -25,36 +28,45 @@ const NewProject = () => {
         setProjectClient('');
     }
 
+    console.log(ColorNames)
+
     return (
-        <View style={styles.container}>
-            <View style={styles.body}>
-                <CustomInput
-                    placeholder="Nombre del proyecto"
-                    action={(name) => setProjectName(name)}
-                    otherStyles={styles.inputs}
-                />
-                <CustomInput
-                    placeholder="Cliente"
-                    action={(desc) => setProjectClient(desc)}
-                    otherStyles={styles.inputs}
-                />
+        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+            <View style={styles.container}>
+                <View style={styles.body}>
+                    <CustomInput
+                        placeholder="Nombre del proyecto"
+                        action={(name) => setProjectName(name)}
+                        otherStyles={styles.inputs}
+                    />
+                    <CustomDropdown data={clients} action={setProjectClient} placeholder="Seleccionar cliente" clientSelected={projectClient}/>
+                    
+                    <View style={styles.colorPicker}>
+                        {
+                            ColorNames.map(({id, color})=>(
+                                <Pressable key={id} style={[styles.colorItem, {backgroundColor: color, borderWidth: colorName === color ? 1 : 0, opacity: colorName === color ? 1 : 0.5}]} onPress={()=>setColorName(color)}/>
+                            ))
+                        }
+                    </View>
+
+                </View>
+                <CustomText textValue={"Tipo de proyecto"} otherStyles={{ fontSize: 12, marginVertical: 10 }} />
+                <View style={styles.eventType}>
+                    <Pressable onPress={()=>setProjectType('fijo')}>
+                        <CustomText otherStyles={[styles.labels, projectType === "fijo" && styles.activeLabel]} textValue={"Fijo"} fontType="medium" />
+                    </Pressable>
+                    <Pressable onPress={()=>setProjectType('eventual')}>
+                        <CustomText otherStyles={[styles.labels, projectType === "eventual" && styles.activeLabel]} textValue={"Eventual"} fontType="medium" />
+                    </Pressable>
+                </View>
+                <View style={styles.footer}>
+                    <CustomButton
+                        onPress={addProject}
+                        text="GUARDAR"
+                    />
+                </View>
             </View>
-            <CustomText textValue={"Tipo de proyecto"} otherStyles={{ fontSize: 12, marginVertical: 10 }} />
-            <View style={styles.eventType}>
-                <Pressable onPress={()=>setProjectType('fijo')}>
-                    <CustomText otherStyles={[styles.labels, projectType === "fijo" && styles.activeLabel]} textValue={"Fijo"} fontType="medium" />
-                </Pressable>
-                <Pressable onPress={()=>setProjectType('eventual')}>
-                    <CustomText otherStyles={[styles.labels, projectType === "eventual" && styles.activeLabel]} textValue={"Eventual"} fontType="medium" />
-                </Pressable>
-            </View>
-            <View style={styles.footer}>
-                <CustomButton
-                    onPress={addProject}
-                    text="GUARDAR"
-                />
-            </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -62,9 +74,6 @@ export default NewProject
 
 const styles = StyleSheet.create({
     container: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
         padding: 25,
         alignItems: 'center',
         width: "100%"
@@ -96,5 +105,18 @@ const styles = StyleSheet.create({
     },
     footer: {
         marginVertical: 50
+    },
+    colorPicker:{
+        flexDirection: 'row',
+        marginVertical: 15,
+        borderBottomWidth: 1,
+        paddingVertical: 5,
+        borderBottomColor:  '#ccc',
+    },
+    colorItem:{
+        padding: 10, 
+        borderRadius: 5,
+        marginHorizontal: 3,
+        borderColor: Colors.secondaryBlue
     }
 })
