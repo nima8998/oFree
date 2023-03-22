@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Modal } from 'react-native'
 import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider'
 import CustomText from '../Elements/CustomText';
-import Colors from '../Constants/Colors';
+import Colors from '../../Constants/Colors';
 
 const ModalMessage = ({
     data

@@ -5,11 +5,11 @@ import { CustomButton, CustomInput, CustomTextarea, ModalMessage, CustomDropdown
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import { FontAwesome5 } from '@expo/vector-icons';
-import Colors from '../../components/Constants/Colors';
-
-const clients = require("../../Data/Clients.json")
+import Colors from '../../Constants/Colors';
+import { useSelector } from 'react-redux';
 
 const NewTask = () => {
+  const clientsList = useSelector(({clientsList})=>clientsList.clientsList);
   const {addNewTask, tasksList, setIsModalVisible, isModalVisible} = useCommonContext();
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [taskName, setTaskName] = React.useState('');
@@ -66,7 +66,7 @@ const NewTask = () => {
           showDatePicker && <DateTimePicker mode="date" value={!date ? new Date() : date} id="date" onChange={handleDate}/>
         }
         
-        <CustomDropdown data={clients} action={setClient} clientSelected={client} placeholder="Seleccionar cliente"/>
+        <CustomDropdown data={clientsList} action={setClient} value={client} placeholder="Seleccionar cliente"/>
 
         <CustomTextarea 
           placeholder={"Descripción"}

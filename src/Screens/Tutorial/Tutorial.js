@@ -5,7 +5,7 @@ import {
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { useCommonContext } from "../../Context/CommonContextProvider"
-import Colors from "../../components/Constants/Colors"
+import Colors from "../../Constants/Colors"
 import CustomText from "../../components/Elements/CustomText"
 
 

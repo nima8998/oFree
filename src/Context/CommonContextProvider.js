@@ -6,6 +6,7 @@ export const useCommonContext = () => React.useContext(CommonContext);
 export let CommonContextProvider = ({ children }) => {
 	const [projects, setProjects] = React.useState([]);
 	const [tasksList, setTasksList] = React.useState([]);
+	const [clientsList, setClientsList] = React.useState([]);
 
 	const [isListVisible, setIsListVisible] = React.useState(false);
 	const [isModalVisible, setIsModalVisible] = React.useState(false);
@@ -27,6 +28,20 @@ export let CommonContextProvider = ({ children }) => {
 		})
 	}
 
+	const addNewClient = async (clientData) =>{
+		return await new Promise((resolve, reject) =>{
+			try {
+				setClientsList(prev=>[...prev, clientData])
+				setTimeout(() => {
+					resolve({status: 200, message: "Cliente agregado!"})
+				}, 500);
+			} catch (error) {
+				reject(error);
+				throw error;
+			}
+		})
+	}
+
 	const deleteProject = (id) =>{
 		const filteredList = projects.filter(element => element.id !== id)
 		setProjects(filteredList);
@@ -40,7 +55,8 @@ export let CommonContextProvider = ({ children }) => {
 		isModalVisible, setIsModalVisible,
 		step, setStep,
 		deleteProject,
-		addNewTask
+		addNewTask,
+		addNewClient
 	}), [
 			projects,
 			tasksList,

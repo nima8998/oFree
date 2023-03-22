@@ -1,38 +1,28 @@
 import React from 'react'
-import {Home,  Projects,  NewTask,  Users} from '../../Screens'
+import {Home} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import ScreenOptionsNavbar from '../../Constants/ScreenOptionsNavbar'
+import Colors from '../../Constants/Colors'
 
 const Stack = createNativeStackNavigator();
-
-const animationConfig = {
-  animation: "none"
-}
 
 const HomeNavigation = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{
-        headerShown: false
+      title: "oFree",
+      headerTitleStyle: {
+        color: "#fff",
+        fontSize: 22,
+      },
+      headerStyle:{
+        backgroundColor: Colors.primaryBlue
+      }
     }}>
         <Stack.Screen 
           name="Home"
           component={Home} 
-          options={animationConfig}
+          options={ScreenOptionsNavbar}
         />
-        {/* <Stack.Screen 
-          name="NewTask"
-          component={NewTask} 
-          options={animationConfig}
-        />
-        <Stack.Screen 
-          name="Projects"
-          component={Projects} 
-          options={animationConfig}
-        />
-        <Stack.Screen 
-          name="Users"
-          component={Users} 
-          options={animationConfig}
-        /> */}
     </Stack.Navigator>
   )
 }

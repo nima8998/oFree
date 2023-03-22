@@ -5,13 +5,13 @@ import { Select } from "native-base";
 const CustomDropdown = ({
     data,
     action,
-    clientSelected,
+    value,
     placeholder = ""
 }) => {
   return (
     <View style={styles.dropdown}>
       <Select 
-        selectedValue={clientSelected} 
+        selectedValue={value} 
         minWidth="200" 
         accessibilityLabel={placeholder} 
         placeholder={placeholder} 

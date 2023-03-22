@@ -1,19 +1,17 @@
 import { StyleSheet, FlatList, View} from 'react-native'
 import React from 'react'
-import ProjectItem from './ProjectItem'
-import { useCommonContext } from '../../Context/CommonContextProvider'
+import ListItem from './ListItem'
 
-const TasksList = () => {
-
-  const {projects} = useCommonContext();
-
+const List = ({
+  data
+}) => {
   return (
     <View>
       <FlatList
-          data={projects}
+          data={data}
           keyExtractor={(item) => item.id}
           renderItem={({item}) => 
-            <ProjectItem 
+            <ListItem 
               projectInfo={item} 
             />
           }
@@ -24,7 +22,7 @@ const TasksList = () => {
   )
 }
 
-export default TasksList
+export default List
 
 const styles = StyleSheet.create({
     container: {

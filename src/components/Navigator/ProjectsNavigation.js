@@ -1,14 +1,12 @@
 import React from 'react'
-import {Projects, NewTask, NewClient, NewProject} from '../../Screens'
+import {Projects, NewTask, NewClient, NewProject, ClientsList, TasksList} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import Colors from '../Constants/Colors';
+import Colors from '../../Constants/Colors';
+import ScreenOptionsNavbar from '../../Constants/ScreenOptionsNavbar'
 
 const Stack = createNativeStackNavigator();
 
-
-const HomeNavigation = () => {
+const ProjectsNavigation = () => {
   return (
     <Stack.Navigator initialRouteName="Projects" screenOptions={{
       title: "oFree",
@@ -23,14 +21,7 @@ const HomeNavigation = () => {
       <Stack.Screen 
         name="Projects"
         component={Projects}
-        options={{
-          headerLeft: () =>(
-            <Entypo name="menu" size={24} color="white" />
-          ),
-          headerRight: () =>(
-            <Ionicons name="notifications-sharp" size={24} color="white" />
-          )
-        }}
+        options={ScreenOptionsNavbar}
       />
       <Stack.Screen 
         name="NewTask"
@@ -53,8 +44,19 @@ const HomeNavigation = () => {
           title: "Nuevo proyecto"
         }}
       />
+
+      <Stack.Screen 
+        name="ClientsList"
+        component={ClientsList}
+        options={ScreenOptionsNavbar}
+      />
+      <Stack.Screen 
+        name="TasksList"
+        component={TasksList}
+        options={ScreenOptionsNavbar}
+      />
     </Stack.Navigator>
   )
 }
 
-export default HomeNavigation
+export default ProjectsNavigation

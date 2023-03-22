@@ -2,17 +2,17 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ButtonActions, List, ProjectsNavbar } from '../../components';
 import CustomText from '../../components/Elements/CustomText';
-import { useCommonContext } from '../../Context/CommonContextProvider'
+import { useSelector } from 'react-redux';
 
 const Projects = ({
   navigation
 }) => {
-  const {projects} = useCommonContext();
+  const clientsList = useSelector(({clientsList})=>clientsList.clientsList);
   return (
     <View style={styles.container}>
       <ProjectsNavbar navigation={navigation}/>
-      <CustomText textValue={"projects view"}/>
-      <List data={projects}/>
+      <CustomText textValue={"Clients list view"}/>
+      <List data={clientsList}/>
       <ButtonActions navigation={navigation}/>
     </View>
   )

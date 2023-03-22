@@ -4,21 +4,21 @@ import { ButtonActions, List, ProjectsNavbar } from '../../components';
 import CustomText from '../../components/Elements/CustomText';
 import { useCommonContext } from '../../Context/CommonContextProvider'
 
-const Projects = ({
+const TasksList = ({
   navigation
 }) => {
   const {projects} = useCommonContext();
   return (
     <View style={styles.container}>
       <ProjectsNavbar navigation={navigation}/>
-      <CustomText textValue={"projects view"}/>
+      <CustomText textValue={"TasksList"}/>
       <List data={projects}/>
       <ButtonActions navigation={navigation}/>
     </View>
   )
 }
 
-export default Projects
+export default TasksList
 
 const styles = StyleSheet.create({
     container: {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable, View } from 'react-native'
 import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider'
-import Colors from '../Constants/Colors'
+import Colors from '../../Constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';

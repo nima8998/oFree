@@ -2,13 +2,13 @@ import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard } from 
 import React from 'react'
 import { CustomInput, CustomButton, CustomDropdown } from '../../components'
 import CustomText from '../../components/Elements/CustomText';
-import Colors from '../../components/Constants/Colors';
-import ColorNames from '../../components/Constants/ColorNames';
+import Colors from '../../Constants/Colors';
+import ColorNames from '../../Constants/ColorNames';
 import { useCommonContext } from '../../Context/CommonContextProvider';
-
-const clients = require("../../Data/Clients");
+import { useSelector } from 'react-redux';
 
 const NewProject = () => {
+    const clientsList = useSelector(({clientsList})=>clientsList.clientsList);
     const [projectName, setProjectName] = React.useState('');
     const [projectClient, setProjectClient] = React.useState('');
     const [projectType, setProjectType] = React.useState('fijo');
@@ -28,7 +28,6 @@ const NewProject = () => {
         setProjectClient('');
     }
 
-    console.log(ColorNames)
 
     return (
         <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
@@ -39,7 +38,7 @@ const NewProject = () => {
                         action={(name) => setProjectName(name)}
                         otherStyles={styles.inputs}
                     />
-                    <CustomDropdown data={clients} action={setProjectClient} placeholder="Seleccionar cliente" clientSelected={projectClient}/>
+                    <CustomDropdown data={clientsList} action={setProjectClient} placeholder="Seleccionar cliente" value={projectClient}/>
                     
                     <View style={styles.colorPicker}>
                         {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
 
-const ProjectItem = ({
+const ListItem = ({
     projectInfo
 }) => {
   
@@ -14,7 +14,7 @@ const ProjectItem = ({
   )
 }
 
-export default ProjectItem
+export default ListItem
 
 const styles = StyleSheet.create({
     item:{
