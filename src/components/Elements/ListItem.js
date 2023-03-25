@@ -1,15 +1,13 @@
 import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
+import CustomText from './CustomText'
 
 const ListItem = ({
-    projectInfo
+    data
 }) => {
-  
   return (
-    <Pressable style={styles.item} >
-      <Text style={styles.itemText}>
-        {projectInfo.name}
-      </Text>
+    <Pressable style={styles.item}>
+      <CustomText textValue={data.name} otherStyles={styles.itemText}/>
     </Pressable>
   )
 }
@@ -18,13 +16,11 @@ export default ListItem
 
 const styles = StyleSheet.create({
     item:{
-        width: 200,
         backgroundColor: '#dadada',
         borderRadius: 5,
-        marginVertical: 10,
-        justifyContent: 'center',
-        alignItems:  "center",
-        padding: 10,
+        padding: 5,
+        marginVertical: 12,
+
 
         shadowColor: "#000",
         shadowOffset: {

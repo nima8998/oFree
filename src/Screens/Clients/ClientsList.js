@@ -1,18 +1,23 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { ButtonActions, List, ProjectsNavbar } from '../../components';
-import CustomText from '../../components/Elements/CustomText';
-import { useSelector } from 'react-redux';
+import {  StyleSheet, View } from 'react-native'
+import { ButtonActions, List, ProjectsNavbar,  } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClients } from '../../Store/Actions/clients.action';
 
 const Projects = ({
   navigation
 }) => {
-  const clientsList = useSelector(({clientsList})=>clientsList.clientsList);
+  const dispatch = useDispatch();
+  const clients = useSelector(({clients})=>clients.list)
+
+  React.useEffect(()=>{
+    dispatch(getClients())
+  },[])
+
   return (
     <View style={styles.container}>
       <ProjectsNavbar navigation={navigation}/>
-      <CustomText textValue={"Clients list view"}/>
-      <List data={clientsList}/>
+      <List data={clients}/>
       <ButtonActions navigation={navigation}/>
     </View>
   )
@@ -21,10 +26,7 @@ const Projects = ({
 export default Projects
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
+  container: {
         flex: 1,
     }
 })

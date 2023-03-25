@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 15,
       flexDirection: 'row',
-      width: "90%",
+      width: "95%",
       justifyContent: 'flex-end',
     },
     button: {

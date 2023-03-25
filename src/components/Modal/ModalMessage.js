@@ -12,7 +12,7 @@ const ModalMessage = ({
     <Modal animationType='fade' visible={isModalVisible} transparent>
         <View style={styles.container}>
             <View style={styles.modal}>
-                <CustomText textValue={data?.message} otherStyles={styles.modalText} fontType="medium"/>
+                <CustomText textValue={data} otherStyles={styles.modalText} fontType="medium"/>
             </View>
         </View>
     </Modal>

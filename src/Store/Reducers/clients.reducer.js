@@ -1,21 +1,25 @@
 import clients from '../../Data/Clients.json';
-import { SELECT_CLIENT_BY_ID } from '../Actions/clients.action';
-
+import { CREATE_CLIENT, GET_CLIENTS} from '../Actions/clients.action';
 
 const initialState = {
-    clientsList: clients,
-    selectedClient: null,
+    list: [],
 };
 
-const categoryReducer = (state=initialState, action) =>{
+const clientsReducer = (state=initialState, action) =>{
     switch(action.type){
-        case SELECT_CLIENT_BY_ID:
-            const indexClient = state.clients.findIndex(({id}) => id===action.idClient)
-            if (indexClient === -1) return state;
-            return {...state, selectedClient: state.clientsList[indexClient]}
+        case GET_CLIENTS:
+            return{
+                ...state,
+                list: action.payload
+            }
+        case CREATE_CLIENT:
+            return {
+                ...state,
+                payload: action.payload
+            }
         default:
             return state;
     }
 }
 
-export default categoryReducer;
+export default clientsReducer;

@@ -1,15 +1,19 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ActivityIndicator } from 'react-native'
 import { CustomButton, CustomInput, CustomTextarea, ModalMessage, CustomDropdown } from '../../components'
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
+import Colors from '../../Constants/Colors';
+import { createClient } from '../../Store/Actions/clients.action';
+
 const states = [
   {id: 1, value: "Activo"},
   {id: 2, value: "Inactivo"}
 ]
 
 const NewClient = () => {
-  const clientsList = useSelector(({clientsList})=>clientsList.clientsList);
+  const clientsList = useSelector(({clients})=>clients.clientsList);
+  const dispatch = useDispatch();
   const {addNewTask,  setIsModalVisible, isModalVisible} = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
   const [reusltData, setReusltData] = React.useState();
@@ -22,23 +26,29 @@ const NewClient = () => {
 
   const saveNewClient = async () =>{
     setIsLoading(true);
-    const clientToSave = {
-      clientId: clientsList.length + 1,
+    const client = {
       name,
       phone,
       mail,
       clientState,
       description,
     };
-    await addNewTask(clientToSave)
-      .then((data)=>{
-        setReusltData(data);
-        setTimeout(() => {
-          setIsModalVisible(false);
-        }, 1000);
+    
+    dispatch(createClient(client))
+      .then((res)=>{
+        setReusltData(res.message)
+        setIsModalVisible(true);
       })
-      .catch((error)=>{throw error})
-      .finally(setIsLoading(false))
+      .catch((error)=>{
+        setReusltData(error.message)
+        setIsModalVisible(true);
+      })
+      .finally(()=>{
+        setTimeout(()=>{
+            setIsModalVisible(false);
+        }, 2000)
+        setIsLoading(false);
+      })
   }
 
   return (

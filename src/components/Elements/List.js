@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View} from 'react-native'
+import { StyleSheet, ScrollView, View} from 'react-native'
 import React from 'react'
 import ListItem from './ListItem'
 
@@ -6,26 +6,19 @@ const List = ({
   data
 }) => {
   return (
-    <View>
-      <FlatList
-          data={data}
-          keyExtractor={(item) => item.id}
-          renderItem={({item}) => 
-            <ListItem 
-              projectInfo={item} 
-            />
-          }
-          contentContainerStyle={styles.container}
-      />
-
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+        {
+          data?.map((item, index)=><ListItem data={item} key={index}/>)
+        }
+    </ScrollView>
   )
 }
 
 export default List
 
 const styles = StyleSheet.create({
-    container: {
-        marginVertical: 10,
-    }
+  container:{
+    width: "100%",
+    paddingHorizontal: 35
+  },
 })
