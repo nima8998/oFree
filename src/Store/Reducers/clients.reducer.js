@@ -1,8 +1,8 @@
-import clients from '../../Data/Clients.json';
-import { CREATE_CLIENT, GET_CLIENTS} from '../Actions/clients.action';
+import { CREATE_CLIENT, GET_CLIENTS, GET_CLIENT_BY_ID} from '../Actions/clients.action';
 
 const initialState = {
     list: [],
+    selectedClient: null,
 };
 
 const clientsReducer = (state=initialState, action) =>{
@@ -16,6 +16,11 @@ const clientsReducer = (state=initialState, action) =>{
             return {
                 ...state,
                 payload: action.payload
+            }
+        case GET_CLIENT_BY_ID:
+            return{
+                ...state,
+                selectedClient: state.list.find(({id})=> id === action.id)
             }
         default:
             return state;
