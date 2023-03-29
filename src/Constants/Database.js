@@ -1,1 +1,0 @@
-export const API_URL_FIREBASE = "https://ofree-db-default-rtdb.firebaseio.com"

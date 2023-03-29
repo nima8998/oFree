@@ -4,7 +4,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import Colors from '../../Constants/Colors';
-import { createClient, getClientById, getClients } from '../../Store/Actions/clients.action';
+import { createClient, getClientById } from '../../Store/Actions/clients.action';
 
 const states = [
   {id: 1, value: "Activo"},

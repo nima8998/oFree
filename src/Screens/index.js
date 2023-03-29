@@ -8,3 +8,4 @@ export {default as NewClient} from './Clients/NewClient';
 export {default as ClientsList} from './Clients/ClientsList';
 export {default as Calendar} from './Calendar/Calendar';
 export {default as Statistics} from './Statistics/Statistics';
+export {default as Login} from './Login/Login';

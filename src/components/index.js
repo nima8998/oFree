@@ -4,6 +4,7 @@ export {default as ButtonActions} from "./Elements/ButtonActions";
 export {default as CustomInput} from "./Elements/CustomInput";
 export {default as CustomTextarea} from "./Elements/CustomTextarea";
 export {default as CustomDropdown} from "./Elements/CustomDropdown";
+export {default as CustomText} from "./Elements/CustomText";
 
 // PROJECT COMPONENTS
 export {default as List} from "./Elements/List";
