@@ -1,4 +1,4 @@
-[
+export const ColorsNames = [
     {"id": "1", "color": "#ffcee6"},
     {"id": "2", "color": "#ffe8ca"},
     {"id": "3", "color": "#eadcff"},

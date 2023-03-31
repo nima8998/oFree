@@ -5,20 +5,22 @@ import { Select } from "native-base";
 const CustomDropdown = ({
     data,
     action,
-    value,
+    defaultValue,
     placeholder = ""
 }) => {
+
   return (
     <View style={styles.dropdown}>
       <Select 
-        selectedValue={value} 
+        selectedValue={defaultValue} 
         minWidth="200" 
         accessibilityLabel={placeholder} 
-        placeholder={placeholder} 
+        placeholder={data.length > 0 ? placeholder : "No hay registros"} 
         onValueChange={itemValue => action(itemValue)}
       >
         {
-          data.map(({id, value})=>(<Select.Item key={id} label={value} value={id}/>))
+          data.length > 0 &&
+          data.map(({id, name})=>(<Select.Item key={id} label={name} value={id} />))
         }
       </Select>
   </View>

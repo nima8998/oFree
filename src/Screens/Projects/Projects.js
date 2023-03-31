@@ -1,20 +1,27 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { ButtonActions, List, ProjectsNavbar } from '../../components';
-import CustomText from '../../components/Elements/CustomText';
-import { useCommonContext } from '../../Context/CommonContextProvider'
+import {  StyleSheet, ScrollView } from 'react-native'
+import { ButtonActions, ProjectsList, ProjectsNavbar,  } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import {getProjects} from '../../Store/Actions/projects.action';
 
 const Projects = ({
   navigation
 }) => {
-  const {projects} = useCommonContext();
+  const dispatch = useDispatch();
+  const projects = useSelector(({projects})=>projects.list)
+
+  React.useEffect(()=>{
+    dispatch(getProjects())
+  },[])
+
   return (
-    <View style={styles.container}>
-      <ProjectsNavbar navigation={navigation}/>
-      <CustomText textValue={"projects view"}/>
-      <List data={projects}/>
-      <ButtonActions navigation={navigation}/>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <>
+        <ProjectsNavbar navigation={navigation}/>
+        <ProjectsList data={projects} navigation={navigation}/>
+        <ButtonActions navigation={navigation}/>
+      </>
+    </ScrollView>
   )
 }
 
@@ -22,9 +29,6 @@ export default Projects
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
         flex: 1,
     }
 })

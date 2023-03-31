@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
-import {CustomButton, CustomInput, CustomText} from '../../components'
+import {CustomButton, CustomInput} from '../../components'
 import React from 'react'
 import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -26,8 +26,8 @@ const Login = () => {
             <CustomInput otherStyles={styles.inputs} placeholder={"Email"} action={setUser}/>
             <CustomInput otherStyles={styles.inputs} placeholder={"Clave"} action={setPassword}/>
             <View style={styles.containerFooter}>
-                <CustomButton text={'SIGN UP'} type='primary' onPress={handleSignUp}/>
-                <CustomButton text={'LOGIN'} type='secondary' onPress={handleLogin}/>
+                <CustomButton text={'LOGIN'} type='primary' onPress={handleLogin}/>
+                <CustomButton text={'SIGN UP'} type='secondary' onPress={handleSignUp}/>
             </View>
         </View>
     </TouchableWithoutFeedback>

@@ -6,11 +6,13 @@ const CustomTextarea = ({
     value,
     action,
     otherStyles,
+    defaultValue,
     lines = 4
 }) => {
   return (
     <TextInput
         placeholder={placeholder}
+        defaultValue={defaultValue}
         value={value}
         onChangeText={(text) => action(text)}
         style={[styles.textarea, otherStyles]}

@@ -18,11 +18,13 @@ import StatisticsNavigation from './StatisticsNavigation';
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
+
   return (
     <Tab.Navigator  screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: styles.container
+        tabBarStyle: styles.container,
+        tabBarHideOnKeyboard: true,
     }}>
       <Tab.Screen name="Home tab" component={HomeNavigation}
         options={{
@@ -71,8 +73,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlue,
     borderTopEndRadius: 12,
     borderTopStartRadius: 12,
-    flexDirection:  'row',
-    justifyContent: 'center',
+    // flexDirection:  'row',
+    // justifyContent: 'center',
   },
   tab: {
     flex: 1,
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
   tabText:{
     color: "#fff",
     fontSize: 10,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+
   }
 })

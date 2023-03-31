@@ -1,21 +1,21 @@
 import { StyleSheet, ScrollView, View} from 'react-native'
 import React from 'react'
-import ListItem from './ListItem'
+import ProjectsListItem from './ProjectsListItem'
 
-const List = ({
+const ProjectsList = ({
   data,
   navigation
 }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
         {
-          data.map((item, index)=><ListItem data={item} key={index} navigation={navigation}/>)
+          data.map((item, index)=><ProjectsListItem data={item} key={index} navigation={navigation}/>)
         }
     </ScrollView>
   )
 }
 
-export default List
+export default ProjectsList
 
 const styles = StyleSheet.create({
   container:{

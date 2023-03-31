@@ -27,7 +27,7 @@ export default function App() {
     <Provider store={Store}>
       <CommonContextProvider>
         <NativeBaseProvider>
-          <StatusBar translucent backgroundColor={Colors.primaryBlue}/>
+          <StatusBar translucent/>
           <Navigator/>
         </NativeBaseProvider>
       </CommonContextProvider>

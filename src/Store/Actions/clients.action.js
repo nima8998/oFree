@@ -1,7 +1,7 @@
 export const CREATE_CLIENT = 'CREATE_CLIENT';
 export const GET_CLIENTS = 'GET_CLIENTS';
 export const GET_CLIENT_BY_ID = 'GET_CLIENT_BY_ID';
-import {API_URL_FIREBASE} from 'env'
+export const UPDATE_CLIENT = 'UPDATE_CLIENT';
 
 export const getClients = () =>{
     const options ={
@@ -15,10 +15,13 @@ export const getClients = () =>{
         try {
             const response = await fetch(`${process.env.API_URL_FIREBASE}/clients.json`, options);
             const result = await response.json();
-            const clients = Object.keys(result).map(key=>({
-                ...result[key],
-                id: key
-            }));
+            const clients = 
+                result != null &&
+                Object.keys(result).map(key=>({
+                    ...result[key],
+                    id: key
+                }));
+                
             dispatch({
                 type: GET_CLIENTS,
                 payload: clients
@@ -39,7 +42,25 @@ export const createClient = (client) =>{
     }
 
     return async dispatch => {
-        return await fetch(`${API_URL_FIREBASE}/clients.json`, options)
+        return await fetch(`${process.env.API_URL_FIREBASE}/clients.json`, options)
+            .then(
+                () => dispatch({type: CREATE_CLIENT, status: 200, message: "Cliente creado con exito !"}),
+                error => ({status: 400, message: error.message})
+            )
+    }
+}
+
+export const updateClient = (client) =>{
+    const options = {
+        method: "PATCH",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({...client, updateDate: new Date()}),
+    }
+
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE}/clients.json`, options)
             .then(
                 () => dispatch({type: CREATE_CLIENT, status: 200, message: "Cliente creado con exito !"}),
                 error => ({status: 400, message: error.message})

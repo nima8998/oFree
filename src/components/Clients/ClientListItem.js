@@ -1,16 +1,15 @@
 import { StyleSheet, View, Pressable } from 'react-native'
 import React from 'react'
-import CustomText from './CustomText'
+import CustomText from '../Elements/CustomText'
 import { AntDesign } from '@expo/vector-icons';
 import Colors from '../../Constants/Colors';
 
-const ListItem = ({
+const ClientListItem = ({
     data,
-    navigation
+    navigation,
 }) => {
   const [infoVisible, setInfoVisible] = React.useState(false);
 
-  // console.log(`${typeof data.id} ${data.id}`)
   return (
     <>
       <Pressable style={styles.item}>
@@ -45,7 +44,7 @@ const ListItem = ({
   )
 }
 
-export default ListItem
+export default ClientListItem
 
 const styles = StyleSheet.create({
     item:{

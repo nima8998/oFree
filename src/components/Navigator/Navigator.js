@@ -8,7 +8,8 @@ const Navigator = () => {
   const isAuth = useSelector(({auth})=>auth.userId);
   return (
     <NavigationContainer>
-      {!isAuth ? <Login/> : <TabNavigation/>}
+      {/* {!isAuth ? <Login/> : <TabNavigation/>} */}
+      <TabNavigation/>
     </NavigationContainer>
   )
 }

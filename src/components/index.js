@@ -7,9 +7,11 @@ export {default as CustomDropdown} from "./Elements/CustomDropdown";
 export {default as CustomText} from "./Elements/CustomText";
 
 // PROJECT COMPONENTS
-export {default as List} from "./Elements/List";
 export {default as ProjectsNavbar} from "./Projects/ProjectsNavbar";
+export {default as ProjectsList} from "./Projects/ProjectsList";
 
+// CLIENTS COMPONENTS 
+export {default as ClientsList} from "./Clients/ClientsList";
 
 // MODALS
 export {default as ModalMessage} from "./Modal/ModalMessage";

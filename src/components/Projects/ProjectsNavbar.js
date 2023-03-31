@@ -14,15 +14,15 @@ const ProjectsNavbar = ({
           textValue={"Proyectos"}
         />
       </Pressable>
-      <Pressable style={styles.navbarItem} onPress={()=>navigation.navigate('ClientsList')}>
+      <Pressable style={styles.navbarItem} onPress={()=>navigation.navigate('Clients')}>
         <CustomText
           otherStyles={styles.navbarItemsText}
           textValue={"Clientes"}
         />
       </Pressable>
-      <Pressable style={[styles.navbarItem, {borderBottomEndRadius: 10}]} onPress={()=>navigation.navigate('TasksList')}>
+      <Pressable style={[styles.navbarItem, {borderBottomEndRadius: 10}]} onPress={()=>navigation.navigate('Tasks')}>
         <CustomText
-          otherStyles={styles.navbarItemsText}
+          otherStyles={styles.navbarItemsText}r
           textValue={"Entregas"}
         />
         </Pressable>

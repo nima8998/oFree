@@ -9,7 +9,7 @@ import Colors from '../../Constants/Colors';
 import { useSelector } from 'react-redux';
 
 const NewTask = () => {
-  const clientsList = useSelector(({clientsList})=>clientsList.clientsList);
+  const clientsList = useSelector(({clients})=>clients.list);
   const {addNewTask, tasksList, setIsModalVisible, isModalVisible} = useCommonContext();
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [taskName, setTaskName] = React.useState('');

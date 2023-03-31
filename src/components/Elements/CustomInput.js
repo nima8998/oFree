@@ -6,14 +6,22 @@ const CustomInput = ({
     value,
     action,
     otherStyles,
-    required = false
+    defaultValue,
+    required = false,
+    keyboardType = 'default'
 }) => {
+  // keyboardTyp:
+  //  "email-address"
+  //  "phone-pad"
+  //  "numeric"
   return (
     <TextInput
         placeholder={placeholder}
         value={value}
+        defaultValue={defaultValue}
         onChangeText={(text) => action(text)}
         style={[styles.input, otherStyles]}
+        keyboardType={keyboardType}
     />
   )
 }
