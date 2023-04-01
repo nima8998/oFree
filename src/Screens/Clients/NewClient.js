@@ -4,128 +4,152 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import Colors from '../../Constants/Colors';
-import { createClient, getClientById, updateClient } from '../../Store/Actions/clients.action';
+import { createClient, updateClient } from '../../Store/Actions/clients.action';
+
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const inputValues = {
+      ...state.inputValues,
+      [action.input]: action.value
+    }
+    const inputValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid
+    }
+    let formIsValid = true;
+    for (const key in inputValidities) {
+      formIsValid = formIsValid && inputValidities[key];
+    }
+    return {
+      formIsValid,
+      inputValidities,
+      inputValues
+    }
+  }
+  return state;
+}
 
 const states = [
-  {id: "1", name: "Activo"},
-  {id: "2", name: "Inactivo"}
+  { id: "1", name: "Activo" },
+  { id: "2", name: "Inactivo" }
 ]
 
-const NewClient = ({
-  route
-}) => {
+const NewClient = () => {
   const dispatch = useDispatch();
-  const {setIsModalVisible, isModalVisible} = useCommonContext();
+
+  const [formState, dispatchFormState] = React.useReducer(formReducer, {
+    inputValues: {
+      name: "",
+      phone: "",
+      mail: "",
+      description: "",
+      clientState: 1
+    },
+    inputValidities: {
+      name: false,
+      phone: false,
+      mail: false,
+      description: false,
+      clientState: false,
+    },
+    formIsValid: false
+  })
+
+
+  const { setIsModalVisible, isModalVisible } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [reusltData, setReusltData] = React.useState();
-  // seteo selectedClient con el selector, si el parametro id me llega por el parametro de la ruta, 
-  // seteo al currentClient con el valor del selector. Esto es para evitar que, al agregar un nuevo cliente,
-  // me base en el valor y aguardado del store.
-  const selectedClient = useSelector(({clients})=>clients.selectedClient);
-  const [currentClient, setCurrentClient] = React.useState();
-  
-  // inputs del cliente
-  const [name, setName] = React.useState(currentClient?.name);
-  const [phone, setPhone] = React.useState(currentClient?.phone);
-  const [mail, setMail] = React.useState(currentClient?.mail);
-  const [description, setDescription] = React.useState(currentClient?.description);
-  const [clientState, setClientState] = React.useState(currentClient?.clientState);
-  
+  const [resultData, setResultData] = React.useState();
 
-  React.useEffect(()=>{
-    if (route.params?.id){
-      dispatch(getClientById(route.params.id))
-      setCurrentClient(selectedClient)
-    }
-  },[])
+  const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
+    dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentifier
+    })
+  }, [dispatchFormState])
 
-
-  const saveNewClient = async () =>{
+  const saveNewClient = async () => {
     setIsLoading(true);
     const client = {
-      name,
-      phone,
-      mail,
-      clientState,
-      description,
+      name: formState.inputValues.name,
+      phone: formState.inputValues.phone,
+      mail: formState.inputValues.mail,
+      clientState: formState.inputValues.clientState,
+      description: formState.inputValues.description,
     };
 
-    // TODO: Si no hay un currentClient, significa que es un nuevo cliente. De lo contrario, habrá que hacer un update en la db
-    !currentClient ?
-      dispatch(createClient(client))
-        .then((res)=>{
-          setReusltData(res.message)
-          setIsModalVisible(true);
-        })
-        .catch((error)=>{
-          setReusltData(error.message)
-          setIsModalVisible(true);
-        })
-        .finally(()=>{
-          setTimeout(()=>{
-            setIsModalVisible(false);
-          }, 2000)
-          setIsLoading(false);
-        })
-      :
-      dispatch(updateClient(currentClient.id, client))
-        .then((res)=>{
-          setReusltData(res.message)
-          setIsModalVisible(true);
-        })
-        .catch((error)=>{
-          setReusltData(error.message)
-          setIsModalVisible(true);
-        })
-        .finally(()=>{
-          setTimeout(()=>{
-            setIsModalVisible(false);
-          }, 2000)
-          setIsLoading(false);
-        })
+    dispatch(createClient(client))
+      .then((res) => {
+        setResultData(res.message)
+        setIsModalVisible(true);
+      })
+      .catch((error) => {
+        setResultData(error.message)
+        setIsModalVisible(true);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 2000)
+        setIsLoading(false);
+      })
   }
 
   return (
-    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <CustomInput
           placeholder="Name"
-          action={(name) => setName(name)}
+          id="name"
+          onInputChange={handleInputChange}
           otherStyles={styles.inputs}
-          defaultValue={currentClient?.name}
-        />
-        
-        <CustomInput
-          placeholder="Teléfono"
-          action={(tel) => setPhone(tel)}
-          otherStyles={styles.inputs}
-          defaultValue={currentClient?.phone}
-          keyboardType='phone-pad'
-        />
-        
-        <CustomInput
-          placeholder="Mail"
-          action={(Mail) => setMail(Mail)}
-          otherStyles={styles.inputs}
-          defaultValue={currentClient?.mail}
-        />
-        
-        <CustomDropdown 
-          data={states} 
-          action={setClientState} 
-          defaultValue={currentClient?.clientState.toString()}
-          placeholder="Estado"
-        />
-        
-        <CustomTextarea 
-          placeholder="Detalles del cliente"
-          action={(desc)=>setDescription(desc)}
-          defaultValue={currentClient?.description}
+          initialValue={formState.inputValues.name}
+          initiallyValid={formState.inputValidities.name}
         />
 
-        <CustomButton type='primary' text="GUARDAR" onPress={saveNewClient}/>
-        {isModalVisible && <ModalMessage data={reusltData}/>}
-        {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue}/>}
+        <CustomInput
+          placeholder="Teléfono"
+          id="phone"
+          onInputChange={handleInputChange}
+          otherStyles={styles.inputs}
+          initialValue={formState.inputValues.phone}
+          initiallyValid={formState.inputValidities.phone}
+          keyboardType='phone-pad'
+        />
+
+        <CustomInput
+          placeholder="Mail"
+          id="mail"
+          onInputChange={handleInputChange}
+          otherStyles={styles.inputs}
+          initialValue={formState.inputValues.mail}
+          initiallyValid={formState.inputValidities.mail}
+          keyboardType='email-address'
+        />
+
+        <CustomDropdown
+          data={states}
+          id="clientState"
+          onDropdownChange={handleInputChange}
+          initialValue={formState.inputValues.clientState}
+          initiallyValid={formState.inputValidities.clientState}
+          placeholder="Estado"
+        />
+
+        <CustomTextarea
+          placeholder="Detalles del cliente"
+          id="description"
+          onTextareaChange={handleInputChange}
+          initialValue={formState.inputValues.description}
+          initiallyValid={formState.inputValidities.description}
+        />
+
+        <CustomButton type='primary' text="GUARDAR" onPress={saveNewClient} />
+        {isModalVisible && <ModalMessage message={resultData} />}
+        {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>
   )
@@ -134,16 +158,16 @@ const NewClient = ({
 export default NewClient
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        marginTop: 20,
-        flex: 1,
-    },
-    inputs: {
-      width: "65%",
-      textAlign: 'center',
-      marginVertical: 10,
-    },
-  })
+  container: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginTop: 20,
+    flex: 1,
+  },
+  inputs: {
+    width: "65%",
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+})

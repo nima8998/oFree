@@ -3,16 +3,18 @@ import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider'
 import CustomText from '../Elements/CustomText';
 import Colors from '../../Constants/Colors';
+import CustomButton from '../Elements/CustomButton';
 
 const ModalMessage = ({
-    data
+    message
 }) => {
-    const {isModalVisible} = useCommonContext();
+    const {isModalVisible, setIsModalVisible} = useCommonContext();
   return (
     <Modal animationType='fade' visible={isModalVisible} transparent>
         <View style={styles.container}>
             <View style={styles.modal}>
-                <CustomText textValue={data} otherStyles={styles.modalText} fontType="medium"/>
+                <CustomText textValue={message} otherStyles={styles.modalText} fontType="medium"/>
+                <CustomButton text="OK" type='secondary' onPress={()=>setIsModalVisible(false)} />
             </View>
         </View>
     </Modal>
@@ -31,7 +33,8 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: "white",
         borderRadius: 5,
-        padding: 35,
+        paddingHorizontal: 25,
+        paddingTop: 25,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -44,5 +47,6 @@ const styles = StyleSheet.create({
     },
     modalText:{
         color: Colors.primaryBlue,
+        marginBottom: 25
     }
 })

@@ -2,21 +2,70 @@ import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { Select } from "native-base";
 
+const DROPDOWN_CHANGE = "DROPDOWN_CHANGE";
+const DROPDOWN_CLOSED = "DROPDOWN_CLOSED";
+
+const dropdownReducer = (state, action) =>{
+  switch(action.type){
+    case DROPDOWN_CHANGE:
+      return{
+        ...state,
+        value: action.value,
+        isValid: action.isValid
+      }
+      case DROPDOWN_CLOSED:
+        return {
+          ...state,
+          closed: true
+        }
+    default:
+      return state;
+  }
+}
+
+
 const CustomDropdown = ({
     data,
-    action,
-    defaultValue,
-    placeholder = ""
+    initialValue,
+    initiallyValid,
+    onDropdownChange,
+    id,
+    required,
+    placeholder = "",
 }) => {
+  const [dropdownState, dropdownDispatch] = React.useReducer(dropdownReducer, {
+    value: initialValue ? initialValue : "",
+    isValid: initiallyValid,
+    closed: false
+  })
+
+  React.useEffect(()=>{
+    if(dropdownState.closed){
+      onDropdownChange(id, dropdownState.value, dropdownState.isValid)
+    }
+  },[dropdownState, onDropdownChange])
+
+  const dropdownChangeHandler = text =>{
+    let isValid = true;
+    if (required && text.trim().length === 0) {
+      isValid = false;
+    }
+    dropdownDispatch({ type: DROPDOWN_CHANGE, value: text, isValid: isValid });
+  }
+
+  const closedDropdownHandler = () => {
+    dropdownDispatch({ type: DROPDOWN_CLOSED });
+  }
 
   return (
     <View style={styles.dropdown}>
       <Select 
-        selectedValue={defaultValue} 
+        selectedValue={dropdownState.value} 
         minWidth="200" 
         accessibilityLabel={placeholder} 
         placeholder={data.length > 0 ? placeholder : "No hay registros"} 
-        onValueChange={itemValue => action(itemValue)}
+        onValueChange={dropdownChangeHandler}
+        onOpen={closedDropdownHandler}
       >
         {
           data.length > 0 &&

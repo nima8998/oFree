@@ -6,14 +6,14 @@ import CustomText from './CustomText'
 const CustomButton = ({
     text,
     onPress,
-    buttonPropsStyle,
+    otherStyles,
     textPropsStyle,
     type = "primary"
 }) => {
   return (
     <TouchableOpacity 
         activeOpacity={0.8}
-        style={[styles.baseStyle, buttonPropsStyle, type !== "primary" && styles.secondaryButton]}
+        style={[styles.baseStyle, otherStyles, type !== "primary" && styles.secondaryButton]}
         onPress={onPress}
     >
         <CustomText otherStyles={[styles.textStyle, textPropsStyle, type !== "primary" && styles.secondaryText]} textValue={text}/>
