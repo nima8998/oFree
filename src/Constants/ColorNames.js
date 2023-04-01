@@ -1,8 +1,8 @@
 export const ColorsNames = [
-    {"id": "1", "color": "#ffcee6"},
-    {"id": "2", "color": "#ffe8ca"},
-    {"id": "3", "color": "#eadcff"},
-    {"id": "4", "color": "#dcfff9"},
-    {"id": "5", "color": "#ffdcdc"},
-    {"id": "6", "color": "#fdfdcc"},
+    {"id": "1", "color": "#ff70b6"},
+    {"id": "2", "color": "#ffb555"},
+    {"id": "3", "color": "#ad77ff"},
+    {"id": "4", "color": "#72ffe7"},
+    {"id": "5", "color": "#f36c6c"},
+    {"id": "6", "color": "#fbfb65"},
 ]

@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, View} from 'react-native'
+import { StyleSheet, ScrollView} from 'react-native'
 import React from 'react'
 import ProjectsListItem from './ProjectsListItem'
 import CustomText from '../Elements/CustomText'

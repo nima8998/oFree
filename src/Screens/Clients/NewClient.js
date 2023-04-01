@@ -53,8 +53,7 @@ const NewClient = () => {
       mail: false,
       description: false,
       clientState: false,
-    },
-    formIsValid: false
+    }
   })
 
 

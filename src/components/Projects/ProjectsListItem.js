@@ -9,12 +9,12 @@ const ProjectsListItem = ({
     navigation,
 }) => {
   const [infoVisible, setInfoVisible] = React.useState(false);
-
+  console.log(data)
   return (
     <>
       <Pressable style={styles.item}>
         <Pressable style={styles.itemTitle} onPress={()=>navigation.navigate("NewProject", {id: data.id})}>
-          <CustomText textValue={data?.name} otherStyles={styles.itemText} fontType="medium"/>
+          <CustomText textValue={data?.name} otherStyles={[styles.itemText, {color: data?.colorName}]} fontType="medium"/>
         </Pressable>
         
         <Pressable onPress={()=>setInfoVisible(!infoVisible)}>
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
     },
     itemText:{
-      color: Colors.primaryBlue,
       fontSize: 18,
       textAlign: 'center',
     },
