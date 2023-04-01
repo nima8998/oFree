@@ -50,19 +50,19 @@ export const createClient = (client) =>{
     }
 }
 
-export const updateClient = (client) =>{
+export const updateClient = (clientId, clientData) =>{
     const options = {
         method: "PATCH",
         headers:{
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({...client, updateDate: new Date()}),
+        body: JSON.stringify({...clientData, updateDate: new Date()}),
     }
 
     return async dispatch => {
-        return await fetch(`${process.env.API_URL_FIREBASE}/clients.json`, options)
+        return await fetch(`${process.env.API_URL_FIREBASE}/clients/${clientId}.json`, options)
             .then(
-                () => dispatch({type: CREATE_CLIENT, status: 200, message: "Cliente creado con exito !"}),
+                () => dispatch({type: CREATE_CLIENT, status: 200, message: "Cliente actualizado con exito !"}),
                 error => ({status: 400, message: error.message})
             )
     }
@@ -72,3 +72,4 @@ export const getClientById = (id) =>({
     type: GET_CLIENT_BY_ID,
     id
 })
+  

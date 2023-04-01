@@ -7,7 +7,6 @@ const CustomInput = ({
     action,
     otherStyles,
     defaultValue,
-    required = false,
     keyboardType = 'default'
 }) => {
   // keyboardTyp:

@@ -26,10 +26,10 @@ const NewClient = ({
   
   // inputs del cliente
   const [name, setName] = React.useState(currentClient?.name);
-  const [phone, setPhone] = React.useState('');
-  const [mail, setMail] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [clientState, setClientState] = React.useState('');
+  const [phone, setPhone] = React.useState(currentClient?.phone);
+  const [mail, setMail] = React.useState(currentClient?.mail);
+  const [description, setDescription] = React.useState(currentClient?.description);
+  const [clientState, setClientState] = React.useState(currentClient?.clientState);
   
 
   React.useEffect(()=>{
@@ -37,7 +37,7 @@ const NewClient = ({
       dispatch(getClientById(route.params.id))
       setCurrentClient(selectedClient)
     }
-  },[currentClient])
+  },[])
 
 
   const saveNewClient = async () =>{
@@ -68,7 +68,7 @@ const NewClient = ({
           setIsLoading(false);
         })
       :
-      dispatch(updateClient(client))
+      dispatch(updateClient(currentClient.id, client))
         .then((res)=>{
           setReusltData(res.message)
           setIsModalVisible(true);
@@ -110,7 +110,12 @@ const NewClient = ({
           defaultValue={currentClient?.mail}
         />
         
-        <CustomDropdown data={states} action={setClientState} defaultValue={currentClient?.clientState.toString()}  placeholder="Estado"/>
+        <CustomDropdown 
+          data={states} 
+          action={setClientState} 
+          defaultValue={currentClient?.clientState.toString()}
+          placeholder="Estado"
+        />
         
         <CustomTextarea 
           placeholder="Detalles del cliente"
