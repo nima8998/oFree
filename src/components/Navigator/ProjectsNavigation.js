@@ -1,5 +1,5 @@
 import React from 'react'
-import {Projects, NewTask, NewClient, NewProject, Clients, Tasks} from '../../Screens'
+import {Projects, NewTask, NewClient, NewProject, Clients, Tasks, EditProjectContainer, EditClientContainer} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Colors from '../../Constants/Colors';
 import ScreenOptionsNavbar from '../../Constants/ScreenOptionsNavbar'
@@ -44,6 +44,16 @@ const ProjectsNavigation = () => {
         }}
       />
       <Stack.Screen 
+        name="EditClientContainer"
+        component={EditClientContainer}
+        options={({route})=>({
+          title: `Editar: ${route.params.name}`,
+          headerStyle:{
+            backgroundColor: Colors.secondaryViolet
+          }
+        })}
+      />
+      <Stack.Screen 
         name="NewProject"
         component={NewProject}
         options={{
@@ -53,6 +63,16 @@ const ProjectsNavigation = () => {
           }
         }}
       />
+        <Stack.Screen 
+          name="EditProjectContainer"
+          component={EditProjectContainer}
+          options={({route})=>({
+            title: `Editar: ${route.params.name}`,
+            headerStyle:{
+              backgroundColor: Colors.secondaryViolet
+            }
+          })}
+        />
 
       <Stack.Screen 
         name="Clients"

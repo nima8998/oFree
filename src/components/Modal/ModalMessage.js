@@ -6,14 +6,14 @@ import Colors from '../../Constants/Colors';
 import CustomButton from '../Elements/CustomButton';
 
 const ModalMessage = ({
-    message
+    data
 }) => {
     const {isModalVisible, setIsModalVisible} = useCommonContext();
   return (
     <Modal animationType='fade' visible={isModalVisible} transparent>
         <View style={styles.container}>
             <View style={styles.modal}>
-                <CustomText textValue={message} otherStyles={styles.modalText} fontType="medium"/>
+                <CustomText textValue={data} otherStyles={styles.modalText} fontType="medium"/>
                 <CustomButton text="OK" type='secondary' onPress={()=>setIsModalVisible(false)} />
             </View>
         </View>

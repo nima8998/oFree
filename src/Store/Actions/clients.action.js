@@ -50,7 +50,7 @@ export const createClient = (client) =>{
     }
 }
 
-export const updateClient = (clientId, clientData) =>{
+export const updateClient = (clientData,clientId) =>{
     const options = {
         method: "PATCH",
         headers:{

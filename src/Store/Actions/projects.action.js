@@ -1,10 +1,10 @@
 export const CREATE_PROJECT = 'CREATE_PROJECT';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
-export const UPDATE_CLIENT = 'UPDATE_CLIENT';
+export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 
-export const getProjects = () =>{
-    const options ={
+export const getProjects = () => {
+    const options = {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -15,9 +15,9 @@ export const getProjects = () =>{
         try {
             const response = await fetch(`${process.env.API_URL_FIREBASE}/projects.json`, options);
             const result = await response.json();
-            const projects = 
+            const projects =
                 result != null &&
-                Object.keys(result).map(key=>({
+                Object.keys(result).map(key => ({
                     ...result[key],
                     id: key
                 }));
@@ -31,29 +31,43 @@ export const getProjects = () =>{
     }
 }
 
-export const createProject = (project) =>{
+export const createProject = (project) => {
     const options = {
         method: "POST",
-        headers:{
+        headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({...project, createDate: new Date()}),
+        body: JSON.stringify({ ...project, createDate: new Date() }),
     }
 
     return async dispatch => {
         return await fetch(`${process.env.API_URL_FIREBASE}/projects.json`, options)
             .then(
-                () => dispatch({type: CREATE_PROJECT, status: 200, message: "Proyecto creado con extio!"}),
-                error => ({status: 400, message: error.message})
+                () => dispatch({ type: CREATE_PROJECT, status: 200, message: "Proyecto creado con extio!" }),
+                error => ({ status: 400, message: error.message })
             )
     }
 }
 
-export const updateProject = (client) =>{
-    console.log('no sabemos updatear en firebase todavia jeje')
+export const updateProjectById = (projectData, projectId) => {
+    const options = {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ...projectData, updateDate: new Date() }),
+    }
+
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE}/projects/${projectId}.json`, options)
+            .then(
+                () => dispatch({ type: UPDATE_PROJECT, status: 200, message: "Proyecto actualizado con exito !" }),
+                error => ({ status: 400, message: error.message })
+            )
+    }
 }
 
-export const getProjectById = (id) =>({
+export const getProjectById = (id) => ({
     type: GET_PROJECT_BY_ID,
     id
 })

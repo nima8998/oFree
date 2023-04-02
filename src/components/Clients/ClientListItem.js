@@ -3,17 +3,17 @@ import React from 'react'
 import CustomText from '../Elements/CustomText'
 import { AntDesign } from '@expo/vector-icons';
 import Colors from '../../Constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 const ClientListItem = ({
     data,
-    navigation,
 }) => {
   const [infoVisible, setInfoVisible] = React.useState(false);
-
+  const navigation = useNavigation();
   return (
     <>
       <Pressable style={styles.item}>
-        <Pressable style={styles.itemTitle} onPress={()=>navigation.navigate("NewClient", {id: data.id})}>
+        <Pressable style={styles.itemTitle} onPress={()=>navigation.navigate("EditClientContainer", {id: data.id, name: data.name})}>
           <CustomText textValue={data?.name} otherStyles={styles.itemText} fontType="medium"/>
         </Pressable>
         

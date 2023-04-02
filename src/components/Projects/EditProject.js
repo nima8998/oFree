@@ -1,14 +1,15 @@
 import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native'
 import React from 'react'
-import { CustomButton, CustomInput, ModalMessage, CustomDropdown } from '../../components'
-import CustomText from '../../components/Elements/CustomText';
+import { CustomButton, CustomInput, ModalMessage, CustomDropdown } from '..'
+import CustomText from '../Elements/CustomText';
 import Colors from '../../Constants/Colors';
 import { useSelector } from 'react-redux';
 import { ColorsNames } from '../../Constants/ColorNames'
 import { useDispatch } from 'react-redux';
-import { createProject } from '../../Store/Actions/projects.action';
+import { updateProjectById } from '../../Store/Actions/projects.action';
 import { getClients } from '../../Store/Actions/clients.action';
 import { useCommonContext } from '../../Context/CommonContextProvider';
+import { useNavigation } from '@react-navigation/native';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -35,8 +36,11 @@ const formReducer = (state, action) => {
   return state;
 }
 
-const NewProject = () => {
+const EditProject = ({
+    project
+}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const clientsList = useSelector(({ clients }) => clients.list);
@@ -49,12 +53,16 @@ const NewProject = () => {
 
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
     inputValues: {
-      name: "",
-      client: "",
+      name: project.name,
+      client: project.client,
+      projectType: project.projectType,
+      colorName: project.colorName,
     },
     inputValidities: {
       name: false,
       client: false,
+      projectType: true,
+      colorName: true,
     }
   })
 
@@ -70,22 +78,25 @@ const NewProject = () => {
 
   React.useEffect(() => {
     dispatch(getClients())
+    setProjectType(project.projectType)
+    setColorName(project.colorName)
   }, [])
 
 
-
-  const addProject = () => {
-    const newProject = {
+  const updateProject = () => {
+    const updatedProjectData = {
       name: formState.inputValues.name,
       client: formState.inputValues.client,
       colorName: colorName,
       projectType: projectType,
     }
-
-    dispatch(createProject(newProject))
+    dispatch(updateProjectById(updatedProjectData, project.id))
       .then((res) => {
         setReusltData(res.message)
         setIsModalVisible(true);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 2000)
       })
       .catch((error) => {
         setReusltData(error.message)
@@ -96,6 +107,7 @@ const NewProject = () => {
           setIsModalVisible(false);
         }, 2000)
         setIsLoading(false);
+
       })
   }
 
@@ -131,7 +143,7 @@ const NewProject = () => {
                   key={id}
                   style={[
                     styles.colorItem,
-                    { backgroundColor: color, opacity: colorName === color ? 1 : 0.5 }
+                    { backgroundColor: color, opacity: colorName === color ? 1 : 0.3 }
                   ]}
                   onPress={() => setColorName(color)}
                 />
@@ -161,7 +173,7 @@ const NewProject = () => {
 
         <View style={styles.footer}>
           <CustomButton
-            onPress={addProject}
+            onPress={updateProject}
             text="GUARDAR"
           />
         </View>
@@ -173,7 +185,7 @@ const NewProject = () => {
   )
 }
 
-export default NewProject
+export default EditProject
 
 const styles = StyleSheet.create({
   container: {
@@ -220,6 +232,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginHorizontal: 3,
-    borderColor: Colors.secondaryBlue
   }
 })

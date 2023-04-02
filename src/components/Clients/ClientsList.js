@@ -5,13 +5,12 @@ import CustomText from '../Elements/CustomText'
 
 const List = ({
   data,
-  navigation
 }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
         {
           data.length > 0 ?
-          data.map((item, index)=><ClientListItem data={item} key={index} navigation={navigation}/>) :
+          data.map((item, index)=><ClientListItem data={item} key={index}/>) :
           <CustomText textValue={"No hay clientes creados"}/>
         }
     </ScrollView>

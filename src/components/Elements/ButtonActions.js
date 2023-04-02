@@ -5,14 +5,14 @@ import Colors from '../../Constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const ButtonActions = ({
-  navigation
-}) => {
+const ButtonActions = () => {
   const {
     setIsListVisible,
     isListVisible,
   } = useCommonContext()
+  const navigation = useNavigation();
 
  
   const navigateAndCloseList = (screen) =>{

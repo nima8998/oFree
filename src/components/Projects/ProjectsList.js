@@ -5,13 +5,12 @@ import CustomText from '../Elements/CustomText'
 
 const ProjectsList = ({
   data,
-  navigation
 }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
         {
           data ?
-          data.map((item, index)=><ProjectsListItem data={item} key={index} navigation={navigation}/>) :
+          data.map((item, index)=><ProjectsListItem data={item} key={index}/>) :
           <CustomText textValue={"No hay proyectos creados"}/>
         }
     </ScrollView>

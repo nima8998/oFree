@@ -2,10 +2,10 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import CustomText from '../Elements/CustomText'
 import Colors from '../../Constants/Colors'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
-const ProjectsNavbar = ({
-  navigation
-}) => {
+const ProjectsNavbar = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.navbar}>
       <Pressable style={[styles.navbarItem, {borderBottomStartRadius: 10}]} onPress={()=>navigation.navigate('Projects')}>
