@@ -3,7 +3,6 @@ import {  StyleSheet, ScrollView, RefreshControl } from 'react-native'
 import { ButtonActions, ProjectsList, ProjectsNavbar,  } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import {getProjects} from '../../Store/Actions/projects.action';
-import Colors from '../../Constants/Colors';
 
 const Projects = () => {
   const dispatch = useDispatch();

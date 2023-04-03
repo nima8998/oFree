@@ -27,7 +27,8 @@ const ProjectsListItem = ({
         </Pressable>
       </Pressable>
       <View style={[styles.info, {display: infoVisible === true ? "flex" : "none"}]}>
-        <View style={styles.infoItem}>
+        
+        {/* <View style={styles.infoItem}>
           <CustomText otherStyles={styles.infoItemText} textValue="Teléfono:"/>
           <CustomText otherStyles={styles.infoItemText} textValue={data?.phone}/>
         </View>
@@ -38,7 +39,7 @@ const ProjectsListItem = ({
         <View>
           <CustomText otherStyles={styles.infoItemText} textValue="Observaciones:"/>
           <CustomText otherStyles={styles.infoItemDescription} textValue={data?.description}/>
-        </View>
+        </View> */}
       </View>
     </>
   )

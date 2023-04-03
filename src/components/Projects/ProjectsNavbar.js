@@ -2,25 +2,41 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import CustomText from '../Elements/CustomText'
 import Colors from '../../Constants/Colors'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 const ProjectsNavbar = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   return (
     <View style={styles.navbar}>
-      <Pressable style={[styles.navbarItem, {borderBottomStartRadius: 10}]} onPress={()=>navigation.navigate('Projects')}>
+      <Pressable style={[
+          styles.navbarItem, 
+          route.name === "Projects" && styles.activeLink,
+        ]} 
+        onPress={()=>navigation.navigate('Projects')}
+      >
         <CustomText
           otherStyles={styles.navbarItemsText}
           textValue={"Proyectos"}
         />
       </Pressable>
-      <Pressable style={styles.navbarItem} onPress={()=>navigation.navigate('Clients')}>
+      <Pressable style={[
+          styles.navbarItem, 
+          route.name === "Clients" && styles.activeLink,
+        ]} 
+        onPress={()=>navigation.navigate('Clients')}
+      >
         <CustomText
           otherStyles={styles.navbarItemsText}
           textValue={"Clientes"}
         />
       </Pressable>
-      <Pressable style={[styles.navbarItem, {borderBottomEndRadius: 10}]} onPress={()=>navigation.navigate('Tasks')}>
+      <Pressable style={[
+          styles.navbarItem, 
+          route.name === "Tasks" && styles.activeLink,
+        ]} 
+        onPress={()=>navigation.navigate('Tasks')}
+      >
         <CustomText
           otherStyles={styles.navbarItemsText}r
           textValue={"Entregas"}
@@ -38,6 +54,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: "100%",
     backgroundColor: Colors.primaryBlue,
+    borderBottomEndRadius: 15,
+    borderBottomStartRadius: 15
   },
   navbarItem:{
     flex: 1,
@@ -48,10 +66,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 10
   },
-  firstItem:{
-    borderBottomStartRadius: 10,
-  },
-  lastItem:{
-    borderBottomEndRadius: 10,
+  activeLink:{
+    borderBottomWidth: 3,
+    borderBottomColor: "#fff"
   }
 })

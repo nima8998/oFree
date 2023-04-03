@@ -5,6 +5,7 @@ const CustomText = ({
     textValue,
     fontType,
     otherStyles,
+    ...restProps
 }) => {
 
   return (
@@ -19,6 +20,7 @@ const CustomText = ({
             "Montserrat-Medium" :
             "Montserrat-Regular"
         }, otherStyles]}
+        {...restProps}
       >
         {textValue}
       </Text>

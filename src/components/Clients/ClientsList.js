@@ -21,7 +21,7 @@ export default List
 
 const styles = StyleSheet.create({
   container:{
-    width: "100%",
+    width: "90%",
     paddingHorizontal: 35,
     paddingTop: 20,
   },

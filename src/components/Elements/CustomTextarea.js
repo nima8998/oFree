@@ -28,7 +28,6 @@ const CustomTextarea = ({
     otherStyles,
     initialValue,
     initiallyValid,
-    lines = 4,
     id,
     required,
     min,
@@ -80,7 +79,6 @@ const CustomTextarea = ({
         onBlur={lostFocusHandler}
         style={[styles.textarea, otherStyles]}
         multiline={true}
-        numberOfLines={lines}
     />
   )
 }
@@ -97,5 +95,6 @@ const styles = StyleSheet.create({
         width: "65%",
         textAlignVertical: "top",
         marginVertical: 10,
+        minHeight: 150
     }
 })

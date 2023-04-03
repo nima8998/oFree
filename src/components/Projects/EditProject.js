@@ -155,16 +155,16 @@ const EditProject = ({
 
         <CustomText textValue={"Tipo de proyecto"} otherStyles={{ fontSize: 12, marginVertical: 10 }} />
         <View style={styles.eventType}>
-          <Pressable onPress={() => setProjectType('fijo')}>
+          <Pressable onPress={() => setProjectType('fijo')} style={projectType === "fijo" && styles.activeLabel}>
             <CustomText
-              otherStyles={[styles.labels, projectType === "fijo" && styles.activeLabel]}
+              otherStyles={[styles.labels, projectType === "fijo" && styles.activeColor]}
               textValue={"Fijo"}
               fontType="medium"
             />
           </Pressable>
-          <Pressable onPress={() => setProjectType('eventual')}>
+          <Pressable onPress={() => setProjectType('eventual')} style={projectType === "eventual" && styles.activeLabel}>
             <CustomText
-              otherStyles={[styles.labels, projectType === "eventual" && styles.activeLabel]}
+              otherStyles={[styles.labels, projectType === "eventual" && styles.activeColor]}
               textValue={"Eventual"}
               fontType="medium"
             />
@@ -209,14 +209,16 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   labels: {
-    borderBottomWidth: 2,
     textAlign: "center",
     paddingHorizontal: 15,
     paddingBottom: 5
   },
   activeLabel: {
+    borderBottomColor: Colors.primaryBlue,
+    borderBottomWidth: 2
+  },
+  activeColor:{
     color: Colors.primaryBlue,
-    borderBottomColor: Colors.primaryBlue
   },
   footer: {
     marginVertical: 50
