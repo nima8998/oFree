@@ -1,15 +1,17 @@
 import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native'
 import React from 'react'
-import { CustomButton, CustomInput, ModalMessage, CustomDropdown } from '..'
-import CustomText from '../Elements/CustomText';
+import { CustomButton, CustomInput, ModalMessage, CustomDropdown, CustomTextarea } from '../../components'
+import CustomText from '../../components/Elements/CustomText';
 import Colors from '../../Constants/Colors';
 import { useSelector } from 'react-redux';
-import { ColorsNames } from '../../Constants/ColorNames'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
-import { updateProjectById } from '../../Store/Actions/projects.action';
 import { getClients } from '../../Store/Actions/clients.action';
 import { useCommonContext } from '../../Context/CommonContextProvider';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { getProjects } from '../../Store/Actions/projects.action';
 import { useNavigation } from '@react-navigation/native';
+import { updateTaskById } from '../../Store/Actions/tasks.action';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -36,35 +38,43 @@ const formReducer = (state, action) => {
   return state;
 }
 
-const EditProject = ({
-    project
+const EditTask = ({
+  task
 }) => {
-  const dispatch = useDispatch();
+  console.log(task)
+  const { setIsModalVisible, isModalVisible } = useCommonContext();
   const navigation = useNavigation();
 
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const dispatch = useDispatch();
   const clientsList = useSelector(({ clients }) => clients.list);
-
+  const projectsList = useSelector(({ projects }) => projects.list);
+  
+  const [showDatePicker, setShowDatePicker] = React.useState(false);
+  const [date, setDate] = React.useState();
+  
   const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
-
-  const [projectType, setProjectType] = React.useState('fijo');
-  const [colorName, setColorName] = React.useState();
-
+  
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
     inputValues: {
-      name: project.name,
-      client: project.client,
-      projectType: project.projectType,
-      colorName: project.colorName,
+      taskName: task.taskName,
+      taskClient: task.taskClient,
+      taskDescription: task.taskDescription,
+      taskProject: task.taskProject,
     },
     inputValidities: {
-      name: false,
-      client: false,
-      projectType: true,
-      colorName: true,
+      taskName: false,
+      taskClient: false,
+      taskDescription: false,
+      taskProject: false,
     }
   })
+
+  const handleDate = (event) =>{
+    const selectedTimestamp = event.nativeEvent.timestamp
+    setShowDatePicker(false);
+    setDate(new Date(selectedTimestamp));
+  }
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
@@ -78,19 +88,22 @@ const EditProject = ({
 
   React.useEffect(() => {
     dispatch(getClients())
-    setProjectType(project.projectType)
-    setColorName(project.colorName)
+    dispatch(getProjects())
+    setDate(new Date(task.taskDate))
   }, [])
 
 
-  const updateProject = () => {
-    const updatedProjectData = {
-      name: formState.inputValues.name,
-      client: formState.inputValues.client,
-      colorName: colorName,
-      projectType: projectType,
+
+  const addTask = () => {
+    const taskUpdated = {
+      taskName: formState.inputValues.taskName,
+      taskClient: formState.inputValues.taskClient,
+      taskDate: date,
+      taskDescription: formState.inputValues.taskDescription,
+      taskProject: formState.inputValues.taskProject,
     }
-    dispatch(updateProjectById(updatedProjectData, project.id))
+
+    dispatch(updateTaskById(taskUpdated, task.id))
       .then((res) => {
         setReusltData(res.message)
         setIsModalVisible(true);
@@ -107,7 +120,6 @@ const EditProject = ({
           setIsModalVisible(false);
         }, 1500)
         setIsLoading(false);
-
       })
   }
 
@@ -119,61 +131,58 @@ const EditProject = ({
         <View style={styles.body}>
 
           <CustomInput
-            placeholder="Nombre del proyecto"
+            placeholder="Nombre de la tarea"
             onInputChange={handleInputChange}
             otherStyles={styles.inputs}
-            id="name"
-            initialValue={formState.inputValues.name}
-            initiallyValid={formState.inputValidities.name}
+            id="taskName"
+            initialValue={formState.inputValues.taskName}
+            initiallyValid={formState.inputValidities.taskName}
           />
 
           <CustomDropdown
             data={clientsList}
             onDropdownChange={handleInputChange}
             placeholder="Seleccionar cliente"
-            id="client"
-            initialValue={formState.inputValues.client}
-            initiallyValid={formState.inputValidities.client}
+            id="taskClient"
+            initialValue={formState.inputValues.taskClient}
+            initiallyValid={formState.inputValidities.taskClient}
           />
 
-          <View style={styles.colorPicker}>
-            {
-              ColorsNames.map(({ id, color }) => (
-                <Pressable
-                  key={id}
-                  style={[
-                    styles.colorItem,
-                    { backgroundColor: color, opacity: colorName === color ? 1 : 0.3 }
-                  ]}
-                  onPress={() => setColorName(color)}
-                />
-              ))
-            }
+          <CustomDropdown
+            data={projectsList}
+            onDropdownChange={handleInputChange}
+            placeholder="Seleccionar proyecto"
+            id="taskProject"
+            initialValue={formState.inputValues.taskProject}
+            initiallyValid={formState.inputValidities.taskProject}
+          />
+
+        <Pressable style={styles.datepicker} onPress={()=>setShowDatePicker(true)}>
+          <CustomText textValue={!date ? "Fecha de entrega" : date.toLocaleDateString()}/>
+          {/* <CustomText textValue={'a ver'}/> */}
+          <View >
+            <MaterialCommunityIcons name="calendar-month-outline" size={20} color="grey" />
           </View>
+        </Pressable>
 
-        </View>
+        {
+          showDatePicker && <DateTimePicker mode="date" value={!date ? new Date() : date} id="date" onChange={handleDate}/>
+        }
 
-        <CustomText textValue={"Tipo de proyecto"} otherStyles={{ fontSize: 12, marginVertical: 10 }} />
-        <View style={styles.eventType}>
-          <Pressable onPress={() => setProjectType('fijo')} style={projectType === "fijo" && styles.activeLabel}>
-            <CustomText
-              otherStyles={[styles.labels, projectType === "fijo" && styles.activeColor]}
-              textValue={"Fijo"}
-              fontType="medium"
-            />
-          </Pressable>
-          <Pressable onPress={() => setProjectType('eventual')} style={projectType === "eventual" && styles.activeLabel}>
-            <CustomText
-              otherStyles={[styles.labels, projectType === "eventual" && styles.activeColor]}
-              textValue={"Eventual"}
-              fontType="medium"
-            />
-          </Pressable>
+        <CustomTextarea
+          placeholder="Detalles de la tarea"
+          id="taskDescription"
+          onTextareaChange={handleInputChange}
+          initialValue={formState.inputValues.taskDescription}
+          initiallyValid={formState.inputValidities.taskDescription}
+        />
+
+
         </View>
 
         <View style={styles.footer}>
           <CustomButton
-            onPress={updateProject}
+            onPress={addTask}
             text="GUARDAR"
           />
         </View>
@@ -185,7 +194,7 @@ const EditProject = ({
   )
 }
 
-export default EditProject
+export default EditTask
 
 const styles = StyleSheet.create({
   container: {
@@ -209,19 +218,17 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   labels: {
+    borderBottomWidth: 2,
     textAlign: "center",
     paddingHorizontal: 15,
     paddingBottom: 5
   },
   activeLabel: {
-    borderBottomColor: Colors.primaryBlue,
-    borderBottomWidth: 2
-  },
-  activeColor:{
     color: Colors.primaryBlue,
+    borderBottomColor: Colors.primaryBlue
   },
   footer: {
-    marginVertical: 50
+    marginVertical: 25
   },
   colorPicker: {
     flexDirection: 'row',
@@ -234,5 +241,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginHorizontal: 3,
-  }
+    borderColor: Colors.secondaryBlue
+  },
+  datepicker:{
+    flexDirection: 'row',
+    justifyContent:  'space-around',
+    alignItems: 'center',
+    padding: 5,
+    width: "65%",
+    marginTop: 20,
+    borderBottomWidth: 1,
+    borderColor: '#dadada' 
+  },
 })

@@ -9,11 +9,12 @@ export {default as CustomText} from "./Elements/CustomText";
 // PROJECT COMPONENTS
 export {default as ProjectsNavbar} from "./Projects/ProjectsNavbar";
 export {default as ProjectsList} from "./Projects/ProjectsList";
-export {default as EditProject} from "./Projects/EditProject";
 
 // CLIENTS COMPONENTS 
 export {default as ClientsList} from "./Clients/ClientsList";
-export {default as EditClient} from "./Clients/EditClient";
+
+// PROJECT COMPONENTS
+export {default as TasksList} from "./Tasks/TasksList";
 
 // MODALS
 export {default as ModalMessage} from "./Modal/ModalMessage";

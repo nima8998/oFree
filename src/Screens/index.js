@@ -7,6 +7,7 @@ export {default as NewTask} from './Tasks/NewTask';
 export {default as Tasks} from './Tasks/Tasks';
 export {default as NewClient} from './Clients/NewClient';
 export {default as EditClientContainer} from './Clients/EditClientContainer';
+export {default as EditTaskContainer} from './Tasks/EditTaskContainer';
 export {default as Clients} from './Clients/Clients';
 export {default as Calendar} from './Calendar/Calendar';
 export {default as Statistics} from './Statistics/Statistics';

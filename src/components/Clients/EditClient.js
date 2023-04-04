@@ -90,7 +90,7 @@ const EditClient = ({
         setIsModalVisible(true);
         setTimeout(() => {
           navigation.goBack();
-        }, 2000);
+        }, 1500);
       })
       .catch((error) => {
         setResultData(error.message)
@@ -99,7 +99,7 @@ const EditClient = ({
       .finally(() => {
         setTimeout(() => {
           setIsModalVisible(false);
-        }, 2000)
+        }, 1500)
         setIsLoading(false);
       })
   }

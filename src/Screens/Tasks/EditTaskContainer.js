@@ -2,27 +2,27 @@ import { StyleSheet, View, Text } from 'react-native'
 import React from 'react'
 import CustomText from '../../components/Elements/CustomText';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProjectById } from '../../Store/Actions/projects.action';
-import EditProject from '../../components/Projects/EditProject'
+import { getTaskById } from '../../Store/Actions/tasks.action';
+import EditTask from '../../components/Tasks/EditTask';
 
 
 const EditProjectContainer = ({ route }) => {
-  const currentProjectId = route.params.id;
+  const currentTaskId = route.params.id;
   const dispatch = useDispatch();
   const [isReady, setIsReady] = React.useState(false);
-  const selectedProjectData = useSelector(({ projects }) => projects.selectedProject);
+  const selectedTaskData = useSelector(({ tasks }) => tasks.selectedTask);
 
   React.useEffect(() => {
-    dispatch(getProjectById(currentProjectId));
-    selectedProjectData &&
+    dispatch(getTaskById(currentTaskId));
+    selectedTaskData &&
       setIsReady(true);
-  }, [currentProjectId, selectedProjectData]);
+  }, [currentTaskId, selectedTaskData]);
 
   return (
     <View style={styles.container}>
       { 
-        isReady && selectedProjectData ? 
-         <EditProject project={selectedProjectData}/> : 
+        isReady && selectedTaskData ? 
+         <EditTask task={selectedTaskData}/> : 
           <CustomText textValue="Cargando..."/>
       }
     </View>

@@ -1,17 +1,36 @@
 import React from 'react'
-import { StyleSheet, ScrollView } from 'react-native'
-import { ButtonActions, CustomText, ProjectsNavbar } from '../../components';
+import {  StyleSheet, ScrollView, RefreshControl } from 'react-native'
+import { ButtonActions, ProjectsNavbar, TasksList } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTasks } from '../../Store/Actions/tasks.action';
 
-const Tasks = ({
-  navigation
-}) => {
-  // const {projects} = useCommonContext();
+const Tasks = () => {
+  const dispatch = useDispatch();
+  const tasksList = useSelector(({tasks})=>tasks.list)
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  React.useEffect(()=>{
+    dispatch(getTasks())
+  },[refreshing])
+
+  const onRefresh = React.useCallback(()=>{
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  })
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView 
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+      }  
+    >
       <>
-        <ProjectsNavbar navigation={navigation}/>
-        <CustomText textValue={"Tasks view"}/>
-        <ButtonActions navigation={navigation}/>
+        <ProjectsNavbar/>
+        <TasksList data={tasksList} />
+        <ButtonActions/>
       </>
     </ScrollView>
   )

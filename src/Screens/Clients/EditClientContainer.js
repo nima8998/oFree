@@ -3,7 +3,7 @@ import React from 'react'
 import CustomText from '../../components/Elements/CustomText';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClientById } from '../../Store/Actions/clients.action';
-import { EditClient } from '../../components';
+import EditClient from '../../components/Clients/EditClient'
 
 
 const EditClientContainer = ({ route }) => {
