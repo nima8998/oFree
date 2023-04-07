@@ -13,10 +13,8 @@ import { getProjects } from '../../Store/Actions/projects.action';
 import { useNavigation } from '@react-navigation/native';
 import { updateTaskById } from '../../Store/Actions/tasks.action';
 
-const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
-
 const formReducer = (state, action) => {
-  if (action.type === FORM_INPUT_UPDATE) {
+  if (action.type === "FORM_INPUT_UPDATE") {
     const inputValues = {
       ...state.inputValues,
       [action.input]: action.value
@@ -38,10 +36,7 @@ const formReducer = (state, action) => {
   return state;
 }
 
-const EditTask = ({
-  task
-}) => {
-  console.log(task)
+const EditTask = ({task}) => {
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const navigation = useNavigation();
 
@@ -61,12 +56,14 @@ const EditTask = ({
       taskClient: task.taskClient,
       taskDescription: task.taskDescription,
       taskProject: task.taskProject,
+      taskDone: task.taskDone,
     },
     inputValidities: {
       taskName: false,
       taskClient: false,
       taskDescription: false,
       taskProject: false,
+      taskDone: false,
     }
   })
 
@@ -78,7 +75,7 @@ const EditTask = ({
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
-      type: FORM_INPUT_UPDATE,
+      type: "FORM_INPUT_UPDATE",
       value: inputValue,
       isValid: inputValidity,
       input: inputIdentifier
@@ -98,9 +95,10 @@ const EditTask = ({
     const taskUpdated = {
       taskName: formState.inputValues.taskName,
       taskClient: formState.inputValues.taskClient,
-      taskDate: date,
+      taskDate: date.toLocaleDateString(),
       taskDescription: formState.inputValues.taskDescription,
       taskProject: formState.inputValues.taskProject,
+      taskDone: formState.inputValues.taskProject,
     }
 
     dispatch(updateTaskById(taskUpdated, task.id))
@@ -159,7 +157,6 @@ const EditTask = ({
 
         <Pressable style={styles.datepicker} onPress={()=>setShowDatePicker(true)}>
           <CustomText textValue={!date ? "Fecha de entrega" : date.toLocaleDateString()}/>
-          {/* <CustomText textValue={'a ver'}/> */}
           <View >
             <MaterialCommunityIcons name="calendar-month-outline" size={20} color="grey" />
           </View>

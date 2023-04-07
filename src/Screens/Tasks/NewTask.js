@@ -94,12 +94,13 @@ const NewTask = () => {
     const newTask = {
       taskName: formState.inputValues.taskName,
       taskClient: formState.inputValues.taskClient,
-      taskDate: date,
+      taskDate: date.toLocaleDateString(),
       taskDescription: formState.inputValues.taskDescription,
       taskProject: formState.inputValues.taskProject,
+      taskDone: false,
     }
 
-    dispatch(createTask(newTask))
+    dispatch(createTask(newTask, formState.inputValues.taskProject))
       .then((res) => {
         setReusltData(res.message)
         setIsModalVisible(true);

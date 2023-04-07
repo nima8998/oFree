@@ -31,19 +31,19 @@ export const getTasks = () => {
     }
 }
 
-export const createTask = (task) => {
+export const createTask = (taskData) => {
     const options = {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ...task, createDate: new Date() }),
+        body: JSON.stringify({ ...taskData, updateDate: new Date() }),
     }
 
     return async dispatch => {
         return await fetch(`${process.env.API_URL_FIREBASE}/tasks.json`, options)
             .then(
-                () => dispatch({ type: CREATE_TASK, status: 200, message: "Tarea creada con extio!" }),
+                () => dispatch({ type: CREATE_TASK, status: 200, message: "Tarea agregada al proyecto." }),
                 error => ({ status: 400, message: error.message })
             )
     }

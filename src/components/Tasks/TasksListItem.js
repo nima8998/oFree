@@ -4,11 +4,14 @@ import CustomText from '../Elements/CustomText'
 import { AntDesign } from '@expo/vector-icons';
 import Colors from '../../Constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { Checkbox } from 'native-base';
 
 const TasksListItem = ({
     data,
+    handleTaskStatus
 }) => {
   const [infoVisible, setInfoVisible] = React.useState(false);
+  
   const navigation = useNavigation();
   return (
     <>
@@ -28,18 +31,26 @@ const TasksListItem = ({
       </Pressable>
       <View style={[styles.info, {display: infoVisible === true ? "flex" : "none"}]}>
         
-        {/* <View style={styles.infoItem}>
-          <CustomText otherStyles={styles.infoItemText} textValue="Teléfono:"/>
-          <CustomText otherStyles={styles.infoItemText} textValue={data?.phone}/>
-        </View>
         <View style={styles.infoItem}>
-          <CustomText otherStyles={styles.infoItemText} textValue="Mail:"/>
-          <CustomText otherStyles={styles.infoItemText} textValue={data?.mail}/>
+          <CustomText otherStyles={styles.infoItemText} textValue="Fecha:"/>
+          <CustomText otherStyles={styles.infoItemText} textValue={data?.taskDate}/>
         </View>
+
+        <View style={styles.infoItem}>
+          <CustomText otherStyles={styles.infoItemText} textValue="Completada:"  />
+          <Checkbox 
+            value={data?.taskDone}
+            isChecked={data?.taskDone}
+            color={Colors.primaryBlue} 
+            accessibilityLabel="Tasks status" 
+            size="sm" 
+            onChange={(state)=>handleTaskStatus(data?.id, state)}
+          />
+        </View> 
         <View>
-          <CustomText otherStyles={styles.infoItemText} textValue="Observaciones:"/>
-          <CustomText otherStyles={styles.infoItemDescription} textValue={data?.description}/>
-        </View> */}
+          <CustomText otherStyles={styles.infoItemText} textValue="Descripción:"/>
+          <CustomText otherStyles={styles.infoItemDescription} textValue={data?.taskDescription}/>
+        </View>
       </View>
     </>
   )
@@ -101,6 +112,7 @@ const styles = StyleSheet.create({
     },
     infoItemText:{
       fontSize: 11,
+      paddingVertical: 3
     },
     infoItemDescription:{
       fontSize: 11,
