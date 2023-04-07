@@ -69,7 +69,7 @@ const CustomDropdown = ({
       >
         {
           data.length > 0 &&
-          data.map(({id, name})=>(<Select.Item key={id} label={name} value={id} />))
+          data.map(({id, name})=>(<Select.Item key={id} label={name} value={name} />))
         }
       </Select>
   </View>

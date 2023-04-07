@@ -28,18 +28,14 @@ const ProjectsListItem = ({
       </Pressable>
       <View style={[styles.info, {display: infoVisible === true ? "flex" : "none"}]}>
         
-        {/* <View style={styles.infoItem}>
-          <CustomText otherStyles={styles.infoItemText} textValue="Teléfono:"/>
-          <CustomText otherStyles={styles.infoItemText} textValue={data?.phone}/>
+        <View style={styles.infoItem}>
+          <CustomText otherStyles={styles.infoItemText} textValue="Cliente:"/>
+          <CustomText otherStyles={styles.infoItemText} textValue={data?.client}/>
         </View>
         <View style={styles.infoItem}>
-          <CustomText otherStyles={styles.infoItemText} textValue="Mail:"/>
-          <CustomText otherStyles={styles.infoItemText} textValue={data?.mail}/>
+          <CustomText otherStyles={styles.infoItemText} textValue="Tipo de proyecto:"/>
+          <CustomText otherStyles={styles.infoItemText} textValue={data?.projectType}/>
         </View>
-        <View>
-          <CustomText otherStyles={styles.infoItemText} textValue="Observaciones:"/>
-          <CustomText otherStyles={styles.infoItemDescription} textValue={data?.description}/>
-        </View> */}
       </View>
     </>
   )

@@ -6,11 +6,9 @@ import { ButtonActions, ProjectsNavbar, TasksList } from '../../components';
 const Tasks = () => {
   return (
     <View style={styles.container}>
-      <>
-        <ProjectsNavbar/>
-        <TasksList />
-        <ButtonActions/>
-      </>
+      <ProjectsNavbar/>
+      <TasksList />
+      <ButtonActions/>
     </View>
   )
 }
