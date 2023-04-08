@@ -16,5 +16,8 @@ export {default as ClientsList} from "./Clients/ClientsList";
 // PROJECT COMPONENTS
 export {default as TasksList} from "./Tasks/TasksList";
 
+// CALENDAR COMPONENTS
+export {default as CustomCalendar} from "./Calendar/CustomCalendar";
+
 // MODALS
 export {default as ModalMessage} from "./Modal/ModalMessage";

@@ -4,6 +4,7 @@ import ProjectsListItem from './ProjectsListItem'
 import CustomText from '../Elements/CustomText'
 import { useDispatch, useSelector } from 'react-redux';
 import {getProjects} from '../../Store/Actions/projects.action';
+import onRefresh from '../../Utils/refresh'
 
 const ProjectsList = () => {
   const dispatch = useDispatch();
@@ -14,17 +15,12 @@ const ProjectsList = () => {
     dispatch(getProjects())
   },[refreshing])
 
-  const onRefresh = React.useCallback(()=>{
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
-  })
+
   return (
     <ScrollView 
       contentContainerStyle={styles.container}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh(setRefreshing, 500)}/>
       }  
     >
         {
