@@ -20,13 +20,13 @@ const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
 
   return (
-    <Tab.Navigator  screenOptions={{
+    <Tab.Navigator initialRouteName='HomeTab' screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: styles.container,
         tabBarHideOnKeyboard: true,
     }}>
-      <Tab.Screen name="Home tab" component={HomeNavigation}
+      <Tab.Screen name="HomeTab" component={HomeNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={[styles.tab, styles.firstTab, {backgroundColor: focused && Colors.activeTab}]}>
@@ -35,7 +35,7 @@ const TabNavigation = () => {
             </View>
           )
         }}/>
-      <Tab.Screen name="Projects tab" component={ProjectsNavigation}
+      <Tab.Screen name="ProjectsTab" component={ProjectsNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={[styles.tab, {backgroundColor: focused && Colors.activeTab}]}>
@@ -44,7 +44,7 @@ const TabNavigation = () => {
             </View>
           )
         }}/>
-      <Tab.Screen name="Calendar tab" component={CalendarNavigation}
+      <Tab.Screen name="CalendarTab" component={CalendarNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={[styles.tab, {backgroundColor: focused && Colors.activeTab}]}>
@@ -53,7 +53,7 @@ const TabNavigation = () => {
             </View>
           )
         }}/>
-      <Tab.Screen name="Statistics tab" component={StatisticsNavigation}
+      <Tab.Screen name="StatisticsTab" component={StatisticsNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={[styles.tab, styles.lastTab, {backgroundColor: focused && Colors.activeTab}]}>

@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import React from 'react'
 
 const INPUT_CHANGE = "INPUT_CHANGE";
@@ -26,6 +26,7 @@ const inputReducer = (state, action) =>{
 //  "email-address"
 //  "phone-pad"
 //  "numeric"
+//  "visible-password"
 const CustomInput = ({
   initialValue,
   initiallyValid,
@@ -39,6 +40,10 @@ const CustomInput = ({
   label,
   errorText,
   placeholder,
+  textContentType,
+  type,
+  enable = true,
+  inputRightIcon = null,
   keyboardType = "defualt",
   ...restProps
 }) => {
@@ -81,15 +86,22 @@ const CustomInput = ({
   }
 
   return (
-    <TextInput
-        {...restProps}
-        value={inputState.value}
-        onChangeText={textChangeHandler}
-        onBlur={lostFocusHandler}
-        placeholder={placeholder}
-        style={[styles.input, restProps.otherStyles]}
-        keyboardType={keyboardType}
-    />
+    <>
+      <TextInput
+          {...restProps}
+          value={inputState.value}
+          onChangeText={textChangeHandler}
+          onBlur={lostFocusHandler}
+          placeholder={placeholder}
+          style={[styles.input, restProps.otherStyles, !enable && styles.disabledInpupt]}
+          keyboardType={keyboardType}
+          secureTextEntry={type === 'password' && true}
+          editable={enable}
+      />
+      <View style={styles.inputIcon}>
+        {inputRightIcon}
+      </View>
+    </>
   )
 }
 
@@ -101,6 +113,11 @@ const styles = StyleSheet.create({
         borderBottomColor: '#ccc',
         fontSize: 14,
         textAlign: 'center',
-        width: "65%"
+    },
+    inputIcon:{
+      position: 'absolute'
+    },
+    disabledInpupt:{
+      opacity: .5
     }
 })
