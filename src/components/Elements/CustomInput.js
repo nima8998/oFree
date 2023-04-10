@@ -50,7 +50,7 @@ const CustomInput = ({
   const [inputState, inputDispatch] = React.useReducer(inputReducer, {
     value: initialValue ? initialValue : "",
     isValid: initiallyValid,
-    touched: false
+    touched: true
   })
 
   React.useEffect(()=>{
