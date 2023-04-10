@@ -17,7 +17,7 @@ const ProfileDrawer = (props) => {
         <View>
           <Image
             style={styles.image}
-            source={{uri: currentUser?.photoUrl}}
+            source={{uri: currentUser?.photoUrl != '' ? currentUser?.photoUrl : null}}
           />
         </View>
         <View style={styles.containerInfo}>

@@ -2,10 +2,18 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 // import { ButtonActions } from '../../components';
 import CustomText from '../../components/Elements/CustomText';
+import { getUserData } from '../../Store/Actions/auth.action';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Home = ({
   navigation
 }) => {
+  const dispatch = useDispatch();
+  const {token} = useSelector(({auth})=>auth)
+
+  React.useEffect(()=>{
+    dispatch(getUserData(token))
+  },[])
   return (
     <View style={styles.container}>
       <CustomText textValue={"Home View"}/>

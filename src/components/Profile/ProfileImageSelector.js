@@ -6,8 +6,10 @@ import CustomText from '../Elements/CustomText'
 import CustomButton from '../Elements/CustomButton'
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../Constants/Colors'
+
+
 const ProfileImageSelector = ({onImage, defaultImage}) => {
-  const [pickedUri, setPickedUri] = React.useState(defaultImage || '');
+  const [pickedUri, setPickedUri] = React.useState(defaultImage || null);
 
   const verifyPermissions = async () =>{
     const {status} = await ImagePicker.requestCameraPermissionsAsync();
@@ -48,7 +50,7 @@ const ProfileImageSelector = ({onImage, defaultImage}) => {
               <Image
                 style={styles.image}
                 source={{uri: pickedUri}}
-              />
+              /> 
             )
         }
         <Feather name="camera" size={25} style={[pickedUri && styles.cameraIcon, styles.cameraIconPlace]} color={Colors.primaryBlue} onPress={handlerTakeImage}/>

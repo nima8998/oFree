@@ -4,12 +4,10 @@ import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import CustomText from '../../components/Elements/CustomText'
 import Colors from '../../Constants/Colors';
-import { Input } from 'native-base'
 import { Feather } from '@expo/vector-icons';
 import onRefresh from '../../Utils/refresh';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { createClient, updateClient } from '../../Store/Actions/clients.action';
 import ProfileImageSelector from '../../components/Profile/ProfileImageSelector';
 import { getUserData, updateUserData } from '../../Store/Actions/auth.action';
 
@@ -44,13 +42,11 @@ const Profile = () => {
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
   const [resultData, setResultData] = React.useState();
-  const [show, setShow] = React.useState(false);
-  const [imageValue, setImageValue] = React.useState('')
+  const [imageValue, setImageValue] = React.useState(null)
   const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(()=>{
     dispatch(getUserData(token))
-    console.log(currentUser)
   },[token, refreshing])
 
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
@@ -89,8 +85,8 @@ const Profile = () => {
     dispatch(updateUserData(token, formState.inputValues.name, imageValue, formState.inputValues.mail))
       .then((res) => {
         setResultData('Perfil actualizado con exito.');
+        dispatch(getUserData(token))
         onRefresh(setRefreshing, 500)
-
       })
       .catch((error) => {
         setResultData(error.message)
@@ -111,7 +107,7 @@ const Profile = () => {
         <View style={styles.container}>
           <TouchableWithoutFeedback>
             <View style={styles.imgHero}>
-              <ProfileImageSelector onImage={image=>setImageValue(image)} defaultImage={currentUser?.photoUrl !== '' && currentUser?.photoUrl}/>
+              <ProfileImageSelector onImage={image=>setImageValue(image)} defaultImage={currentUser?.photoUrl !== '' ? currentUser?.photoUrl : null}/>
             </View>
           </TouchableWithoutFeedback>
 
