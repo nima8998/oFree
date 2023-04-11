@@ -21,3 +21,6 @@ export {default as CustomCalendar} from "./Calendar/CustomCalendar";
 
 // MODALS
 export {default as ModalMessage} from "./Modal/ModalMessage";
+
+export {default as MenuItem} from "./Navbar/MenuItem";
+export {default as NotificationsMenu} from "./Navbar/NotificationsMenu";

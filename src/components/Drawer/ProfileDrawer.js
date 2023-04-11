@@ -4,11 +4,9 @@ import Colors from '../../Constants/Colors'
 import CustomText from '../Elements/CustomText'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux';
-import { useDrawerStatus } from '@react-navigation/drawer';
 
 const ProfileDrawer = (props) => {
   const navigation = useNavigation();
-  // const isDrawerOpen = useDrawerStatus() === 'open';
   const {currentUser} = useSelector(({auth})=>auth)
 
   return (

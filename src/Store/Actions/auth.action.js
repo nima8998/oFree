@@ -113,8 +113,6 @@ export const updateUserData = (idToken, displayName, photoUrl, email, returnSecu
 
             const data = await response.json();
 
-            console.log(data)
-
             dispatch({
                 type: UPDATE_USER_DATA,
                 payload: data

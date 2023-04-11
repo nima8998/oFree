@@ -50,6 +50,7 @@ const ProfileImageSelector = ({onImage, defaultImage}) => {
               <Image
                 style={styles.image}
                 source={{uri: pickedUri}}
+                resizeMode='cover'
               /> 
             )
         }

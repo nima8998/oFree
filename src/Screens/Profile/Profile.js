@@ -44,6 +44,7 @@ const Profile = () => {
   const [resultData, setResultData] = React.useState();
   const [imageValue, setImageValue] = React.useState(null)
   const [refreshing, setRefreshing] = React.useState(false);
+  const [show, setShow] = React.useState(false);
 
   React.useEffect(()=>{
     dispatch(getUserData(token))
@@ -53,7 +54,7 @@ const Profile = () => {
     inputValues: {
       name: currentUser?.displayName,
       mail: currentUser?.email,
-      password: "",
+      // password: currentUser?.passwordHash,
       profileImage: imageValue,
     },
     inputValidities: {
@@ -78,7 +79,7 @@ const Profile = () => {
     const newUserData = {
       name: formState.inputValues.name,
       email: formState.inputValues.mail,
-      // password: formState.inputValues.password,
+      password: formState.inputValues.password,
       profileImage: imageValue,
     };
 
@@ -89,7 +90,7 @@ const Profile = () => {
         onRefresh(setRefreshing, 500)
       })
       .catch((error) => {
-        setResultData(error.message)
+        setResultData('Error al modificar el perfil.')
         setIsModalVisible(true);
       })
       .finally(() => {
@@ -128,6 +129,7 @@ const Profile = () => {
             initialValue={formState.inputValues.mail}
             initiallyValid={formState.inputValidities.mail}
             keyboardType='email-address'
+            enable={false}
           />
 
           {/* <View style={styles.inputGroup}>
@@ -148,7 +150,7 @@ const Profile = () => {
           </View> */}
 
           <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateUserData} />
-          {/* {isModalVisible && <ModalMessage message={resultData} />} */}
+          {isModalVisible && <ModalMessage message={resultData} />}
           {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
         </View>
       </TouchableWithoutFeedback>
@@ -172,8 +174,8 @@ const styles = StyleSheet.create({
   imgHero: {
     borderBottomStartRadius: 15,
     borderBottomEndRadius: 15,
-    height: 150,
-    width: "100%"
+    height: 232,
+    width: "100%",
   },
   inputGroup:{
     flexDirection: "row",
