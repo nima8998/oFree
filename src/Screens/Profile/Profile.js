@@ -86,7 +86,6 @@ const Profile = () => {
 
     dispatch(updateUserData(token, formState.inputValues.name, imageValue, formState.inputValues.mail))
       .then((res) => {
-        console.log(res)
         setResultData(res.message);
         setIsModalVisible(true);
         executeRefresh();
