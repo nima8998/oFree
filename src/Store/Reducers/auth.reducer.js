@@ -31,7 +31,7 @@ const authReducer = (state = initialState, action) =>{
         case UPDATE_USER_DATA:
             return{
                 ...state,
-                payload: action.payload
+                payload: action.response
             }
         default:
             return state;

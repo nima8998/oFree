@@ -107,18 +107,11 @@ export const updateUserData = (idToken, displayName, photoUrl, email, returnSecu
     }
     
 
-    return async dispatch =>{
-        try {
-            const response = await fetch (`${process.env.API_URL_FIREBASE_UPDATE_USER_DATA}${process.env.FIREBASE_API_KEY}`, options);
-
-            const data = await response.json();
-
-            dispatch({
-                type: UPDATE_USER_DATA,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error)
-        }
+    return async dispatch => {
+        return await fetch (`${process.env.API_URL_FIREBASE_UPDATE_USER_DATA}${process.env.FIREBASE_API_KEY}`, options)
+            .then(
+                () => dispatch({type: UPDATE_USER_DATA, message: "Perfil actualizado con éxito."}),
+                error => ({message: error.message})
+            )
     }
 }

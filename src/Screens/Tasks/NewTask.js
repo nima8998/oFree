@@ -112,8 +112,8 @@ const NewTask = () => {
       .finally(() => {
         setTimeout(() => {
           setIsModalVisible(false);
+          navigation.goBack();
         }, 1500)
-        navigation.goBack();
         setIsLoading(false);
       })
   }

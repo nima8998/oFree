@@ -147,7 +147,7 @@ const NewClient = () => {
         />
 
         <CustomButton type='primary' text="GUARDAR" onPress={saveNewClient} />
-        {isModalVisible && <ModalMessage message={resultData} />}
+        {isModalVisible && <ModalMessage data={resultData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>

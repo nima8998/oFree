@@ -45,6 +45,7 @@ const Profile = () => {
   const [imageValue, setImageValue] = React.useState(null)
   const [refreshing, setRefreshing] = React.useState(false);
   const [show, setShow] = React.useState(false);
+  const executeRefresh = onRefresh(setRefreshing, 500);
 
   React.useEffect(()=>{
     dispatch(getUserData(token))
@@ -85,12 +86,14 @@ const Profile = () => {
 
     dispatch(updateUserData(token, formState.inputValues.name, imageValue, formState.inputValues.mail))
       .then((res) => {
-        setResultData('Perfil actualizado con exito.');
+        console.log(res)
+        setResultData(res.message);
+        setIsModalVisible(true);
+        executeRefresh();
         dispatch(getUserData(token))
-        onRefresh(setRefreshing, 500)
       })
       .catch((error) => {
-        setResultData('Error al modificar el perfil.')
+        setResultData(error.message)
         setIsModalVisible(true);
       })
       .finally(() => {
@@ -150,7 +153,7 @@ const Profile = () => {
           </View> */}
 
           <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateUserData} />
-          {isModalVisible && <ModalMessage message={resultData} />}
+          {isModalVisible && <ModalMessage data={resultData} />}
           {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
         </View>
       </TouchableWithoutFeedback>
