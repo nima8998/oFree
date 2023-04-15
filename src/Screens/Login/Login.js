@@ -4,7 +4,6 @@ import React from 'react'
 import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signUp, login } from '../../Store/Actions/auth.action';
-import { Input } from 'native-base';
 import { Feather } from '@expo/vector-icons';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";

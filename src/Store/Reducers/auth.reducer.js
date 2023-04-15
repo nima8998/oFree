@@ -3,8 +3,9 @@ import { SIGN_IN, LOG_IN, GET_USER_DATA, UPDATE_USER_DATA } from "../Actions/aut
 
 const initialState = {
     token: null,
-    userId: null,
-    currentUser: null
+    userIdExternalDB: null,
+    userIdInternalDB: null,
+    currentUser: null,
 }
 
 const authReducer = (state = initialState, action) =>{
@@ -13,15 +14,14 @@ const authReducer = (state = initialState, action) =>{
             return{
                 ...state,
                 token: action.token,
-                userId: action.userId,
-                user: null
+                userIdExternalDB: action.userIdExternalDB,
+                currentUser: null
             }
         case LOG_IN:
             return{
                 ...state,
                 token: action.token,
-                userId: action.userId,
-                user: null
+                userIdExternalDB: action.userIdExternalDB,
             }
         case GET_USER_DATA:
             return{

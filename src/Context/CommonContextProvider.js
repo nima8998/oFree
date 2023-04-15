@@ -9,10 +9,6 @@ export let CommonContextProvider = ({ children }) => {
 	const [step, setStep] = React.useState(1);
 	const [isTutorialActive, setIsTutorialActive] = React.useState(true);
 
-	// const deleteProject = (id) =>{
-	// 	const filteredList = projects.filter(element => element.id !== id)
-	// 	setProjects(filteredList);
-	// }
 
 	const MemorizedContext = React.useMemo(()=>({
 		isListVisible, setIsListVisible,
