@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { createProject } from '../../Store/Actions/projects.action';
 import { getClients } from '../../Store/Actions/clients.action';
 import { useCommonContext } from '../../Context/CommonContextProvider';
+import { useNavigation } from '@react-navigation/native';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -37,9 +38,12 @@ const formReducer = (state, action) => {
 
 const NewProject = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const { setIsModalVisible, isModalVisible } = useCommonContext();
-  const clientsList = useSelector(({ clients }) => clients.list);
+  
+  const {list} = useSelector(({clients})=>clients);
+  const {userId} = useSelector(({auth})=>auth)
 
   const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -80,8 +84,8 @@ const NewProject = () => {
       client: formState.inputValues.client,
       colorName: colorName,
       projectType: projectType,
+      userOwner: userId,
     }
-
     dispatch(createProject(newProject))
       .then((res) => {
         setReusltData(res.message)
@@ -94,6 +98,7 @@ const NewProject = () => {
       .finally(() => {
         setTimeout(() => {
           setIsModalVisible(false);
+          navigation.goBack();
         }, 2000)
         setIsLoading(false);
       })
@@ -116,7 +121,7 @@ const NewProject = () => {
           />
 
           <CustomDropdown
-            data={clientsList}
+            data={list}
             onDropdownChange={handleInputChange}
             placeholder="Seleccionar cliente"
             id="client"

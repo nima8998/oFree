@@ -44,7 +44,8 @@ const NewTask = () => {
 
   const dispatch = useDispatch();
   const clientsList = useSelector(({ clients }) => clients.list);
-  const projectsList = useSelector(({ projects }) => projects.list);
+  const list = useSelector(({ projects }) => projects.list);
+  const {userId} = useSelector(({auth})=>auth)
   
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [date, setDate] = React.useState();
@@ -98,6 +99,7 @@ const NewTask = () => {
       taskDescription: formState.inputValues.taskDescription,
       taskProject: formState.inputValues.taskProject,
       taskDone: false,
+      userOwner: userId,
     }
 
     dispatch(createTask(newTask, formState.inputValues.taskProject))
@@ -144,7 +146,7 @@ const NewTask = () => {
           />
 
           <CustomDropdown
-            data={projectsList}
+            data={list}
             onDropdownChange={handleInputChange}
             placeholder="Seleccionar proyecto"
             id="taskProject"

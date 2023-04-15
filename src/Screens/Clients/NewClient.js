@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import Colors from '../../Constants/Colors';
 import { createClient, updateClient } from '../../Store/Actions/clients.action';
+import { useNavigation } from '@react-navigation/native';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -38,6 +39,8 @@ const states = [
 
 const NewClient = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const {userId} = useSelector(({auth})=>auth)
 
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
     inputValues: {
@@ -78,6 +81,7 @@ const NewClient = () => {
       mail: formState.inputValues.mail,
       clientState: formState.inputValues.clientState,
       description: formState.inputValues.description,
+      userOwner: userId,
     };
 
     dispatch(createClient(client))
@@ -92,6 +96,7 @@ const NewClient = () => {
       .finally(() => {
         setTimeout(() => {
           setIsModalVisible(false);
+          navigation.goBack();
         }, 2000)
         setIsLoading(false);
       })

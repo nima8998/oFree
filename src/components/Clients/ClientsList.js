@@ -9,12 +9,13 @@ import onRefresh from '../../Utils/refresh'
 const List = () => {
   const dispatch = useDispatch();
   const clients = useSelector(({clients})=>clients.list)
+  const {userId} = useSelector(({auth})=>auth)
   const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(()=>{
-    dispatch(getClients())
+    dispatch(getClients(userId))
   },[refreshing])
-  
+
   return (
     <ScrollView 
       contentContainerStyle={styles.container}
@@ -24,8 +25,8 @@ const List = () => {
     >
         {
           clients.length > 0 ?
-          clients.map((item, index)=><ClientListItem data={item} key={index}/>) :
-          <CustomText textValue={"No hay clientes creados"}/>
+            clients.map((item, index)=><ClientListItem data={item} key={index}/>) :
+            <CustomText textValue={"No hay clientes creados"}/>
         }
     </ScrollView>
   )

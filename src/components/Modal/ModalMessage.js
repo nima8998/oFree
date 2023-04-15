@@ -14,7 +14,7 @@ const ModalMessage = ({
         <View style={styles.container}>
             <View style={styles.modal}>
                 <CustomText textValue={data} otherStyles={styles.modalText} fontType="medium"/>
-                <CustomButton text="OK" type='secondary' onPress={()=>setIsModalVisible(false)} />
+                {/* <CustomButton text="OK" type='secondary' onPress={()=>setIsModalVisible(false)} /> */}
             </View>
         </View>
     </Modal>

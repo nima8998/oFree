@@ -9,12 +9,12 @@ import onRefresh from '../../Utils/refresh'
 const ProjectsList = () => {
   const dispatch = useDispatch();
   const projects = useSelector(({projects})=>projects.list)
+  const {userId} = useSelector(({auth})=>auth);
   const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(()=>{
-    dispatch(getProjects())
+    dispatch(getProjects(userId))
   },[refreshing])
-
 
   return (
     <ScrollView 
@@ -24,9 +24,9 @@ const ProjectsList = () => {
       }  
     >
         {
-          projects ?
-          projects.map((item, index)=><ProjectsListItem data={item} key={index}/>) :
-          <CustomText textValue={"No hay proyectos creados"}/>
+          projects.length > 0 ?
+            projects.map((item, index)=><ProjectsListItem data={item} key={index}/>) :
+            <CustomText textValue={"No hay proyectos creados"}/>
         }
     </ScrollView>
   )

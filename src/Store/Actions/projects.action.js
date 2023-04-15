@@ -3,7 +3,7 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 
-export const getProjects = () => {
+export const getProjects = (userId) => {
     const options = {
         method: "GET",
         headers: {
@@ -13,7 +13,7 @@ export const getProjects = () => {
 
     return async dispatch => {
         try {
-            const response = await fetch(`${process.env.API_URL_FIREBASE}/projects.json`, options);
+            const response = await fetch(`${process.env.API_URL_FIREBASE}/projects.json?orderBy="userOwner"&equalTo="${userId}"`, options);
             const result = await response.json();
             const projects =
                 result != null &&
@@ -43,7 +43,7 @@ export const createProject = (project) => {
     return async dispatch => {
         return await fetch(`${process.env.API_URL_FIREBASE}/projects.json`, options)
             .then(
-                () => dispatch({ type: CREATE_PROJECT, status: 200, message: "Proyecto creado con extio!" }),
+                () => dispatch({ type: CREATE_PROJECT, status: 200, message: "Proyecto creado con exito!" }),
                 error => ({ status: 400, message: error.message })
             )
     }

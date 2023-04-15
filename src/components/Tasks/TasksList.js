@@ -9,10 +9,11 @@ import { getTasks } from '../../Store/Actions/tasks.action';
 const TasksList = () => {
   const dispatch = useDispatch();
   const tasksList = useSelector(({tasks})=>tasks.list)
+  const {userId} = useSelector(({auth})=>auth);
   const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(()=>{
-    dispatch(getTasks())
+    dispatch(getTasks(userId))
   },[refreshing])
 
   const onRefresh = React.useCallback(()=>{
@@ -48,9 +49,9 @@ const TasksList = () => {
       }  
     >
         {
-          tasksList ?
-          tasksList.map((item, index)=><TasksListItem data={item} key={index} handleTaskStatus={handleTaskStatus}/>) :
-          <CustomText textValue={"No hay tareas creadas"}/>
+          tasksList.length > 0 ?
+            tasksList.map((item, index)=><TasksListItem data={item} key={index} handleTaskStatus={handleTaskStatus}/>) :
+            <CustomText textValue={"No hay tareas creadas"}/>
         }
     </ScrollView>
   )

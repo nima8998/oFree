@@ -3,7 +3,7 @@ export const GET_CLIENTS = 'GET_CLIENTS';
 export const GET_CLIENT_BY_ID = 'GET_CLIENT_BY_ID';
 export const UPDATE_CLIENT = 'UPDATE_CLIENT';
 
-export const getClients = () =>{
+export const getClients = (userId) =>{
     const options ={
         method: "GET",
         headers: {
@@ -13,7 +13,7 @@ export const getClients = () =>{
 
     return async dispatch => {
         try {
-            const response = await fetch(`${process.env.API_URL_FIREBASE}/clients.json`, options);
+            const response = await fetch(`${process.env.API_URL_FIREBASE}/clients.json?orderBy="userOwner"&equalTo="${userId}"`, options);
             const result = await response.json();
             const clients = 
                 result != null &&

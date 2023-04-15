@@ -9,7 +9,6 @@ export let UserContextProvider = ({ children }) => {
   const [hasLocalData, setHasLocalData] = React.useState(false);
   const [loggedUser, setLoggedUser] = React.useState(false);
 
-	const dispatch = useDispatch();
 	const {  currentUser, userId } = useSelector(({ auth }) => auth)
   
 	React.useEffect(() => {
@@ -43,7 +42,9 @@ export let UserContextProvider = ({ children }) => {
 
 	return (
 		<UserContext.Provider
-			value={{loggedUser, setLoggedUser}}
+			value={{
+        loggedUser, setLoggedUser,
+      }}
 		>
 			{children}
 		</UserContext.Provider>

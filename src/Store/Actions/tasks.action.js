@@ -3,7 +3,7 @@ export const CREATE_TASK = 'CREATE_TASK';
 export const GET_TASK_BY_ID = 'GET_TASK_BY_ID';
 export const UPDATE_TASK = 'UPDATE_TASK';
 
-export const getTasks = () => {
+export const getTasks = (userId) => {
     const options = {
         method: "GET",
         headers: {
@@ -13,7 +13,7 @@ export const getTasks = () => {
 
     return async dispatch => {
         try {
-            const response = await fetch(`${process.env.API_URL_FIREBASE}/tasks.json`, options);
+            const response = await fetch(`${process.env.API_URL_FIREBASE}/tasks.json?orderBy="userOwner"&equalTo="${userId}"`, options);
             const result = await response.json();
             const tasks =
                 result != null &&
