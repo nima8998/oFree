@@ -24,3 +24,5 @@ export {default as ModalMessage} from "./Modal/ModalMessage";
 
 export {default as MenuItem} from "./Navbar/MenuItem";
 export {default as NotificationsMenu} from "./Navbar/NotificationsMenu";
+
+export {default as NotificationsContainer} from "./Notifications/NotificationsContainer";

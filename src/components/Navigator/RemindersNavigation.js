@@ -8,14 +8,14 @@ const Stack = createNativeStackNavigator();
 
 const RemindersNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName="Recordatorios" screenOptions={{
+    <Stack.Navigator initialRouteName="Reminders" screenOptions={{
         headerTitleStyle: {
           color: "#fff",
           fontSize: 22,
         },
       }}>
         <Stack.Screen 
-          name="Recordatorios"
+          name="Reminders"
           component={Workday} 
           options={() => ({
             title: 'Recordatorios',
