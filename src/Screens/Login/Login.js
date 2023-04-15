@@ -5,6 +5,7 @@ import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signUp, login } from '../../Store/Actions/auth.action';
 import { Feather } from '@expo/vector-icons';
+import { useUserContext } from '../../Context/UserContextProvider';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -34,6 +35,7 @@ const formReducer = (state, action) => {
 const Login = () => {
   const dispatch = useDispatch();
   const [show, setShow] = React.useState(false);
+  const {loggedUser, setLoggedUser} = useUserContext();
 
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
     inputValues: {
@@ -58,11 +60,19 @@ const Login = () => {
   const handleSignUp = () => {
     if (formState.inputValues.user === '' && formState.inputValues.password === '') return
     dispatch(signUp(formState.inputValues.user, formState.inputValues.password))
+      .then(_=>{
+        setLoggedUser(true)
+      })
+      .catch(err=>console.log(err))
   }
 
   const handleLogin = () => {
     if (formState.inputValues.user === '' && formState.inputValues.password === '') return
     dispatch(login(formState.inputValues.user, formState.inputValues.password))
+      .then(_=>{
+        setLoggedUser(true)
+      })
+      .catch(err=>console.log(err))
   }
 
   return (

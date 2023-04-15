@@ -1,5 +1,5 @@
 import React from 'react'
-import {Home, Login} from '../../Screens'
+import {Home} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ScreenOptionsNavbar from '../../Constants/ScreenOptionsNavbar'
 import Colors from '../../Constants/Colors'

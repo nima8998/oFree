@@ -7,7 +7,7 @@ export const init = () => {
     db.transaction(function (tx) {
       tx.executeSql(`
             CREATE TABLE IF NOT EXISTS user_profile_data(
-                id INTEGER PRIMARY KEY NOT NULL,
+                id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
                 email TEXT NOT NULL,
                 photoUri TEXT
@@ -58,7 +58,7 @@ export const getUserLocalData = (id, dbfield) =>{
   const getUserLocalDataPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {
       tx.executeSql(
-        `SELECT ${dbfield} FROM user_profile_data where id = ${id}`,
+        `SELECT ${dbfield} FROM user_profile_data where id = '${id}'`,
         [],
         (_, result) => { resolve(result) },
         (_, error) => { reject(error) })

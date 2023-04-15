@@ -1,32 +1,49 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { createUserDataLocal } from "../../db";
+import { createUserDataLocal, getUserLocalData } from "../../db";
 
 export let UserContext = React.createContext();
 export const useUserContext = () => React.useContext(UserContext);
 
 export let UserContextProvider = ({ children }) => {
-	const [hasLocalData, setHasLocalData] = React.useState(false);
+  const [hasLocalData, setHasLocalData] = React.useState(false);
+  const [loggedUser, setLoggedUser] = React.useState(false);
 
-  const dispatch = useDispatch();
-	const {userIdExternalDB, currentUser, token} = useSelector(({auth})=>auth)
+	const dispatch = useDispatch();
+	const {  currentUser, userId } = useSelector(({ auth }) => auth)
+  
+	React.useEffect(() => {
+    if(loggedUser){
+      getUserLocalData(userId, 'id')
+        .then(res=>{
+          const result = res.rows._array;
+          if(result.length > 0){
+            setHasLocalData(true);
+          }
+        })
+        .catch(error=>{
+          console.log("error caught at user's local data consulting SQLite: (user context: 25) ", error)
+        })
+    }
 
-	const executeLocalDataCreation = () =>{
-		// if (!hasLocalData){
-		// 	createUserDataLocal(currentUser.email, userIdExternalDB)
-    //     .then(_=>{
+	}, [loggedUser])
 
-    //       setHasLocalData(true)
-    //     })
-    //     .catch(err=>console.log(err))
-		// }
-	}
-	
+  React.useEffect(() => {
+    if(!hasLocalData && currentUser){
+      createUserDataLocal(userId, currentUser.email)
+        .then(res=>{
+          setHasLocalData(true);
+          console.log("user's local data created successfully.", res)
+        })
+        .catch(error=>{
+          console.log("Error caught at the user data creation. (user context:38)", error)
+        })
+    }
+	}, [hasLocalData, currentUser])
+
 	return (
 		<UserContext.Provider
-			value={{
-        executeLocalDataCreation
-      }}
+			value={{loggedUser, setLoggedUser}}
 		>
 			{children}
 		</UserContext.Provider>

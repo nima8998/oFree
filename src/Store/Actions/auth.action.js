@@ -1,15 +1,13 @@
-import { createUserDataLocal } from "../../../db"
-
 export const SIGN_IN = "SIGN_IN"
 export const LOG_IN = "LOG_IN"
 export const GET_USER_DATA = "GET_USER_DATA"
 export const UPDATE_USER_DATA = "UPDATE_USER_DATA"
 
 
-export const signUp = (user,password) =>{
+export const signUp = (user, password) => {
     const options = {
         method: "POST",
-        headers:{
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -19,27 +17,35 @@ export const signUp = (user,password) =>{
         })
     }
 
-    return async dispatch =>{
-        try {
-            const responseFirebaseSignup = await fetch (`${process.env.API_URL_FIREBASE_SIGNUP}${process.env.FIREBASE_API_KEY}`, options);
-            
-            const data = await responseFirebaseSignup.json();
-            
-            dispatch({
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE_SIGNUP}${process.env.FIREBASE_API_KEY}`, options)
+            .then(data=>data.json())
+            .then((res) => dispatch({
                 type: SIGN_IN,
-                token: data.idToken,
-                userIdExternalDB: data.localId,
-            })
-        } catch (error) {
-            console.log('Error caught while signing up.', error)
-        }
+                token: res.idToken,
+                userId: res.localId,
+            }))
+            .catch((error) => { error })
+        // try {
+        //     const responseFirebaseSignup = await fetch (`${process.env.API_URL_FIREBASE_SIGNUP}${process.env.FIREBASE_API_KEY}`, options);
+
+        //     const data = await responseFirebaseSignup.json();
+
+        //     dispatch({
+        //         type: SIGN_IN,
+        //         token: data.idToken,
+        //         userId: data.localId,
+        //     })
+        // } catch (error) {
+        //     console.log('Error caught while signing up.', error)
+        // }
     }
 }
 
-export const login = (user,password) =>{
+export const login = (user, password) => {
     const options = {
         method: "POST",
-        headers:{
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -48,27 +54,38 @@ export const login = (user,password) =>{
             returnSecureToken: true
         })
     }
-    return async dispatch =>{
-        try {
-            const response = await fetch (`${process.env.API_URL_FIREBASE_LOGIN}${process.env.FIREBASE_API_KEY}`, options);
-
-            const data = await response.json();
-       
-            dispatch({
-                type: LOG_IN,
-                token: data.idToken,
-                userIdExternalDB: data.localId
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE_LOGIN}${process.env.FIREBASE_API_KEY}`, options)
+            .then(data=>data.json())
+            .then(res=>{
+                dispatch({
+                    type: LOG_IN,
+                    token: res.idToken,
+                    userId: res.localId
+                })
             })
-        } catch (error) {
-            console.log('Error caught while loging up', error)
-        }
+            .catch((error)=>console.log('Error caught while loging up', error))
+            
+        // try {
+        //     const response = await fetch (`${process.env.API_URL_FIREBASE_LOGIN}${process.env.FIREBASE_API_KEY}`, options);
+
+        //     const data = await response.json();
+
+        //     dispatch({
+        //         type: LOG_IN,
+        //         token: data.idToken,
+        //         userId: data.localId
+        //     })
+        // } catch (error) {
+        //     console.log('Error caught while loging up', error)
+        // }
     }
 }
 
-export const getUserData = (idToken) =>{
+export const getUserData = (idToken) => {
     const options = {
         method: "POST",
-        headers:{
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -76,9 +93,9 @@ export const getUserData = (idToken) =>{
         })
     }
 
-    return async dispatch =>{
+    return async dispatch => {
         try {
-            const response = await fetch (`${process.env.API_URL_FIREBASE_GET_USER_DATA}${process.env.FIREBASE_API_KEY}`, options);
+            const response = await fetch(`${process.env.API_URL_FIREBASE_GET_USER_DATA}${process.env.FIREBASE_API_KEY}`, options);
 
             const data = await response.json();
 
@@ -87,15 +104,15 @@ export const getUserData = (idToken) =>{
                 user: data?.users[0]
             })
         } catch (error) {
-            console.log('Error caught while loging up', error)
+            console.log('Error caught while fetching user data from db', error)
         }
     }
 }
 
-export const updateUserData = (idToken, displayName, photoUrl, email, returnSecureToken = true) =>{
+export const updateUserData = (idToken, displayName, photoUrl, email, returnSecureToken = true) => {
     const options = {
         method: "POST",
-        headers:{
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -106,11 +123,11 @@ export const updateUserData = (idToken, displayName, photoUrl, email, returnSecu
             returnSecureToken
         })
     }
-    
+
 
     return async dispatch => {
-        return await fetch (`${process.env.API_URL_FIREBASE_UPDATE_USER_DATA}${process.env.FIREBASE_API_KEY}`, options)
-            .then(() => dispatch({type: UPDATE_USER_DATA, message: "Perfil actualizado con éxito."}))
-            .catch(error => ({message: error.message}))
+        return await fetch(`${process.env.API_URL_FIREBASE_UPDATE_USER_DATA}${process.env.FIREBASE_API_KEY}`, options)
+            .then(() => dispatch({ type: UPDATE_USER_DATA, message: "Perfil actualizado con éxito." }))
+            .catch(error => ({ message: error.message }))
     }
 }

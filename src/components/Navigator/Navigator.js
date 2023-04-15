@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 import { Login } from '../../Screens';
 
 const Navigator = () => {
-  const {userIdExternalDB} = useSelector(({auth})=>auth);
+  const {userId} = useSelector(({auth})=>auth);
   return (
     <NavigationContainer>
-      {!userIdExternalDB ? <Login/> : <DrawerNavigation/>}
+      {!userId ? <Login/> : <DrawerNavigation/>}
     </NavigationContainer>
   )
 }
