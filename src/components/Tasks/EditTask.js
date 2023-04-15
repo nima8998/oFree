@@ -43,6 +43,7 @@ const EditTask = ({task}) => {
   const dispatch = useDispatch();
   const clientsList = useSelector(({ clients }) => clients.list);
   const projectsList = useSelector(({ projects }) => projects.list);
+  const {userId} = useSelector(({auth})=>auth);
   
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [date, setDate] = React.useState();
@@ -84,8 +85,8 @@ const EditTask = ({task}) => {
 
 
   React.useEffect(() => {
-    dispatch(getClients())
-    dispatch(getProjects())
+    dispatch(getClients(userId))
+    dispatch(getProjects(userId))
     setDate(new Date(task.taskDate))
   }, [])
 

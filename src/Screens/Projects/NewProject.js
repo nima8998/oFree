@@ -73,7 +73,7 @@ const NewProject = () => {
 
 
   React.useEffect(() => {
-    dispatch(getClients())
+    dispatch(getClients(userId))
   }, [])
 
 

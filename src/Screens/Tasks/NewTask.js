@@ -85,8 +85,8 @@ const NewTask = () => {
 
 
   React.useEffect(() => {
-    dispatch(getClients())
-    dispatch(getProjects())
+    dispatch(getClients(userId))
+    dispatch(getProjects(userId))
   }, [])
 
 

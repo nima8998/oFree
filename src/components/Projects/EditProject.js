@@ -44,6 +44,7 @@ const EditProject = ({
 
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const clientsList = useSelector(({ clients }) => clients.list);
+  const {userId} = useSelector(({auth})=>auth);
 
   const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -77,7 +78,7 @@ const EditProject = ({
 
 
   React.useEffect(() => {
-    dispatch(getClients())
+    dispatch(getClients(userId))
     setProjectType(project.projectType)
     setColorName(project.colorName)
   }, [])
