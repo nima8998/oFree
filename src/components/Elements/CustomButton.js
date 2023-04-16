@@ -8,13 +8,20 @@ const CustomButton = ({
     onPress,
     otherStyles,
     textPropsStyle,
+    disabled,
     type = "primary"
 }) => {
   return (
     <TouchableOpacity 
         activeOpacity={0.8}
-        style={[styles.baseStyle, otherStyles, type !== "primary" && styles.secondaryButton]}
-        onPress={onPress}
+        style={[
+            styles.baseStyle,
+            otherStyles,
+            disabled && styles.disabledBtn,
+            type !== "primary" && styles.secondaryButton
+        ]}
+        onPress={!disabled ? onPress : null}
+        disabled={disabled}
     >
         <CustomText otherStyles={[styles.textStyle, textPropsStyle, type !== "primary" && styles.secondaryText]} textValue={text}/>
     </TouchableOpacity>
@@ -42,5 +49,8 @@ const styles = StyleSheet.create({
     },
     secondaryText:{
         color: Colors.primaryBlue,
+    },
+    disabledBtn:{
+        backgroundColor: Colors.secondaryBlue
     }
 })

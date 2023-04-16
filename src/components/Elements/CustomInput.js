@@ -1,5 +1,6 @@
 import { StyleSheet, TextInput, View } from 'react-native'
 import React from 'react'
+import CustomText from './CustomText';
 
 const INPUT_CHANGE = "INPUT_CHANGE";
 const INPUT_BLUR = "INPUT_BLUR";
@@ -38,7 +39,7 @@ const CustomInput = ({
   max,
   minLength,
   label,
-  errorText,
+  errorValue,
   placeholder,
   textContentType,
   type,
@@ -50,7 +51,7 @@ const CustomInput = ({
   const [inputState, inputDispatch] = React.useReducer(inputReducer, {
     value: initialValue ? initialValue : "",
     isValid: initiallyValid,
-    touched: true
+    touched: false
   })
 
   React.useEffect(()=>{
@@ -86,22 +87,31 @@ const CustomInput = ({
   }
 
   return (
-    <>
-      <TextInput
-          {...restProps}
-          value={inputState.value}
-          onChangeText={textChangeHandler}
-          onBlur={lostFocusHandler}
-          placeholder={placeholder}
-          style={[styles.input, restProps.otherStyles, !enable && styles.disabledInpupt]}
-          keyboardType={keyboardType}
-          secureTextEntry={type === 'password' && true}
-          editable={enable}
-      />
-      <View style={styles.inputIcon}>
-        {inputRightIcon}
+    <View style={{flexDirection: 'column', width: "100%",  alignItems: 'center', marginBottom: 10}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TextInput
+            {...restProps}
+            value={inputState.value}
+            onChangeText={textChangeHandler}
+            onBlur={lostFocusHandler}
+            placeholder={placeholder}
+            style={[styles.input, restProps.otherStyles, !enable && styles.disabledInpupt]}
+            keyboardType={keyboardType}
+            secureTextEntry={type === 'password' && true}
+            editable={enable}
+        />
+        <View style={styles.inputIcon}>
+          {inputRightIcon}
+        </View>
       </View>
-    </>
+      {
+        !inputState.isValid && inputState.touched && (
+          <View style={styles.errorContainer}>
+            <CustomText style={styles.errorText} textValue={errorValue}/>
+          </View>
+        )
+      }
+    </View>
   )
 }
 
@@ -115,9 +125,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     inputIcon:{
-      position: 'absolute'
+      position: 'absolute',
+      right: 0
     },
     disabledInpupt:{
       opacity: .5
+    },
+    errorContainer:{
+      marginTop: 3,
+    },
+    errorText:{
+      color: 'red'
     }
 })

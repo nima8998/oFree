@@ -35,7 +35,8 @@ const formReducer = (state, action) => {
 const Login = () => {
   const dispatch = useDispatch();
   const [show, setShow] = React.useState(false);
-  const {loggedUser, setLoggedUser} = useUserContext();
+  const {setLoggedUser} = useUserContext();
+  const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
     inputValues: {
@@ -48,6 +49,14 @@ const Login = () => {
     }
   })
 
+  React.useEffect(()=>{
+    if(formState.inputValues.password === '' || formState.inputValues.user === ''){
+      setIsDisabledBtn(true)
+    }else{
+      setIsDisabledBtn(false)
+    }
+  },[formState.inputValues.password, formState.inputValues.user])
+
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
       type: FORM_INPUT_UPDATE,
@@ -58,7 +67,6 @@ const Login = () => {
   }, [dispatchFormState])
 
   const handleSignUp = () => {
-    if (formState.inputValues.user === '' && formState.inputValues.password === '') return
     dispatch(signUp(formState.inputValues.user, formState.inputValues.password))
       .then(_=>{
         setLoggedUser(true)
@@ -67,7 +75,6 @@ const Login = () => {
   }
 
   const handleLogin = () => {
-    if (formState.inputValues.user === '' && formState.inputValues.password === '') return
     dispatch(login(formState.inputValues.user, formState.inputValues.password))
       .then(_=>{
         setLoggedUser(true)
@@ -85,6 +92,9 @@ const Login = () => {
           id='user'
           initialValue={formState.inputValues.user}
           initiallyValid={formState.inputValidities.user}
+          email={true}
+          required={true}
+          errorValue={"Email incorrecto"}
         />
         <View style={styles.inputGroup}>
           <CustomInput
@@ -94,6 +104,9 @@ const Login = () => {
             id='password'
             initialValue={formState.inputValues.password}
             initiallyValid={formState.inputValidities.password}
+            required={true}
+            minLength={6}
+            errorValue={"Clave invalida, mínimo 6 caracteres"}
             type={!show && 'password'}
             inputRightIcon={
               <Pressable onPress={() => setShow(!show)}>
@@ -103,7 +116,7 @@ const Login = () => {
           />
         </View>
         <View style={styles.containerFooter}>
-          <CustomButton text={'INGRESAR'} type='primary' onPress={handleLogin} />
+          <CustomButton text={'INGRESAR'} type='primary' onPress={handleLogin} disabled={isDisabledBtn}/>
           <CustomButton text={'REGISTRARSE'} type='secondary' onPress={handleSignUp} />
         </View>
       </View>
