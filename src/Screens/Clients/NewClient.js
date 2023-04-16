@@ -112,6 +112,8 @@ const NewClient = () => {
           otherStyles={styles.inputs}
           initialValue={formState.inputValues.name}
           initiallyValid={formState.inputValidities.name}
+          required={true}
+          errorValue="Ingrese un nombre."
         />
 
         <CustomInput
@@ -132,6 +134,7 @@ const NewClient = () => {
           initialValue={formState.inputValues.mail}
           initiallyValid={formState.inputValidities.mail}
           keyboardType='email-address'
+          email={true}
         />
 
         <CustomDropdown

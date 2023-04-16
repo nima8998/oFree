@@ -95,7 +95,12 @@ const CustomInput = ({
             onChangeText={textChangeHandler}
             onBlur={lostFocusHandler}
             placeholder={placeholder}
-            style={[styles.input, restProps.otherStyles, !enable && styles.disabledInpupt]}
+            style={[
+              styles.input, 
+              restProps.otherStyles, 
+              !inputState.isValid && inputState.touched && required && styles.errorInput,
+              !enable && styles.disabledInpupt
+            ]}
             keyboardType={keyboardType}
             secureTextEntry={type === 'password' && true}
             editable={enable}
@@ -132,9 +137,12 @@ const styles = StyleSheet.create({
       opacity: .5
     },
     errorContainer:{
-      marginTop: 3,
+      marginTop: 1,
     },
     errorText:{
-      color: 'red'
+      color: '#f96f6f'
+    },
+    errorInput:{
+      borderBottomColor: '#f96f6f'
     }
 })
