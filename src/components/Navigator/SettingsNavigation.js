@@ -1,5 +1,5 @@
 import React from 'react'
-import {Workday} from '../../Screens'
+import {Settings} from '../../Screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Colors from '../../Constants/Colors'
 import MenuItem from '../Navbar/MenuItem'
@@ -16,7 +16,7 @@ const SettingNavigation = () => {
       }}>
         <Stack.Screen 
           name="Settings"
-          component={Workday} 
+          component={Settings} 
           options={() => ({
             title: 'Preferencias',
             headerStyle: {

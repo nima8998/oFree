@@ -1,11 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
-import * as Permissions from 'expo-permissions'
 import CustomText from '../Elements/CustomText'
-import CustomButton from '../Elements/CustomButton'
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../Constants/Colors'
+import { Alert } from 'react-native'
 
 
 const ProfileImageSelector = ({onImage, defaultImage}) => {
@@ -16,13 +15,11 @@ const ProfileImageSelector = ({onImage, defaultImage}) => {
     if (status !== 'granted') {
       Alert.alert(
         'Permiso denegado',
-        'Neceista dar permisos a la camara para que pueda elegir una foto de perfil',
+        'Para utilizar la cámara necesitas dar permiso desde la pantalla de configuración de tu dispositivo.',
         [{text: 'Ok'}]
       )
-
       return false;
     }
-
     return true;
   }
 

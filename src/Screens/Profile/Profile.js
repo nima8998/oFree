@@ -2,7 +2,6 @@ import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ActivityIndicator
 import { CustomButton, CustomInput, ModalMessage } from '../../components'
 import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider';
-import CustomText from '../../components/Elements/CustomText'
 import Colors from '../../Constants/Colors';
 import { Feather } from '@expo/vector-icons';
 import onRefresh from '../../Utils/refresh';
@@ -77,12 +76,6 @@ const Profile = () => {
 
   const handleUpdateUserData = async () => {
     setIsLoading(true);
-    const newUserData = {
-      name: formState.inputValues.name,
-      email: formState.inputValues.mail,
-      password: formState.inputValues.password,
-      profileImage: imageValue,
-    };
 
     dispatch(updateUserData(token, formState.inputValues.name, imageValue, formState.inputValues.mail))
       .then((res) => {
@@ -96,6 +89,9 @@ const Profile = () => {
         setIsModalVisible(true);
       })
       .finally(() => {
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 750);
         setIsLoading(false);
       })
   }

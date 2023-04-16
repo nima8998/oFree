@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { createUserDataLocal, getUserLocalData } from "../../db";
 
 export let UserContext = React.createContext();
@@ -15,8 +15,7 @@ export let UserContextProvider = ({ children }) => {
     if(loggedUser){
       getUserLocalData(userId, 'id')
         .then(res=>{
-          const result = res.rows._array;
-          if(result.length > 0){
+          if(res){
             setHasLocalData(true);
           }
         })

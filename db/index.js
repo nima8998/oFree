@@ -35,16 +35,15 @@ export const createUserDataLocal = (id, email) => {
   return createUserDataLocalPromise;
 }
 
-export const updateUserDataLocal = (id, externalId, name, email, photoUri) =>{
+export const updateUserDataLocal = (id, name, email, photoUri) =>{
   const updateUserDataLocalPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {
       tx.executeSql(`
         UPDATE user_profile_data
-        SET external_id = ${externalId},
-        SET name = ${name},
-        SET email = ${email},
-        SET photoUri = ${photoUri}
-        WHERE id = ${id}
+        SET name = '${name}',
+            email = '${email}',
+            photoUri = ${photoUri}
+        WHERE id = '${id}'
       `, 
       [],
       (_, result) => { resolve(result) },
@@ -60,7 +59,7 @@ export const getUserLocalData = (id, dbfield) =>{
       tx.executeSql(
         `SELECT ${dbfield} FROM user_profile_data where id = '${id}'`,
         [],
-        (_, result) => { resolve(result) },
+        (_, result) => { resolve(result.rows._array[0]) },
         (_, error) => { reject(error) })
     })
   })
