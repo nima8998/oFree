@@ -87,7 +87,7 @@ const Login = () => {
       <View style={styles.container}>
         <CustomInput
           otherStyles={styles.inputs}
-          placeholder={"Email"}
+          placeholder={"Email *"}
           onInputChange={handleInputChange}
           id='user'
           initialValue={formState.inputValues.user}
@@ -99,7 +99,7 @@ const Login = () => {
         <View style={styles.inputGroup}>
           <CustomInput
             otherStyles={styles.inputs}
-            placeholder={"Contraseña"}
+            placeholder={"Contraseña *"}
             onInputChange={handleInputChange}
             id='password'
             initialValue={formState.inputValues.password}

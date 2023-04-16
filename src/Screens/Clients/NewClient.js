@@ -63,6 +63,7 @@ const NewClient = () => {
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
   const [resultData, setResultData] = React.useState();
+  const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
@@ -72,6 +73,13 @@ const NewClient = () => {
         input: inputIdentifier
     })
   }, [dispatchFormState])
+
+  React.useEffect(()=>{
+    if(formState.inputValues.name === '')
+      setIsDisabledBtn(true);
+    else
+      setIsDisabledBtn(false);
+  },[formState.inputValues.name])
 
   const saveNewClient = async () => {
     setIsLoading(true);
@@ -106,7 +114,7 @@ const NewClient = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <CustomInput
-          placeholder="Name"
+          placeholder="Nombre del cliente *"
           id="name"
           onInputChange={handleInputChange}
           otherStyles={styles.inputs}
@@ -154,7 +162,7 @@ const NewClient = () => {
           initiallyValid={formState.inputValidities.description}
         />
 
-        <CustomButton type='primary' text="GUARDAR" onPress={saveNewClient} />
+        <CustomButton type='primary' text="GUARDAR" onPress={saveNewClient} disabled={isDisabledBtn}/>
         {isModalVisible && <ModalMessage data={resultData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>

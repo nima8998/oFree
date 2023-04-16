@@ -64,6 +64,7 @@ const EditClient = ({
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
   const [resultData, setResultData] = React.useState();
+  const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
@@ -73,6 +74,13 @@ const EditClient = ({
         input: inputIdentifier
     })
   }, [dispatchFormState])
+
+  React.useEffect(()=>{
+    if(formState.inputValues.name === '')
+      setIsDisabledBtn(true);
+    else
+      setIsDisabledBtn(false);
+  },[formState.inputValues.name])
 
   const handleUpdateClient = async () => {
     setIsLoading(true);
@@ -108,12 +116,14 @@ const EditClient = ({
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <CustomInput
-          placeholder="Name"
+          placeholder="Nombre del cliente *"
           id="name"
           onInputChange={handleInputChange}
           otherStyles={styles.inputs}
           initialValue={formState.inputValues.name}
           initiallyValid={formState.inputValidities.name}
+          required={true}
+          errorValue="Ingrese un nombre."
         />
 
         <CustomInput
@@ -153,7 +163,7 @@ const EditClient = ({
           initiallyValid={formState.inputValidities.description}
         />
 
-        <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateClient} />
+        <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateClient} disabled={isDisabledBtn}/>
         {isModalVisible && <ModalMessage data={resultData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>

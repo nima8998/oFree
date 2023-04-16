@@ -47,6 +47,7 @@ const EditTask = ({task}) => {
   
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [date, setDate] = React.useState();
+  const [isDisabledBtn, setIsDisabledBtn] = React.useState();
   
   const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -54,14 +55,14 @@ const EditTask = ({task}) => {
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
     inputValues: {
       taskName: task.taskName,
-      taskClient: task.taskClient,
+      // taskClient: task.taskClient,
       taskDescription: task.taskDescription,
       taskProject: task.taskProject,
       taskDone: task.taskDone,
     },
     inputValidities: {
       taskName: false,
-      taskClient: false,
+      // taskClient: false,
       taskDescription: false,
       taskProject: false,
       taskDone: false,
@@ -90,12 +91,17 @@ const EditTask = ({task}) => {
     setDate(new Date(task.taskDate))
   }, [])
 
-
+  React.useEffect(()=>{
+    if(formState.inputValues.taskName === '')
+      setIsDisabledBtn(true);
+    else
+      setIsDisabledBtn(false);
+  },[formState.inputValues.taskName])
 
   const addTask = () => {
     const taskUpdated = {
       taskName: formState.inputValues.taskName,
-      taskClient: formState.inputValues.taskClient,
+      // taskClient: formState.inputValues.taskClient,
       taskDate: date.toLocaleDateString(),
       taskDescription: formState.inputValues.taskDescription,
       taskProject: formState.inputValues.taskProject,
@@ -130,22 +136,24 @@ const EditTask = ({task}) => {
         <View style={styles.body}>
 
           <CustomInput
-            placeholder="Nombre de la tarea"
+            placeholder="Nombre de la tarea *"
             onInputChange={handleInputChange}
             otherStyles={styles.inputs}
             id="taskName"
             initialValue={formState.inputValues.taskName}
             initiallyValid={formState.inputValidities.taskName}
+            required={true}
+            errorValue="Ingrese el nombre de la tarea."
           />
 
-          <CustomDropdown
+          {/* <CustomDropdown
             data={clientsList}
             onDropdownChange={handleInputChange}
             placeholder="Seleccionar cliente"
             id="taskClient"
             initialValue={formState.inputValues.taskClient}
             initiallyValid={formState.inputValidities.taskClient}
-          />
+          /> */}
 
           <CustomDropdown
             data={projectsList}
@@ -182,6 +190,7 @@ const EditTask = ({task}) => {
           <CustomButton
             onPress={addTask}
             text="GUARDAR"
+            disabled={isDisabledBtn}
           />
         </View>
 

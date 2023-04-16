@@ -110,7 +110,7 @@ const CustomInput = ({
         </View>
       </View>
       {
-        !inputState.isValid && inputState.touched && (
+        !inputState.isValid && inputState.touched && required && (
           <View style={styles.errorContainer}>
             <CustomText style={styles.errorText} textValue={errorValue}/>
           </View>

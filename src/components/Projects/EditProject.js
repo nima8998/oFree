@@ -48,6 +48,7 @@ const EditProject = ({
 
   const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const [projectType, setProjectType] = React.useState('fijo');
   const [colorName, setColorName] = React.useState();
@@ -83,6 +84,12 @@ const EditProject = ({
     setColorName(project.colorName)
   }, [])
 
+  React.useEffect(()=>{
+    if(formState.inputValues.name === '')
+      setIsDisabledBtn(true);
+    else
+      setIsDisabledBtn(false);
+  },[formState.inputValues.name])
 
   const updateProject = () => {
     const updatedProjectData = {
@@ -120,12 +127,14 @@ const EditProject = ({
         <View style={styles.body}>
 
           <CustomInput
-            placeholder="Nombre del proyecto"
+            placeholder="Nombre del proyecto *"
             onInputChange={handleInputChange}
             otherStyles={styles.inputs}
             id="name"
             initialValue={formState.inputValues.name}
             initiallyValid={formState.inputValidities.name}
+            required={true}
+            errorValue={"Ingrese el nombre del proyecto"}
           />
 
           <CustomDropdown
@@ -176,6 +185,7 @@ const EditProject = ({
           <CustomButton
             onPress={updateProject}
             text="GUARDAR"
+            disabled={isDisabledBtn}
           />
         </View>
 

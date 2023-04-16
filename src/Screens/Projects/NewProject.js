@@ -47,6 +47,7 @@ const NewProject = () => {
 
   const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const [projectType, setProjectType] = React.useState('fijo');
   const [colorName, setColorName] = React.useState();
@@ -76,7 +77,12 @@ const NewProject = () => {
     dispatch(getClients(userId))
   }, [])
 
-
+  React.useEffect(()=>{
+    if(formState.inputValues.name === '')
+      setIsDisabledBtn(true);
+    else
+      setIsDisabledBtn(false);
+  },[formState.inputValues.name])
 
   const addProject = () => {
     const newProject = {
@@ -112,12 +118,14 @@ const NewProject = () => {
         <View style={styles.body}>
 
           <CustomInput
-            placeholder="Nombre del proyecto"
+            placeholder="Nombre del proyecto *"
             onInputChange={handleInputChange}
             otherStyles={styles.inputs}
             id="name"
             initialValue={formState.inputValues.name}
             initiallyValid={formState.inputValidities.name}
+            required={true}
+            errorValue={"Ingrese el nombre del proyecto"}
           />
 
           <CustomDropdown
@@ -168,6 +176,7 @@ const NewProject = () => {
           <CustomButton
             onPress={addProject}
             text="GUARDAR"
+            disabled={isDisabledBtn}
           />
         </View>
 
