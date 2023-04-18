@@ -19,6 +19,9 @@ export {default as TasksList} from "./Tasks/TasksList";
 // CALENDAR COMPONENTS
 export {default as CustomCalendar} from "./Calendar/CustomCalendar";
 
+// HOME COMPONENTS
+export {default as Counter} from "./Home/Counter";
+
 // MODALS
 export {default as ModalMessage} from "./Modal/ModalMessage";
 

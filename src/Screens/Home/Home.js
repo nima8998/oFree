@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import CustomText from '../../components/Elements/CustomText';
+import {Counter} from "../../components"
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserData } from '../../Store/Actions/auth.action';
 
@@ -16,7 +16,7 @@ const Home = ({
 
   return (
     <View style={styles.container}>
-      <CustomText textValue={"Home View"}/>
+      <Counter/>
     </View>
   )
 }
