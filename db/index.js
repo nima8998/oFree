@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('address.db');
 
-export const init = () => {
+export const init_user_profile_data = () => {
   const initPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {
       tx.executeSql(`
@@ -11,7 +11,30 @@ export const init = () => {
                 name TEXT,
                 email TEXT NOT NULL,
                 photoUri TEXT
-            )`,
+            );
+            CREATE TABLE IF NOT EXISTS user_work_time(
+              id TEXT PRIMARY KEY NOT NULL,
+              work_data TEXT
+            );
+            `,
+        [],
+        () => { resolve() },
+        (_, error) => { reject(error) });
+    })
+  })
+  return initPromise;
+}
+
+export const init_user_work_time = () => {
+  const initPromise = new Promise((resolve, reject) => {
+    db.transaction(function (tx) {
+      tx.executeSql(`
+            CREATE TABLE IF NOT EXISTS user_work_time(
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              id_user TEXT NOT NULL,
+              work_data TEXT
+            )
+            `,
         [],
         () => { resolve() },
         (_, error) => { reject(error) });
@@ -64,4 +87,40 @@ export const getUserLocalData = (id, dbfield) =>{
     })
   })
   return getUserLocalDataPromise;
+}
+
+export const createWorkTimeLocal = (id_user, value) => {
+  const work_data = JSON.stringify(value);
+  const createWorkTimeLocalPromise = new Promise((resolve, reject) => {
+    db.transaction(function (tx) {
+        tx.executeSql(
+          `INSERT INTO user_work_time
+          (id_user, work_data)
+          values(?, ?)
+        `,
+        [id_user, work_data],
+        (_, result) => { resolve(result) },
+        (_, error) => { reject(error) })
+    })
+  })
+  return createWorkTimeLocalPromise;
+}
+
+export const getWorkTimeLocal = (id_user) => {
+  const getWorkTimeLocalPromise = new Promise((resolve, reject) => {
+    db.transaction(function (tx) {
+        tx.executeSql(
+          `select work_data
+          from user_work_time
+          where id_user = '${id_user}'
+        `,
+        [],
+        (_, result) => { 
+          const jsonData = result.rows._array.map(row=>JSON.parse(row.work_data))
+          resolve(jsonData) 
+        },
+        (_, error) => { reject(error) })
+    })
+  })
+  return getWorkTimeLocalPromise;
 }

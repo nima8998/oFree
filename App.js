@@ -8,15 +8,22 @@ import { Provider } from 'react-redux';
 import Store from './src/Store';
 
 import { useFonts } from 'expo-font';
-import { init } from './db';
+import { init_user_profile_data, init_user_work_time } from './db';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { UserContextProvider } from './src/Context/UserContextProvider';
 
-init()
-  .then(()=>console.log('SQLite initialized successfully.'))
+init_user_profile_data()
+  .then(()=>console.log('user_profile_data initialized.'))
   .catch((err)=>{
-    console.log('SQLite init failed.');
+    console.log('user_profile_data init failed.');
+    console.log(err.message);
+  })
+
+  init_user_work_time()
+  .then(()=>console.log('user_work_time initialized.'))
+  .catch((err)=>{
+    console.log('user_work_time init failed.');
     console.log(err.message);
   })
 

@@ -4,7 +4,7 @@ import Colors from '../../Constants/Colors'
 import CustomText from '../Elements/CustomText'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
-import { setAsyncStorageItem } from '../../../storage';
+import { createWorkTimeLocal } from '../../../db';
 
 import Toast from 'react-native-easy-toast';
 
@@ -89,9 +89,13 @@ const Counter = () => {
       seconds: seconds,
     }
 
-    setAsyncStorageItem(userId, worktimeReport)
-      .then(data=>successToast.current.show(data.message, 1500))
-      .catch(err=>errorToast.current.current.show(err.message, 1500))
+    createWorkTimeLocal(userId, worktimeReport)
+      .then(data=>
+        successToast.current.show('Progreso guardado.', 1500)
+      )
+      .catch(err=>
+        errorToast.current.current.show(`Error al guardar progreso.\n\n${err}`, 1500)
+      )
   }
 
   return (
