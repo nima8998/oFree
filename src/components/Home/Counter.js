@@ -26,11 +26,12 @@ const Counter = () => {
 
   React.useEffect(() => {
     let interval = null;
+    const timeInterval = 1000; // set 1 to test faster
     if (isCounting && !pauseCount) {
 
       interval = setInterval(() => {
         setSeconds(prev => prev + 1)
-      }, 1000)
+      }, timeInterval)
 
     }
     seconds === 61 && setSeconds(1);

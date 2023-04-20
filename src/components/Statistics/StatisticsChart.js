@@ -5,13 +5,14 @@ import Colors from '../../Constants/Colors';
 import CustomText from '../Elements/CustomText';
 
 const StatisticsChart = ({
-  title
+  title,
+  hoursPerDay
 }) => {
   const data = {
     labels: ["D", "L", "M", "X", "J", "V", "S"],
     datasets: [
       {
-        data: [5, 8, 6, 7, 8, 5, 4]
+        data: hoursPerDay || [0, 0, 0, 0, 0, 0, 0],
       }
     ]
   };
