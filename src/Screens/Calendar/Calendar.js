@@ -4,14 +4,28 @@ import { CustomCalendar } from '../../components'
 import { useSelector } from 'react-redux'
 import Colors from '../../Constants/Colors'
 import onRefresh from '../../Utils/refresh'
+import { getMarkedDots } from '../../Utils/getMarkedDots'
+import { useDispatch } from 'react-redux'
+import { getTasks } from '../../Store/Actions/tasks.action'
 
 const Calendar = () => {
+  const dispatch = useDispatch();
+  const tasksList = useSelector(({tasks})=>tasks.list);
+  const {userId} = useSelector(({auth})=>auth);
   const [refreshing, setRefreshing] = React.useState(false);
-  // const tasksList = useSelector(({tasks})=>tasks.list)
-  // const dots = [];
+  const [markedDots, setMarkedDots] = React.useState();
 
-  // TODO: seguir la docu para armar los markedDates segun la data de la lista de tareas. 
-  // https://www.npmjs.com/package/react-native-calendars?activeTab=readme
+  React.useEffect(()=>{
+    dispatch(getTasks(userId))
+  },[]) 
+  
+
+  React.useEffect(()=>{
+    if(tasksList){
+      const marks = getMarkedDots(tasksList);
+      setMarkedDots(marks)
+    }
+  },[refreshing]) 
 
   return (
     <ScrollView 
@@ -20,7 +34,9 @@ const Calendar = () => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh(setRefreshing, 500)}/>
       }  
     >
-      <CustomCalendar/>
+      <CustomCalendar
+        markedDates={markedDots}
+      />
     </ScrollView>
   )
 }
