@@ -1,6 +1,6 @@
-import { StyleSheet, ScrollView, RefreshControl, View, Alert } from 'react-native'
+import { StyleSheet, ScrollView, RefreshControl, View } from 'react-native'
 import React from 'react'
-import { CustomCalendar, CustomText } from '../../components'
+import { CustomCalendar, CustomText, ModalMessage } from '../../components'
 import { useSelector } from 'react-redux'
 import Colors from '../../Constants/Colors'
 import { getMarkedDots } from '../../Utils/getMarkedDots'
@@ -8,17 +8,20 @@ import { useDispatch } from 'react-redux'
 import { updateTaskById } from '../../Store/Actions/tasks.action'
 import { Checkbox } from 'native-base';
 import { useUserContext } from '../../Context/UserContextProvider'
+import { useCommonContext } from '../../Context/CommonContextProvider'
 
 const Calendar = () => {
   const dispatch = useDispatch();
   const tasksList = useSelector(({ tasks }) => tasks.list);
   const {refreshData, setRefreshData} = useUserContext();
+  const { setIsModalVisible, isModalVisible } = useCommonContext();
   const [refreshing, setRefreshing] = React.useState(false);
   const [markedDots, setMarkedDots] = React.useState();
 
   const [tasksFromSelectedDay, setTasksFromSelectedDay] = React.useState();
   const [selectedDate, setSelectedDate] = React.useState();
 
+  const [reusltData, setReusltData] = React.useState();
   React.useEffect(() => {
     refreshing && setRefreshData(!refreshData)
     const marks = getMarkedDots(tasksList);
@@ -48,16 +51,20 @@ const Calendar = () => {
     }
     dispatch(updateTaskById(newTaskData, taskId))
     .then(data => {
-      Alert.alert('', 'Tarea actualizada.', [
-        {
-          text: 'OK',
-          style: "destructive",
-        }
-      ])
+      setReusltData(data.message)
+      setIsModalVisible(true);
     })
-    .catch(err => console.log(err))
-    onRefresh();
-    setSelectedDate('');
+    .catch(error => {
+      setReusltData(error.message)
+      setIsModalVisible(true);
+    })
+    .finally(() => {
+      onRefresh();
+      setSelectedDate('');
+      setTimeout(() => {
+        setIsModalVisible(false);
+      }, 1500)
+    })
   }
 
   return (
@@ -97,6 +104,7 @@ const Calendar = () => {
             </ScrollView>
           </View>
         }
+        {isModalVisible && <ModalMessage data={reusltData} />}
     </View>
   )
 }

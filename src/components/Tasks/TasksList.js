@@ -1,21 +1,26 @@
-import { StyleSheet, ScrollView, RefreshControl, Alert} from 'react-native'
+import { StyleSheet, ScrollView, RefreshControl } from 'react-native'
 import React from 'react'
 import TasksListItem from './TasksListItem'
 import CustomText from '../Elements/CustomText'
 import { updateTaskById } from '../../Store/Actions/tasks.action'
 import { useDispatch, useSelector } from 'react-redux';
 import { useUserContext } from '../../Context/UserContextProvider'
+import { useCommonContext } from '../../Context/CommonContextProvider'
+import ModalMessage from '../Modal/ModalMessage'
+
 const TasksList = () => {
-  const {refreshData, setRefreshData} = useUserContext();  
-  const dispatch = useDispatch();  
-  const tasksList = useSelector(({tasks})=>tasks.list)
+  const { refreshData, setRefreshData } = useUserContext();
+  const dispatch = useDispatch();
+  const tasksList = useSelector(({ tasks }) => tasks.list)
   const [refreshing, setRefreshing] = React.useState(false);
+  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const [reusltData, setReusltData] = React.useState();
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     refreshing && setRefreshData(!refreshData)
-  },[refreshing])
+  }, [refreshing])
 
-  const onRefresh = React.useCallback(()=>{
+  const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -23,35 +28,41 @@ const TasksList = () => {
   })
 
 
-  const handleTaskStatus = (taskId, value) =>{
+  const handleTaskStatus = (taskId, value) => {
     const newTaskData = {
       taskDone: value
     }
     dispatch(updateTaskById(newTaskData, taskId))
-      .then(data=>{
-        Alert.alert('', data?.message, [
-          {
-            text: 'OK',
-            style: "destructive",
-          }
-        ])
-        if(data?.status) onRefresh();
+      .then(data => {
+        setReusltData(data.message)
+        setIsModalVisible(true);
+        if (data?.status) onRefresh();
       })
-      .catch(err=>console.log(err))
+      .catch(error => {
+        setReusltData(error.message)
+        setIsModalVisible(true);
+      })
+      .finally(() => {
+        onRefresh();
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 1500)
+      })
   }
 
   return (
-    <ScrollView 
+    <ScrollView
       contentContainerStyle={styles.container}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
-      }  
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
-        {
-          tasksList.length > 0 ?
-            tasksList.map((item, index)=><TasksListItem data={item} key={index} handleTaskStatus={handleTaskStatus}/>) :
-            <CustomText textValue={"No hay tareas creadas"}/>
-        }
+      {
+        tasksList.length > 0 ?
+          tasksList.map((item, index) => <TasksListItem data={item} key={index} handleTaskStatus={handleTaskStatus} />) :
+          <CustomText textValue={"No hay tareas creadas"} />
+      }
+      {isModalVisible && <ModalMessage data={reusltData} />}
     </ScrollView>
   )
 }
@@ -59,7 +70,7 @@ const TasksList = () => {
 export default TasksList
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     width: "90%",
     paddingHorizontal: 35,
     paddingTop: 20,
