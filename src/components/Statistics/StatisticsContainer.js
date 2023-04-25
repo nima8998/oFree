@@ -9,10 +9,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getWorkTimeLocal } from '../../../db'
 
 import { getProjects } from '../../Store/Actions/projects.action'
-import { getTasks } from '../../Store/Actions/tasks.action'
 import { getTimeWorkedWeek } from '../../Utils/getTimeWorkedWeek'
+import { useUserContext } from '../../Context/UserContextProvider'
 
 const StatisticsContainer = () => {
+  const {refreshData, setRefreshData} = useUserContext();  
+
   const dispatch = useDispatch();
   const {userId} = useSelector(({auth})=>auth)
   const projects = useSelector(({projects})=>projects.list)
@@ -33,7 +35,7 @@ const StatisticsContainer = () => {
         .catch(error=>console.log(error))
 
       dispatch(getProjects(userId))
-      dispatch(getTasks(userId))
+      refreshing && setRefreshData(!refreshData)
     }
   },[userId, refreshing])
   

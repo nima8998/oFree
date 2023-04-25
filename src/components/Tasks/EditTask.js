@@ -105,7 +105,7 @@ const EditTask = ({task}) => {
       taskDate: date.toLocaleDateString(),
       taskDescription: formState.inputValues.taskDescription,
       taskProject: formState.inputValues.taskProject,
-      taskDone: formState.inputValues.taskProject,
+      taskDone: formState.inputValues.taskDone,
     }
 
     dispatch(updateTaskById(taskUpdated, task.id))

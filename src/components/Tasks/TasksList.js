@@ -4,16 +4,15 @@ import TasksListItem from './TasksListItem'
 import CustomText from '../Elements/CustomText'
 import { updateTaskById } from '../../Store/Actions/tasks.action'
 import { useDispatch, useSelector } from 'react-redux';
-import { getTasks } from '../../Store/Actions/tasks.action';
-
+import { useUserContext } from '../../Context/UserContextProvider'
 const TasksList = () => {
-  const dispatch = useDispatch();
+  const {refreshData, setRefreshData} = useUserContext();  
+  const dispatch = useDispatch();  
   const tasksList = useSelector(({tasks})=>tasks.list)
-  const {userId} = useSelector(({auth})=>auth);
   const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(()=>{
-    dispatch(getTasks(userId))
+    refreshing && setRefreshData(!refreshData)
   },[refreshing])
 
   const onRefresh = React.useCallback(()=>{

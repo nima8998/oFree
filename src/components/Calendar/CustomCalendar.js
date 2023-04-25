@@ -4,7 +4,6 @@ import { Calendar } from 'react-native-calendars';
 function CustomCalendar(
   {
     handleSelectDate,
-    styles,
     ...markedDots
   }
 ) {
@@ -13,7 +12,6 @@ function CustomCalendar(
       markingType='multi-dot'
       markedDates={markedDots['markedDates']}
       onDayPress={({dateString})=>handleSelectDate(dateString)}
-      style={styles}
     />
   );
 }

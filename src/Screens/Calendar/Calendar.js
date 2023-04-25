@@ -5,14 +5,14 @@ import { useSelector } from 'react-redux'
 import Colors from '../../Constants/Colors'
 import { getMarkedDots } from '../../Utils/getMarkedDots'
 import { useDispatch } from 'react-redux'
-import { getTasks } from '../../Store/Actions/tasks.action'
 import { updateTaskById } from '../../Store/Actions/tasks.action'
 import { Checkbox } from 'native-base';
+import { useUserContext } from '../../Context/UserContextProvider'
 
 const Calendar = () => {
   const dispatch = useDispatch();
   const tasksList = useSelector(({ tasks }) => tasks.list);
-  const { userId } = useSelector(({ auth }) => auth);
+  const {refreshData, setRefreshData} = useUserContext();
   const [refreshing, setRefreshing] = React.useState(false);
   const [markedDots, setMarkedDots] = React.useState();
 
@@ -20,15 +20,9 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = React.useState();
 
   React.useEffect(() => {
-    dispatch(getTasks(userId))
-  }, [])
-
-
-  React.useEffect(() => {
-    if (tasksList && refreshing) {
-      const marks = getMarkedDots(tasksList);
-      setMarkedDots(marks)
-    }
+    refreshing && setRefreshData(!refreshData)
+    const marks = getMarkedDots(tasksList);
+    setMarkedDots(marks)
   }, [refreshing, tasksList])
 
   const handleSelectDate = (date) => {
@@ -39,11 +33,9 @@ const Calendar = () => {
     const tasksFromSelectedDate = tasksList.filter(({ taskDate, taskDone }) => taskDate === newDateFormat && !taskDone);
     setTasksFromSelectedDay(tasksFromSelectedDate);
     setSelectedDate(newDateFormat)
-    console.log(tasksFromSelectedDate)
   }
 
-  const onRefresh = React.useCallback(()=>{
-    dispatch(getTasks(userId))
+  const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -55,59 +47,57 @@ const Calendar = () => {
       taskDone: value
     }
     dispatch(updateTaskById(newTaskData, taskId))
-      .then(data => {
-        alert('', data?.message, [
-          {
-            text: 'OK',
-            style: "destructive",
-          }
-        ])
-        if(data?.status) {
-          onRefresh();
-          setSelectedDate('');
-        };
-      })
-      .catch(err => console.log(err))
+    .then(data => {
+      Alert.alert('', 'Tarea actualizada.', [
+        {
+          text: 'OK',
+          style: "destructive",
+        }
+      ])
+    })
+    .catch(err => console.log(err))
+    onRefresh();
+    setSelectedDate('');
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      <CustomCalendar
-        markedDates={markedDots}
-        handleSelectDate={handleSelectDate}
-      />
-      {
-        tasksFromSelectedDay?.length > 0 && selectedDate !== '' &&
-        <View style={styles.containerselectedDate}>
-          <View style={styles.containerselectedDateHeader}>
-            <CustomText textValue='Tareas' style={styles.containerSelectedDateTitle} />
+    <View style={styles.container}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <CustomCalendar
+          markedDates={markedDots}
+          handleSelectDate={handleSelectDate}
+        />
+      </ScrollView>
+        {
+          tasksFromSelectedDay?.length > 0 && selectedDate !== '' &&
+          <View style={styles.containerselectedDate}>
+            <View style={styles.containerselectedDateHeader}>
+              <CustomText textValue='Tareas' style={styles.containerSelectedDateTitle} />
+            </View>
+            <ScrollView contentContainerStyle={styles.containerTasks}>
+              {
+                tasksFromSelectedDay.map(({ taskDescription, id, taskDone }) => (
+                  <View style={styles.taskItem} key={id}>
+                    <CustomText textValue={taskDescription} />
+                    <Checkbox
+                      value={taskDone}
+                      isChecked={taskDone}
+                      color={Colors.primaryBlue}
+                      accessibilityLabel="Tasks status"
+                      size="sm"
+                      onChange={(state) => handleTaskStatus(id, state)}
+                    />
+                  </View>
+                ))
+              }
+            </ScrollView>
           </View>
-          <View style={{}}>
-            {
-              tasksFromSelectedDay.map(({ taskDescription, id, taskDone }) => (
-                <View key={id} style={styles.taskItem}>
-                  <CustomText textValue={taskDescription}  />
-                  <Checkbox
-                    value={taskDone}
-                    isChecked={taskDone}
-                    color={Colors.primaryBlue}
-                    accessibilityLabel="Tasks status"
-                    size="sm"
-                    onChange={(state) => handleTaskStatus(id, state)}
-                  />
-                </View>
-              ))
-            }
-
-          </View>
-        </View>
-      }
-    </ScrollView>
+        }
+    </View>
   )
 }
 
@@ -115,24 +105,28 @@ export default Calendar
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    position: 'relative',
+    flex: 4,
   },
   containerselectedDate: {
-    flex: 1,
+    flex: 9,
+    marginTop: -10,
   },
   containerselectedDateHeader: {
-    marginVertical: 15,
-    marginHorizontal: 25, 
-    borderBottomColor:  Colors.primaryBlue, 
+    marginHorizontal: 25,
+    borderBottomColor: Colors.primaryBlue,
     borderBottomWidth: 1
   },
-  containerSelectedDateTitle:{
+  containerSelectedDateTitle: {
     color: Colors.primaryBlue,
     fontSize: 20
   },
-  taskItem:{
+  containerTasks: {
+    position:"relative",
+    alignItems: 'center',
+  },
+  taskItem: {
     flexDirection: 'row',
-    width: "100%",
     justifyContent: 'space-between',
     width: "85%"
   }
