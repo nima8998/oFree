@@ -30,7 +30,10 @@ const StatisticsContainer = () => {
     {
       getWorkTimeLocal(userId)
         .then((data)=>{ 
-          setHoursPerDay(getTimeWorkedWeek(data));
+          const {days, hoursFixed} = getTimeWorkedWeek(data);
+          console.log(days);
+          console.log(hoursFixed);
+          // setHoursPerDay(getTimeWorkedWeek(data)); 
         })
         .catch(error=>console.log(error))
 

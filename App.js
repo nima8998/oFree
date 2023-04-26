@@ -8,45 +8,52 @@ import { Provider } from 'react-redux';
 import Store from './src/Store';
 
 import { useFonts } from 'expo-font';
-import { init_user_profile_data, init_user_work_time } from './db';
+import { init_user_profile_data, init_user_work_time, init_local_settings } from './db';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { UserContextProvider } from './src/Context/UserContextProvider';
 
+init_local_settings()
+  .then(() => console.log('init_local_settings initialized.'))
+  .catch((err) => {
+    console.log('init_local_settings init failed.');
+    console.log(err.message);
+  })
+
 init_user_profile_data()
-  .then(()=>console.log('user_profile_data initialized.'))
-  .catch((err)=>{
+  .then(() => console.log('user_profile_data initialized.'))
+  .catch((err) => {
     console.log('user_profile_data init failed.');
     console.log(err.message);
   })
 
-  init_user_work_time()
-  .then(()=>console.log('user_work_time initialized.'))
-  .catch((err)=>{
+init_user_work_time()
+  .then(() => console.log('user_work_time initialized.'))
+  .catch((err) => {
     console.log('user_work_time init failed.');
     console.log(err.message);
   })
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Montserrat-Regular': require("./src/Font/Montserrat-Regular.ttf"), 
-    'Montserrat-SemiBold': require("./src/Font/Montserrat-SemiBold.ttf"), 
-    'Montserrat-Medium': require("./src/Font/Montserrat-Medium.ttf"), 
+    'Montserrat-Regular': require("./src/Font/Montserrat-Regular.ttf"),
+    'Montserrat-SemiBold': require("./src/Font/Montserrat-SemiBold.ttf"),
+    'Montserrat-Medium': require("./src/Font/Montserrat-Medium.ttf"),
   })
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     fontsLoaded && SplashScreen.hideAsync();
   }, [fontsLoaded])
 
-  if(!fontsLoaded) return null;
+  if (!fontsLoaded) return null;
 
   return (
     <Provider store={Store}>
       <UserContextProvider>
         <CommonContextProvider>
           <NativeBaseProvider>
-            <StatusBar translucent/>
-            <Navigator/>
+            <StatusBar translucent />
+            <Navigator />
           </NativeBaseProvider>
         </CommonContextProvider>
       </UserContextProvider>

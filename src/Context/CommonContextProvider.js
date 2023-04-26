@@ -1,32 +1,45 @@
 import React from "react";
+import { getSettingValue, updateDbfieldSettings } from "../../db";
 export let CommonContext = React.createContext();
 export const useCommonContext = () => React.useContext(CommonContext);
 
 export let CommonContextProvider = ({ children }) => {
-	const [isListVisible, setIsListVisible] = React.useState(false);
-	const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [isListVisible, setIsListVisible] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
 
-	const [step, setStep] = React.useState(1);
-	const [isTutorialActive, setIsTutorialActive] = React.useState(true);
+  const [step, setStep] = React.useState(1);
+
+  const [showTutorial, setShowTutorial] = React.useState();
+
+  React.useEffect(()=>{
+    getSettingValue('tutorial')
+      .then(data => {
+        const res = Boolean(data.rows._array[0]['tutorial'])
+        setShowTutorial(res)
+      })
+      .catch(err => console.log(err))
+  },[])
+
+  const handleTutorial = () =>{
+    updateDbfieldSettings('tutorial', 'false')
+      .then((data)=>{
+        setShowTutorial(false);
+      })
+      .catch((error)=>console.log(error))
+  }
 
 
-	const MemorizedContext = React.useMemo(()=>({
-		isListVisible, setIsListVisible,
-		isTutorialActive, setIsTutorialActive,
-		isModalVisible, setIsModalVisible,
-		step, setStep,
-	}), [
-			isListVisible,
-			isTutorialActive,
-			isModalVisible,
-			step,			
-		])
-
-	return (
-		<CommonContext.Provider
-			value={MemorizedContext}
-		>
-			{children}
-		</CommonContext.Provider>
-	);
+  return (
+    <CommonContext.Provider
+      value={{
+        isListVisible, setIsListVisible,
+        isModalVisible, setIsModalVisible,
+        step, setStep,
+        showTutorial, setShowTutorial,
+        handleTutorial
+      }}
+    >
+      {children}
+    </CommonContext.Provider>
+  );
 };

@@ -22,12 +22,16 @@ export const signUp = (user, password) => {
       .then(data => data.json())
       .then((res) => {
         if (res.error && res.error.code === 400) {
+          console.log(res.error.message)
           switch (res.error.message) {
             case "EMAIL_EXISTS":
               alert('El email ya se encuentra registrado.')
               break;
             case "TOO_MANY_ATTEMPTS_TRY_LATER":
               alert('Hemos bloqueado todas las peticiones de este dispositivo. Intente mas tarde.')
+              break;
+            case "MISSING_PASSWORD":
+              alert('La contrasña es obligatoria.')
               break;
             default:
               alert('Ha habido un error al registrarse. Intentelo mas tarde.')
