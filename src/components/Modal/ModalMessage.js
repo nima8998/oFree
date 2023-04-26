@@ -3,7 +3,6 @@ import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider'
 import CustomText from '../Elements/CustomText';
 import Colors from '../../Constants/Colors';
-import CustomButton from '../Elements/CustomButton';
 
 const ModalMessage = ({
     data

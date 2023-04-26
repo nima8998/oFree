@@ -20,13 +20,12 @@ const TasksList = () => {
     refreshing && setRefreshData(!refreshData)
   }, [refreshing])
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
-  })
-
+  }
 
   const handleTaskStatus = (taskId, value) => {
     const newTaskData = {
@@ -36,14 +35,12 @@ const TasksList = () => {
       .then(data => {
         setReusltData(data.message)
         setIsModalVisible(true);
-        if (data?.status) onRefresh();
       })
       .catch(error => {
         setReusltData(error.message)
         setIsModalVisible(true);
       })
       .finally(() => {
-        onRefresh();
         setTimeout(() => {
           setIsModalVisible(false);
         }, 1500)
