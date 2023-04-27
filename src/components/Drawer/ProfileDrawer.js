@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, TouchableWithoutFeedback, Image } from 'react-native'
+import { StyleSheet, View, TouchableWithoutFeedback, Image } from 'react-native'
 import React from 'react'
 import Colors from '../../Constants/Colors'
 import CustomText from '../Elements/CustomText'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux';
 
-const ProfileDrawer = (props) => {
+// componente personalziado del drawer para mostrar la info del usuario.
+const ProfileDrawer = () => {
   const navigation = useNavigation();
   const {currentUser} = useSelector(({auth})=>auth)
 

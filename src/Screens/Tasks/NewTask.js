@@ -1,6 +1,6 @@
 import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native'
 import React from 'react'
-import { CustomButton, CustomInput, ModalMessage, CustomDropdown, CustomTextarea } from '../../components'
+import { CustomButton, CustomInput, CustomDropdown, CustomTextarea } from '../../components'
 import CustomText from '../../components/Elements/CustomText';
 import Colors from '../../Constants/Colors';
 import { useSelector } from 'react-redux';
@@ -39,7 +39,7 @@ const formReducer = (state, action) => {
 }
 
 const NewTask = () => {
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const { setIsModalVisible, setResultData } = useCommonContext();
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
@@ -51,7 +51,6 @@ const NewTask = () => {
   const [date, setDate] = React.useState();
   const [isDisabledBtn, setIsDisabledBtn] = React.useState();
   
-  const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   
   const [formState, dispatchFormState] = React.useReducer(formReducer, {
@@ -110,11 +109,11 @@ const NewTask = () => {
 
     dispatch(createTask(newTask, formState.inputValues.taskProject))
       .then((res) => {
-        setReusltData(res.message)
+        setResultData(res.message)
         setIsModalVisible(true);
       })
       .catch((error) => {
-        setReusltData(error.message)
+        setResultData(error.message)
         setIsModalVisible(true);
       })
       .finally(() => {
@@ -192,7 +191,6 @@ const NewTask = () => {
           />
         </View>
 
-        {isModalVisible && <ModalMessage data={reusltData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>

@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ActivityIndicator } from 'react-native'
-import { CustomButton, CustomInput, CustomTextarea, ModalMessage, CustomDropdown } from '..'
+import { CustomButton, CustomInput, CustomTextarea, CustomDropdown } from '..'
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
@@ -61,9 +61,8 @@ const EditClient = ({
   })
 
 
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const { setIsModalVisible, setResultData } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [resultData, setResultData] = React.useState();
   const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
@@ -164,7 +163,6 @@ const EditClient = ({
         />
 
         <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateClient} disabled={isDisabledBtn}/>
-        {isModalVisible && <ModalMessage data={resultData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>

@@ -3,15 +3,16 @@ import { StyleSheet, View } from 'react-native'
 import {Counter} from "../../components"
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserData } from '../../Store/Actions/auth.action';
+import {useUserContext} from '../../Context/UserContextProvider'
 
-const Home = ({
-  navigation
-}) => {
+const Home = () => {
 	const dispatch = useDispatch();
 	const {token} = useSelector(({ auth }) => auth)
+  const {refreshData, setRefreshData} = useUserContext();
 
   React.useEffect(()=>{
     dispatch(getUserData(token))
+    setRefreshData(!refreshData)
   },[])
 
   return (

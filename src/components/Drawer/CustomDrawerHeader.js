@@ -21,5 +21,3 @@ const CustomDrawerHeader = (props) => {
 }
 
 export default CustomDrawerHeader
-
-const styles = StyleSheet.create({})

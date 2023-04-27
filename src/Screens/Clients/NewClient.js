@@ -1,10 +1,10 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ActivityIndicator } from 'react-native'
-import { CustomButton, CustomInput, CustomTextarea, ModalMessage, CustomDropdown } from '../../components'
+import { CustomButton, CustomInput, CustomTextarea, CustomDropdown } from '../../components'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import Colors from '../../Constants/Colors';
-import { createClient, updateClient } from '../../Store/Actions/clients.action';
+import { createClient } from '../../Store/Actions/clients.action';
 import { useNavigation } from '@react-navigation/native';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -60,9 +60,8 @@ const NewClient = () => {
   })
 
 
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const { setIsModalVisible, setResultData } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [resultData, setResultData] = React.useState();
   const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
@@ -163,7 +162,6 @@ const NewClient = () => {
         />
 
         <CustomButton type='primary' text="GUARDAR" onPress={saveNewClient} disabled={isDisabledBtn}/>
-        {isModalVisible && <ModalMessage data={resultData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>

@@ -12,7 +12,9 @@ import { init_user_profile_data, init_user_work_time, init_local_settings } from
 
 import * as SplashScreen from 'expo-splash-screen';
 import { UserContextProvider } from './src/Context/UserContextProvider';
+import ContainerNavigator from './src/components/Navigator/ContainerNavigator';
 
+// inicializo tablas de sqlite
 init_local_settings()
   .then(() => console.log('init_local_settings initialized.'))
   .catch((err) => {
@@ -53,7 +55,8 @@ export default function App() {
         <CommonContextProvider>
           <NativeBaseProvider>
             <StatusBar translucent />
-            <Navigator />
+            <ContainerNavigator/>
+            {/* <Navigator /> */}
           </NativeBaseProvider>
         </CommonContextProvider>
       </UserContextProvider>

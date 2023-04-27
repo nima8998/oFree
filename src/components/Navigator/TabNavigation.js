@@ -73,8 +73,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlue,
     borderTopEndRadius: 12,
     borderTopStartRadius: 12,
-    // flexDirection:  'row',
-    // justifyContent: 'center',
   },
   tab: {
     flex: 1,

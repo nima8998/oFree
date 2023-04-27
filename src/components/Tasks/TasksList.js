@@ -6,15 +6,13 @@ import { updateTaskById } from '../../Store/Actions/tasks.action'
 import { useDispatch, useSelector } from 'react-redux';
 import { useUserContext } from '../../Context/UserContextProvider'
 import { useCommonContext } from '../../Context/CommonContextProvider'
-import ModalMessage from '../Modal/ModalMessage'
 
 const TasksList = () => {
   const { refreshData, setRefreshData } = useUserContext();
   const dispatch = useDispatch();
   const tasksList = useSelector(({ tasks }) => tasks.list)
   const [refreshing, setRefreshing] = React.useState(false);
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
-  const [reusltData, setReusltData] = React.useState();
+  const { setIsModalVisible, setResultData } = useCommonContext();
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -30,11 +28,11 @@ const TasksList = () => {
     }
     dispatch(updateTaskById(newTaskData, taskId))
       .then(data => {
-        setReusltData(data.message)
+        setResultData(data.message)
         setIsModalVisible(true);
       })
       .catch(error => {
-        setReusltData(error.message)
+        setResultData(error.message)
         setIsModalVisible(true);
       })
       .finally(() => {
@@ -57,7 +55,6 @@ const TasksList = () => {
           tasksList.map((item, index) => <TasksListItem data={item} key={index} handleTaskStatus={handleTaskStatus} />) :
           <CustomText textValue={"No hay tareas creadas"} />
       }
-      {isModalVisible && <ModalMessage data={reusltData} />}
     </ScrollView>
   )
 }

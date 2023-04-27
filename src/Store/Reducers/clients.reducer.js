@@ -34,7 +34,6 @@ const clientsReducer = (state=initialState, action) =>{
         case UPDATE_CLIENT:
             return {
                 ...state,
-                clients: state.list.map(client => client.id === action.data.id ? action.data : client),
                 status: action.status,
                 message: action.message,
             };

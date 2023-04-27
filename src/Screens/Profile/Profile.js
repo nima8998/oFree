@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ActivityIndicator, Pressable, ScrollView, RefreshControl } from 'react-native'
-import { CustomButton, CustomInput, ModalMessage } from '../../components'
+import { CustomButton, CustomInput } from '../../components'
 import React from 'react'
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import Colors from '../../Constants/Colors';
@@ -38,9 +38,8 @@ const formReducer = (state, action) => {
 const Profile = () => {
   const dispatch = useDispatch();
   const {currentUser, token} = useSelector(({auth})=>auth)
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const { setIsModalVisible, setResultData } = useCommonContext();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [resultData, setResultData] = React.useState();
   const [imageValue, setImageValue] = React.useState(null)
   const [refreshing, setRefreshing] = React.useState(false);
   const [show, setShow] = React.useState(false);
@@ -129,7 +128,7 @@ const Profile = () => {
             keyboardType='email-address'
             enable={false}
           />
-
+          {/* se comenta para poder configurar la modificaciond de la clave */}
           {/* <View style={styles.inputGroup}>
             <CustomInput
               otherStyles={styles.inputs}
@@ -148,7 +147,6 @@ const Profile = () => {
           </View> */}
 
           <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateUserData} />
-          {isModalVisible && <ModalMessage data={resultData} />}
           {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
         </View>
       </TouchableWithoutFeedback>

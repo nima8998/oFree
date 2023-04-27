@@ -21,7 +21,6 @@ const StatisticsContainer = () => {
   const tasksList = useSelector(({tasks})=>tasks.list)
   
   const [refreshing, setRefreshing] = React.useState(false);
-  const [workTimeReport, setWorkTimeReport] = React.useState();
   const [hoursPerDay, setHoursPerDay] = React.useState();
   const [tasksDone, setTasksDone] = React.useState();
   

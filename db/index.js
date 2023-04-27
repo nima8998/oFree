@@ -2,6 +2,7 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('address.db');
 
+// tabla donde se va a guardar la configuracion global de la app para el usuario, se aplica en todas las cuentas del mismo usuario.
 export const init_local_settings = () => {
   const initPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {
@@ -16,7 +17,7 @@ export const init_local_settings = () => {
   })
   return initPromise;
 }
-
+// datos del perfil de cada cuenta del usuario
 export const init_user_profile_data = () => {
   const initPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {
@@ -35,7 +36,7 @@ export const init_user_profile_data = () => {
   })
   return initPromise;
 }
-
+// se guardan las horas de trabajo para consultarlo en las estadisticas
 export const init_user_work_time = () => {
   const initPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {
@@ -53,7 +54,7 @@ export const init_user_work_time = () => {
   })
   return initPromise;
 }
-
+// inserto el primer registro de la cuenta del usuario, luego se van haciendo updates o consultas en base al usuario 
 export const createUserDataLocal = (id, email) => {
   const createUserDataLocalPromise = new Promise((resolve, reject) => {
     db.transaction(function (tx) {

@@ -2,9 +2,7 @@ import { StyleSheet, RefreshControl, View} from 'react-native'
 import React from 'react'
 import {StatisticsContainer} from '../../components'
 
-const Statistics = ({
-  navigation
-}) => {
+const Statistics = () => {
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native'
 import React from 'react'
-import { CustomButton, CustomInput, ModalMessage, CustomDropdown } from '..'
+import { CustomButton, CustomInput, CustomDropdown } from '..'
 import CustomText from '../Elements/CustomText';
 import Colors from '../../Constants/Colors';
 import { useSelector } from 'react-redux';
@@ -42,11 +42,10 @@ const EditProject = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const { setIsModalVisible, setResultData } = useCommonContext();
   const clientsList = useSelector(({ clients }) => clients.list);
   const {userId} = useSelector(({auth})=>auth);
 
-  const [reusltData, setReusltData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isDisabledBtn, setIsDisabledBtn] = React.useState();
 
@@ -100,14 +99,14 @@ const EditProject = ({
     }
     dispatch(updateProjectById(updatedProjectData, project.id))
       .then((res) => {
-        setReusltData(res.message)
+        setResultData(res.message)
         setIsModalVisible(true);
         setTimeout(() => {
           navigation.goBack();
         }, 1500)
       })
       .catch((error) => {
-        setReusltData(error.message)
+        setResultData(error.message)
         setIsModalVisible(true);
       })
       .finally(() => {
@@ -189,7 +188,6 @@ const EditProject = ({
           />
         </View>
 
-        {isModalVisible && <ModalMessage data={reusltData} />}
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>

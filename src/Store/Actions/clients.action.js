@@ -62,7 +62,7 @@ export const updateClient = (clientData,clientId) =>{
     return async dispatch => {
         return await fetch(`${process.env.API_URL_FIREBASE}/clients/${clientId}.json`, options)
             .then(
-                () => dispatch({type: CREATE_CLIENT, status: 200, message: "Cliente actualizado con exito !"}),
+                () => dispatch({type: UPDATE_CLIENT, status: 200, message: "Cliente actualizado con exito !"}),
                 error => ({status: 400, message: error.message})
             )
     }

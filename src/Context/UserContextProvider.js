@@ -11,8 +11,10 @@ export let UserContextProvider = ({ children }) => {
   const [loggedUser, setLoggedUser] = React.useState(false);
   const [refreshData, setRefreshData] = React.useState(false);
   const dispatch = useDispatch();
-  const tasksList = useSelector(({ tasks }) => tasks.list);
   const { currentUser, userId } = useSelector(({ auth }) => auth)
+
+  // cuando se loguea el usuario, verifico que tenga datos registrados en SQLite, así no vuelvo a insertar un registro nuevo en la tabla.
+  // esto se debe a que un usuario puede tener más de una cuenta.
 
   React.useEffect(() => {
     dispatch(getTasks(userId))
@@ -43,6 +45,7 @@ export let UserContextProvider = ({ children }) => {
     }
   }, [hasLocalData, currentUser])
 
+  // useEffect que escucha a un state, que modifico desde las screens que necesito que despache y actualice el listado de tareas.
   React.useEffect(()=>{
     dispatch(getTasks(userId))
   },[refreshData])

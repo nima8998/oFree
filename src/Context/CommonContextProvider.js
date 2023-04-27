@@ -6,6 +6,7 @@ export const useCommonContext = () => React.useContext(CommonContext);
 export let CommonContextProvider = ({ children }) => {
   const [isListVisible, setIsListVisible] = React.useState(false);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [reusltData, setResultData] = React.useState();
 
   const [step, setStep] = React.useState(1);
 
@@ -34,6 +35,7 @@ export let CommonContextProvider = ({ children }) => {
       value={{
         isListVisible, setIsListVisible,
         isModalVisible, setIsModalVisible,
+        reusltData, setResultData,
         step, setStep,
         showTutorial, setShowTutorial,
         handleTutorial

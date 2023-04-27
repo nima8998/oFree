@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, RefreshControl, View } from 'react-native'
 import React from 'react'
-import { CustomCalendar, CustomText, ModalMessage } from '../../components'
+import { CustomCalendar, CustomText } from '../../components'
 import { useSelector } from 'react-redux'
 import Colors from '../../Constants/Colors'
 import { getMarkedDots } from '../../Utils/getMarkedDots'
@@ -14,20 +14,21 @@ const Calendar = () => {
   const dispatch = useDispatch();
   const tasksList = useSelector(({ tasks }) => tasks.list);
   const {refreshData, setRefreshData} = useUserContext();
-  const { setIsModalVisible, isModalVisible } = useCommonContext();
+  const { setIsModalVisible, setResultData } = useCommonContext();
   const [refreshing, setRefreshing] = React.useState(false);
   const [markedDots, setMarkedDots] = React.useState();
 
   const [tasksFromSelectedDay, setTasksFromSelectedDay] = React.useState();
   const [selectedDate, setSelectedDate] = React.useState();
 
-  const [reusltData, setReusltData] = React.useState();
+  // seteo las marcas para el calendario, donde se muestran las tareas pendientes en el dia correspondiente 
   React.useEffect(() => {
     refreshing && setRefreshData(!refreshData)
     const marks = getMarkedDots(tasksList);
     setMarkedDots(marks)
   }, [refreshing, tasksList])
 
+  // formateo la fecha seleccionada, para filtrar entre la lista de tareas y setearlo en un estado, donde se mapea debajo del calendario
   const handleSelectDate = (date) => {
     const newDate = new Date(date);
     newDate.setMinutes(newDate.getMinutes() + newDate.getTimezoneOffset());
@@ -51,11 +52,11 @@ const Calendar = () => {
     }
     dispatch(updateTaskById(newTaskData, taskId))
     .then(data => {
-      setReusltData(data.message)
+      setResultData(data.message)
       setIsModalVisible(true);
     })
     .catch(error => {
-      setReusltData(error.message)
+      setResultData(error.message)
       setIsModalVisible(true);
     })
     .finally(() => {
@@ -104,7 +105,6 @@ const Calendar = () => {
             </ScrollView>
           </View>
         }
-        {isModalVisible && <ModalMessage data={reusltData} />}
     </View>
   )
 }
