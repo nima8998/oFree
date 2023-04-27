@@ -38,7 +38,7 @@ const ProjectsNavbar = () => {
         onPress={()=>navigation.navigate('Tasks')}
       >
         <CustomText
-          otherStyles={styles.navbarItemsText}r
+          otherStyles={styles.navbarItemsText}
           textValue={"Entregas"}
         />
         </Pressable>

@@ -14,7 +14,7 @@ const CustomDrawerHeader = (props) => {
       <DrawerContentScrollView {...props}>
         <ProfileDrawer {...props}/>
         <DrawerItemList {...props} />
-        <CustomText textValue={"Salir"} style={{marginLeft: 17}}  onPress={()=> dispatch(logOut())}/>
+        <CustomText textValue={"Salir"} style={{marginLeft: 17, marginTop: 12}}  onPress={()=> dispatch(logOut())}/> 
       </DrawerContentScrollView>
     </View>
   )

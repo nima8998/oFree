@@ -16,12 +16,9 @@ const TasksList = () => {
   const { setIsModalVisible, isModalVisible } = useCommonContext();
   const [reusltData, setReusltData] = React.useState();
 
-  React.useEffect(() => {
-    refreshing && setRefreshData(!refreshData)
-  }, [refreshing])
-
   const onRefresh = () => {
     setRefreshing(true);
+    setRefreshData(!refreshData)
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
@@ -41,6 +38,7 @@ const TasksList = () => {
         setIsModalVisible(true);
       })
       .finally(() => {
+        onRefresh();
         setTimeout(() => {
           setIsModalVisible(false);
         }, 1500)
