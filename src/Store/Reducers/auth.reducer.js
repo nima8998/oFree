@@ -1,4 +1,4 @@
-import { SIGN_IN, LOG_IN, GET_USER_DATA, UPDATE_USER_DATA } from "../Actions/auth.action"
+import { SIGN_IN, LOG_IN, GET_USER_DATA, UPDATE_USER_DATA, LOG_OUT } from "../Actions/auth.action"
 
 
 const initialState = {
@@ -30,6 +30,10 @@ const authReducer = (state = initialState, action) =>{
             return{
                 ...state,
                 payload: action.response
+            }
+        case LOG_OUT:
+            return{
+                state: initialState
             }
         default:
             return state;

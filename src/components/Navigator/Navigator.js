@@ -8,6 +8,7 @@ import {useCommonContext} from '../../Context/CommonContextProvider';
 const Navigator = () => {
   const {showTutorial} = useCommonContext();
   const {userId} = useSelector(({auth}) => auth);
+  console.log(userId)
 
   return (
     <NavigationContainer>

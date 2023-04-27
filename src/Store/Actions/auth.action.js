@@ -2,6 +2,7 @@ export const SIGN_IN = "SIGN_IN"
 export const LOG_IN = "LOG_IN"
 export const GET_USER_DATA = "GET_USER_DATA"
 export const UPDATE_USER_DATA = "UPDATE_USER_DATA"
+export const LOG_OUT = "LOG_OUT"
 
 
 export const signUp = (user, password) => {
@@ -142,3 +143,7 @@ export const updateUserData = (idToken, displayName, photoUrl, email, returnSecu
       .catch(error => ({ message: error.message }))
   }
 }
+
+export const logOut = () => ({
+  type: LOG_OUT,
+})
