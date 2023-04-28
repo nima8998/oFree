@@ -38,5 +38,6 @@ export const getTimeWorkedWeek = (
   //   hours
   // }
 
-  return {days, hoursFixed};
+  // return {days, hoursFixed};
+  return hoursFixed;
 }
