@@ -7,7 +7,7 @@ oFree es una aplicación móvil que permite a los usuarios organizar sus proyect
 
 [![linkedin](https://img.shields.io/badge/diseñadora:_Georgina_Mauna-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/georgina-mauna/)
 
-[![portfolio](https://img.shields.io/badge/Diseño_Y_DEMO-1769FF?style=for-the-badge&logo=behance&logoColor=white)](https://www.behance.net/tu_usuario)
+[![portfolio](https://img.shields.io/badge/Diseño_Y_DEMO-1769FF?style=for-the-badge&logo=behance&logoColor=white)](https://www.behance.net/gallery/110908249/Ofree-Diseno-UXUI)
 
 
 ## Tecnologías utilizadas
