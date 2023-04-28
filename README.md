@@ -37,3 +37,6 @@ oFree es una aplicación móvil que permite a los usuarios organizar sus proyect
   npm install
   npx expo start || npm run android
 ```
+
+## DEMO gif
+![](https://github.com/nima8998/oFree/blob/main/assets/demo.gif)
