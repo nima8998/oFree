@@ -7,6 +7,12 @@ export let CommonContextProvider = ({ children }) => {
   const [isListVisible, setIsListVisible] = React.useState(false);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [reusltData, setResultData] = React.useState();
+  const [notifications, setNotifications] = React.useState([
+    { id: 1, message: 'Recordatorio!', type: 'reminder', status: 1 },
+    { id: 2, message: 'Nuevo record, felicitaciones.', type: 'record', status: 1 },
+    { id: 3, message: 'Nueva actualizacion disponible.', type: 'system', status: 1 },
+  ]);
+  const [hasNotifications, setHasNotifications] = React.useState(notifications.length > 0 ? true : false);
 
   const [step, setStep] = React.useState(1);
 
@@ -38,7 +44,9 @@ export let CommonContextProvider = ({ children }) => {
         reusltData, setResultData,
         step, setStep,
         showTutorial, setShowTutorial,
-        handleTutorial
+        handleTutorial,
+        notifications, setNotifications,
+        hasNotifications, setHasNotifications,
       }}
     >
       {children}

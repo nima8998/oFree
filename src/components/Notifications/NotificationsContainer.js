@@ -3,16 +3,13 @@ import React from 'react'
 import NotificationsItem from './NotificationsItem'
 import CustomText from '../Elements/CustomText'
 import Colors from '../../Constants/Colors'
+import {useCommonContext} from '../../Context/CommonContextProvider' 
 
 const NotificationsContainer = () => {
-  const [notifications, setNotifications] = React.useState([
-    { id: 1, message: 'Recordatorio!', type: 'reminder', status: 1 },
-    { id: 2, message: 'Nuevo record, felicitaciones.', type: 'record', status: 1 },
-    { id: 3, message: 'Nueva actualizacion disponible.', type: 'system', status: 1 },
-  ]);
-
+  const {notifications, setNotifications, setHasNotifications} = useCommonContext();
   const handleDeleteNotifications = () =>{
     setNotifications([]);
+    setHasNotifications(false);
   }
 
   return (
