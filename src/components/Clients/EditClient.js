@@ -4,7 +4,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import Colors from '../../Constants/Colors';
-import { updateClient } from '../../Store/Actions/clients.action';
+import { deleteClientById, updateClient } from '../../Store/Actions/clients.action';
 import { useNavigation } from '@react-navigation/native';
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -67,19 +67,19 @@ const EditClient = ({
 
   const handleInputChange = React.useCallback((inputIdentifier, inputValue, inputValidity) => {
     dispatchFormState({
-        type: FORM_INPUT_UPDATE,
-        value: inputValue,
-        isValid: inputValidity,
-        input: inputIdentifier
+      type: FORM_INPUT_UPDATE,
+      value: inputValue,
+      isValid: inputValidity,
+      input: inputIdentifier
     })
   }, [dispatchFormState])
 
-  React.useEffect(()=>{
-    if(formState.inputValues.name === '')
+  React.useEffect(() => {
+    if (formState.inputValues.name === '')
       setIsDisabledBtn(true);
     else
       setIsDisabledBtn(false);
-  },[formState.inputValues.name])
+  }, [formState.inputValues.name])
 
   const handleUpdateClient = async () => {
     setIsLoading(true);
@@ -90,7 +90,7 @@ const EditClient = ({
       clientState: formState.inputValues.clientState,
       description: formState.inputValues.description,
     };
-    
+
     dispatch(updateClient(updatedClient, client.id))
       .then((res) => {
         setResultData(res.message)
@@ -108,6 +108,30 @@ const EditClient = ({
           setIsModalVisible(false);
         }, 1500)
         setIsLoading(false);
+      })
+  }
+
+  const deleteClient = () => {
+    const { id } = client;
+
+    dispatch(deleteClientById(id))
+      .then((res) => {
+        setResultData(res.message)
+        setIsModalVisible(true);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 1500)
+      })
+      .catch((error) => {
+        setResultData(error.message)
+        setIsModalVisible(true);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 1500)
+        setIsLoading(false);
+
       })
   }
 
@@ -162,7 +186,19 @@ const EditClient = ({
           initiallyValid={formState.inputValidities.description}
         />
 
-        <CustomButton type='primary' text="GUARDAR" onPress={handleUpdateClient} disabled={isDisabledBtn}/>
+        <View style={styles.footer}>
+          <CustomButton
+            onPress={updateClient}
+            text="GUARDAR"
+            disabled={isDisabledBtn}
+          />
+          <CustomButton
+            onPress={deleteClient}
+            text="ELIMINAR"
+            disabled={isDisabledBtn}
+            type='warning'
+          />
+        </View>        
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
     </TouchableWithoutFeedback>
@@ -183,5 +219,9 @@ const styles = StyleSheet.create({
     width: "65%",
     textAlign: 'center',
     marginVertical: 10,
+  },
+  footer: {
+    marginVertical: 50,
+    flexDirection: 'row',
   },
 })

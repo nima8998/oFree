@@ -2,6 +2,7 @@ export const CREATE_CLIENT = 'CREATE_CLIENT';
 export const GET_CLIENTS = 'GET_CLIENTS';
 export const GET_CLIENT_BY_ID = 'GET_CLIENT_BY_ID';
 export const UPDATE_CLIENT = 'UPDATE_CLIENT';
+export const DELETE_CLIENT = 'DELETE_CLIENT';
 
 export const getClients = (userId) =>{
     const options ={
@@ -64,6 +65,23 @@ export const updateClient = (clientData,clientId) =>{
             .then(
                 () => dispatch({type: UPDATE_CLIENT, status: 200, message: "Cliente actualizado con exito !"}),
                 error => ({status: 400, message: error.message})
+            )
+    }
+}
+
+export const deleteClientById = (projectId) =>{
+    const options = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }
+
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE}/clients/${projectId}.json`, options)
+            .then(
+                () => dispatch({ type: DELETE_CLIENT, status: 200, message: "Cliente eliminado con exito !" }),
+                error => ({ status: 400, message: error.message })
             )
     }
 }

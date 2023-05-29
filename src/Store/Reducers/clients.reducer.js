@@ -1,4 +1,4 @@
-import { CREATE_CLIENT, GET_CLIENTS, GET_CLIENT_BY_ID, UPDATE_CLIENT_ERROR, UPDATE_CLIENT} from '../Actions/clients.action';
+import { CREATE_CLIENT, GET_CLIENTS, GET_CLIENT_BY_ID, UPDATE_CLIENT_ERROR, UPDATE_CLIENT, DELETE_CLIENT} from '../Actions/clients.action';
 
 const initialState = {
     list: [],
@@ -32,6 +32,12 @@ const clientsReducer = (state=initialState, action) =>{
                 error: action.error,
             };
         case UPDATE_CLIENT:
+            return {
+                ...state,
+                status: action.status,
+                message: action.message,
+            };
+        case DELETE_CLIENT:
             return {
                 ...state,
                 status: action.status,
