@@ -69,7 +69,7 @@ export const updateClient = (clientData,clientId) =>{
     }
 }
 
-export const deleteClientById = (projectId) =>{
+export const deleteClientById = (clientId) =>{
     const options = {
         method: "DELETE",
         headers: {
@@ -78,7 +78,7 @@ export const deleteClientById = (projectId) =>{
     }
 
     return async dispatch => {
-        return await fetch(`${process.env.API_URL_FIREBASE}/clients/${projectId}.json`, options)
+        return await fetch(`${process.env.API_URL_FIREBASE}/clients/${clientId}.json`, options)
             .then(
                 () => dispatch({ type: DELETE_CLIENT, status: 200, message: "Cliente eliminado con exito !" }),
                 error => ({ status: 400, message: error.message })

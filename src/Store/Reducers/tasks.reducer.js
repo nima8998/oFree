@@ -1,4 +1,4 @@
-import { CREATE_TASK, GET_TASKS, GET_TASK_BY_ID} from '../Actions/tasks.action';
+import { CREATE_TASK, DELETE_TASK, GET_TASKS, GET_TASK_BY_ID} from '../Actions/tasks.action';
 
 const initialState = {
     list: [],
@@ -22,6 +22,11 @@ const tasksReducer = (state=initialState, action) =>{
                 ...state,
                 selectedTask: state.list.find(({id})=> id === action.id)
             }
+            case DELETE_TASK:
+                return {
+                    ...state,
+                    payload: action.payload
+                }
         default:
             return state;
     }

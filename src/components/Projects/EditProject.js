@@ -205,15 +205,15 @@ const EditProject = ({
 
         <View style={styles.footer}>
           <CustomButton
-            onPress={updateProject}
-            text="GUARDAR"
-            disabled={isDisabledBtn}
-          />
-          <CustomButton
             onPress={deleteProject}
             text="ELIMINAR"
             disabled={isDisabledBtn}
             type='warning'
+          />
+          <CustomButton
+            onPress={updateProject}
+            text="GUARDAR"
+            disabled={isDisabledBtn}
           />
         </View>
 

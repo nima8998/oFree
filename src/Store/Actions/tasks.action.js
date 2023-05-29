@@ -2,6 +2,7 @@ export const GET_TASKS = 'GET_TASKS';
 export const CREATE_TASK = 'CREATE_TASK';
 export const GET_TASK_BY_ID = 'GET_TASK_BY_ID';
 export const UPDATE_TASK = 'UPDATE_TASK';
+export const DELETE_TASK = 'DELETE_TASK';
 
 export const getTasks = (userId) => {
     const options = {
@@ -62,6 +63,24 @@ export const updateTaskById = (taskData, taskId) => {
         return await fetch(`${process.env.API_URL_FIREBASE}/tasks/${taskId}.json`, options)
             .then(
                 () => dispatch({ type: UPDATE_TASK, status: 200, message: "Tarea actualizada con exito !" }),
+                error => ({ status: 400, message: error.message })
+            )
+    }
+}
+
+
+export const deleteTaskById = (taskId) =>{
+    const options = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }
+
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE}/tasks/${taskId}.json`, options)
+            .then(
+                () => dispatch({ type: DELETE_TASK, status: 200, message: "Tarea eliminada con exito !" }),
                 error => ({ status: 400, message: error.message })
             )
     }

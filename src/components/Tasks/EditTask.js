@@ -11,7 +11,7 @@ import { useCommonContext } from '../../Context/CommonContextProvider';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { getProjects } from '../../Store/Actions/projects.action';
 import { useNavigation } from '@react-navigation/native';
-import { updateTaskById } from '../../Store/Actions/tasks.action';
+import { deleteTaskById, updateTaskById } from '../../Store/Actions/tasks.action';
 
 const formReducer = (state, action) => {
   if (action.type === "FORM_INPUT_UPDATE") {
@@ -125,6 +125,29 @@ const EditTask = ({task}) => {
       })
     }
 
+    const deleteTask = () => {
+      const { id } = task;
+  
+      dispatch(deleteTaskById(id))
+        .then((res) => {
+          setResultData(res.message)
+          setIsModalVisible(true);
+          setTimeout(() => {
+            navigation.goBack();
+          }, 1500)
+        })
+        .catch((error) => {
+          setResultData(error.message)
+          setIsModalVisible(true);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsModalVisible(false);
+          }, 1500)
+          setIsLoading(false);
+  
+        })
+    }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -181,14 +204,19 @@ const EditTask = ({task}) => {
 
 
         </View>
-
         <View style={styles.footer}>
+          <CustomButton
+            onPress={deleteTask}
+            text="ELIMINAR"
+            disabled={isDisabledBtn}
+            type='warning'
+          />
           <CustomButton
             onPress={addTask}
             text="GUARDAR"
             disabled={isDisabledBtn}
           />
-        </View>
+        </View> 
 
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
       </View>
@@ -230,7 +258,8 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.primaryBlue
   },
   footer: {
-    marginVertical: 25
+    marginVertical: 50,
+    flexDirection: 'row',
   },
   colorPicker: {
     flexDirection: 'row',

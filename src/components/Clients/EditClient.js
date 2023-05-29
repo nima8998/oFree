@@ -188,15 +188,15 @@ const EditClient = ({
 
         <View style={styles.footer}>
           <CustomButton
-            onPress={updateClient}
-            text="GUARDAR"
-            disabled={isDisabledBtn}
-          />
-          <CustomButton
             onPress={deleteClient}
             text="ELIMINAR"
             disabled={isDisabledBtn}
             type='warning'
+          />
+          <CustomButton
+            onPress={updateClient}
+            text="GUARDAR"
+            disabled={isDisabledBtn}
           />
         </View>        
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
