@@ -2,6 +2,7 @@ export const CREATE_PROJECT = 'CREATE_PROJECT';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
 
 export const getProjects = (userId) => {
     const options = {
@@ -62,6 +63,23 @@ export const updateProjectById = (projectData, projectId) => {
         return await fetch(`${process.env.API_URL_FIREBASE}/projects/${projectId}.json`, options)
             .then(
                 () => dispatch({ type: UPDATE_PROJECT, status: 200, message: "Proyecto actualizado con exito !" }),
+                error => ({ status: 400, message: error.message })
+            )
+    }
+}
+
+export const deleteProjectById = (projectId) =>{
+    const options = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }
+
+    return async dispatch => {
+        return await fetch(`${process.env.API_URL_FIREBASE}/projects/${projectId}.json`, options)
+            .then(
+                () => dispatch({ type: DELETE_PROJECT, status: 200, message: "Proyecto eliminado con exito !" }),
                 error => ({ status: 400, message: error.message })
             )
     }

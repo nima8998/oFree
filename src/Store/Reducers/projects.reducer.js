@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, GET_PROJECTS, GET_PROJECT_BY_ID} from '../Actions/projects.action';
+import { CREATE_PROJECT, GET_PROJECTS, GET_PROJECT_BY_ID, DELETE_PROJECT} from '../Actions/projects.action';
 
 const initialState = {
     list: [],
@@ -21,6 +21,11 @@ const projectReducer = (state=initialState, action) =>{
             return{
                 ...state,
                 selectedProject: state.list.find(({id})=> id === action.id)
+            }
+        case DELETE_PROJECT:
+            return{
+                ...state,
+                payload: action.payload
             }
         default:
             return state;

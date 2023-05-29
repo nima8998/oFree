@@ -18,12 +18,20 @@ const CustomButton = ({
             styles.baseStyle,
             otherStyles,
             disabled && styles.disabledBtn,
-            type !== "primary" && styles.secondaryButton
+            type === "secondary" && styles.secondaryButton,
+            type === "warning" && styles.warningButton,
         ]}
         onPress={!disabled ? onPress : null}
         disabled={disabled}
     >
-        <CustomText otherStyles={[styles.textStyle, textPropsStyle, type !== "primary" && styles.secondaryText]} textValue={text}/>
+        <CustomText 
+            otherStyles={[
+                styles.baseStyleButton, 
+                textPropsStyle, 
+                type === "secondary" && styles.secondaryText,
+                type === "warning" && styles.baseStyleButton,
+            ]} 
+            textValue={text}/>
     </TouchableOpacity>
   )
 }
@@ -40,8 +48,12 @@ const styles = StyleSheet.create({
     },
     secondaryButton: {
         backgroundColor: "#fff",
+        color: Colors.primaryBlue
     },
-    textStyle: {
+    warningButton:{
+        backgroundColor: Colors.primaryViolet,
+    },
+    baseStyleButton: {
         fontSize: 10,
         fontWeight:  'bold',
         color: "#fff",

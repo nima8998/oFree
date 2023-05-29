@@ -6,7 +6,7 @@ import Colors from '../../Constants/Colors';
 import { useSelector } from 'react-redux';
 import { ColorsNames } from '../../Constants/ColorNames'
 import { useDispatch } from 'react-redux';
-import { updateProjectById } from '../../Store/Actions/projects.action';
+import { updateProjectById, deleteProjectById } from '../../Store/Actions/projects.action';
 import { getClients } from '../../Store/Actions/clients.action';
 import { useCommonContext } from '../../Context/CommonContextProvider';
 import { useNavigation } from '@react-navigation/native';
@@ -37,14 +37,14 @@ const formReducer = (state, action) => {
 }
 
 const EditProject = ({
-    project
+  project
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const { setIsModalVisible, setResultData } = useCommonContext();
   const clientsList = useSelector(({ clients }) => clients.list);
-  const {userId} = useSelector(({auth})=>auth);
+  const { userId } = useSelector(({ auth }) => auth);
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isDisabledBtn, setIsDisabledBtn] = React.useState();
@@ -83,12 +83,12 @@ const EditProject = ({
     setColorName(project.colorName)
   }, [])
 
-  React.useEffect(()=>{
-    if(formState.inputValues.name === '')
+  React.useEffect(() => {
+    if (formState.inputValues.name === '')
       setIsDisabledBtn(true);
     else
       setIsDisabledBtn(false);
-  },[formState.inputValues.name])
+  }, [formState.inputValues.name])
 
   const updateProject = () => {
     const updatedProjectData = {
@@ -118,6 +118,29 @@ const EditProject = ({
       })
   }
 
+  const deleteProject = () => {
+    const { id } = project;
+
+    dispatch(deleteProjectById(id))
+      .then((res) => {
+        setResultData(res.message)
+        setIsModalVisible(true);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 1500)
+      })
+      .catch((error) => {
+        setResultData(error.message)
+        setIsModalVisible(true);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 1500)
+        setIsLoading(false);
+
+      })
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -186,6 +209,12 @@ const EditProject = ({
             text="GUARDAR"
             disabled={isDisabledBtn}
           />
+          <CustomButton
+            onPress={deleteProject}
+            text="ELIMINAR"
+            disabled={isDisabledBtn}
+            type='warning'
+          />
         </View>
 
         {isLoading && <ActivityIndicator animating={true} size="large" color={Colors.primaryBlue} />}
@@ -226,11 +255,12 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.primaryBlue,
     borderBottomWidth: 2
   },
-  activeColor:{
+  activeColor: {
     color: Colors.primaryBlue,
   },
   footer: {
-    marginVertical: 50
+    marginVertical: 50,
+    flexDirection: 'row',
   },
   colorPicker: {
     flexDirection: 'row',
